@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<title>...</title>
+<style>
+
+header{background-color: #222222; color: blanchedalmond; margin:0%; padding:0%;}
+
+#menu{background-color: black; width:20px; height:20px; transition:1s; position: fixed;}
+
+.contenido{width:500px; height:600px; background-color:silver;  margin-left: auto; margin-right: auto; text-align:center;}
+.btdm{opacity:0; transition:3s; margin:auto; text-align:center;}
+/* .lkp{text-align:center;} */
+
+</style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body style="background-color:#201609d7;">
+
+<header id="header" align="center">
+<div id="des_menu">
+ <img id="logo" src="alenn.png">
+
+</div>
+</header>
+
+<div id="menu" onclick="openMenu()" style="color:white;">
+  <h2 id="bper" onclick="openPer()" class="btdm">per</h2>
+  <h2 id="bpro" onclick="openPro()" class="btdm">pro</h2>
+  <h2 id="bace" onclick="openAce()" class="btdm">ace</h2>
+</div>
+
+<!-- <div style="height:25px;"></div> ???-->
+
+<!-- perfil -->
+<div id="per" class="contenido">
+
+<h2>hola</h2>
+
+</div>
+<!-- proyectos (principal) -->
+<div id="pro" style="display:none;" class="contenido">
+  <a href="https://eddyomar1.github.io/morseTr/" class="lkp">traductor morse</a><br>
+  <a href="https://eddyomar1.github.io/ETOTU/" class="lkp">navesita</a><br>
+  <a href="https://eddyomar1.github.io/snake/" class="lkp">snake</a>
+  </div>
+<!-- acertijos -->
+<div id="ace" style="display:none;" class="contenido">
+<p>ofhhwawnunbgabgguar</p>
+</div>
+
+<script>
+
+var header = document.getElementById("header");
+// header.innerHTML = 'hola';
+
+header.style.height = (screen.height/16) + 'px';
+
+
+var menu = document.getElementById("menu");
+var count_menu = true;
+
+var per = document.getElementById("per");
+var pro = document.getElementById("pro");
+var ace = document.getElementById("ace");
+
+
+function openMenu(){
+  
+  // document.getElementsByClassName();
+
+var cla = document.getElementsByClassName('btdm');
+
+if(count_menu){ menu.style.height = 500 + 'px'; setTimeout(() => {menu.style.width = (screen.width/4) + 'px';}, 400); for(var x = 0;x<cla.length;x++){cla[x].style.opacity = 1}; count_menu = !count_menu; /*menu.style.fontSize = 20 + "px"*/}
+  
+else if(!count_menu){menu.style.width = 20 + 'px'; menu.style.height = 20 + 'px'; for(var x = 0;x<cla.length;x++){cla[x].style.opacity = 0}; count_menu = !count_menu; /*menu.style.fontSize = 0 + "px"*/}
+  
+  }
+
+  function openPer(){
+  
+per.style.display = "inline";
+pro.style.display = "none";
+ace.style.display = "none";
+
+  }
+
+  function openPro(){
+  
+per.style.display = "none";
+pro.style.display = "inline-block";
+ace.style.display = "none";
+
+  }
+
+  function openAce(){
+  
+per.style.display = "none";
+pro.style.display = "none";
+ace.style.display = "inline";
+
+
+  }
+
+
+  var logo = document.getElementById("logo");
+
+logo.style.width = (screen.height/12) + "px";
+
+
+
+
+
+
+// setTimeout(() => {location.reload()}, 10000);
+
+</script>
+
+</body>
+
+</html>

@@ -12,8 +12,9 @@ header{background-color: #222222; color: blanchedalmond; margin:0%; padding:0%;}
 
 .dropdown-item{cursor: pointer;}
 
+img{width:200px;}
+
 /* .btdm{opacity:0; transition:3s; margin:auto; text-align:center;} */
-/* .lkp{text-align:center;} */
 
 </style>
 
@@ -58,7 +59,7 @@ header{background-color: #222222; color: blanchedalmond; margin:0%; padding:0%;}
 </div>
 
 
-<div style="width:500px; height:600px; background-color: silver; margin-left: auto; margin-right: auto;" >
+<div id="con" style="width:500px; height:600px; background-color: silver; margin-left: auto; margin-right: auto;" >
 
 <!-- perfil -->
 <div id="per" class="contenido">
@@ -70,23 +71,40 @@ header{background-color: #222222; color: blanchedalmond; margin:0%; padding:0%;}
 <div id="pro" style="display:none;" class="contenido">
   <a href="https://eddyomar1.github.io/morseTr/" class="lkp">traductor morse</a><br>
   <a href="https://eddyomar1.github.io/ETOTU/" class="lkp">navesita</a><br>
-  <a href="https://eddyomar1.github.io/snake/" class="lkp">snake</a>
-  </div>
+  <a href="https://eddyomar1.github.io/snake/" class="lkp">snake</a><br>
+  <a href="https://eddyomar1.github.io/tenisbot/" class="lkp">tenis</a><br>
+ 
+
+</div>
 <!-- acertijos -->
 <div id="ace" style="display:none;" class="contenido">
 <br>
   <p>Estos son algunos acertijos de diferentes dificultades</p>
+
+  <h4>acertijo numero 3</h4>
+
+<img src="act3.jpeg" alt="acertijo #3">
+
 </div>
 
 </div>
 
 <script>
 
-var header = document.getElementById("header");
+() => {
+var con = document.getElementById('con'); 
+con.style.width = screen.width + 'px';
+// header.style.width = screen.width + 'px';
+}
+
+
+// var header = document.getElementById("header");
 // header.innerHTML = 'hola';
+var width = screen.width;
 
 header.style.height = (screen.height/16) + 'px';
 
+header.style.width = (width<=500)?(width + (500-width)) + 'px':header.style.width = width + 'px';
 
 var menu = document.getElementById("menu");
 var count_menu = true;

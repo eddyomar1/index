@@ -9,7 +9,10 @@ header{background-color: #222222; color: blanchedalmond; margin:0%; padding:0%;}
 #menu{background-color: black; width:20px; height:20px; transition:1s; position: fixed;}
 
 .contenido{width:500px; height:600px; background-color:silver;  margin-left: auto; margin-right: auto; text-align:center;}
-.btdm{opacity:0; transition:3s; margin:auto; text-align:center;}
+
+.dropdown-item{cursor: pointer;}
+
+/* .btdm{opacity:0; transition:3s; margin:auto; text-align:center;} */
 /* .lkp{text-align:center;} */
 
 </style>
@@ -34,11 +37,11 @@ header{background-color: #222222; color: blanchedalmond; margin:0%; padding:0%;}
 </div>
 </header>
 
-<div id="menu" onclick="openMenu()" style="color:white;">
+<!-- <div id="menu" onclick="openMenu()" style="color:white;">
   <h2 id="bper" onclick="openPer()" class="btdm">per</h2>
   <h2 id="bpro" onclick="openPro()" class="btdm">pro</h2>
   <h2 id="bace" onclick="openAce()" class="btdm">ace</h2>
-</div>
+</div> -->
 
 <!-- <div style="height:25px;"></div> ???-->
 
@@ -48,13 +51,14 @@ header{background-color: #222222; color: blanchedalmond; margin:0%; padding:0%;}
     Action
   </button>
   <div class="dropdown-menu">
-    <h3 class="dropdown-item">per</h3>
-    <h3 class="dropdown-item">pro</h3>
-    <h3 class="dropdown-item">ace</h3>
+    <h3 class="dropdown-item" onclick="openPer()">per</h3>
+    <h3 class="dropdown-item" onclick="openPro()">pro</h3>
+    <h3 class="dropdown-item" onclick="openAce()">ace</h3>
   </div>
 </div>
 
 
+<div style="width:500px; height:600px; background-color: silver; margin-left: auto; margin-right: auto;" >
 
 <!-- perfil -->
 <div id="per" class="contenido">
@@ -70,7 +74,10 @@ header{background-color: #222222; color: blanchedalmond; margin:0%; padding:0%;}
   </div>
 <!-- acertijos -->
 <div id="ace" style="display:none;" class="contenido">
-<p>ofhhwawnunbgabgguar</p>
+<br>
+  <p>Estos son algunos acertijos de diferentes dificultades</p>
+</div>
+
 </div>
 
 <script>

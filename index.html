@@ -20,8 +20,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 
 <!-- animation.style -->
-<link
-rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 <style>
 
@@ -29,26 +28,23 @@ body{background-color:#201609d7}
 
 header{background-color: #222222;}
 
-/* #des_menu{min-width:auto;} */
-
-#menu{background-color: black; width:20px; height:20px; transition:1s; position: fixed;}
-
-.contenido{width:100%; height:600px; background-color:silver;  margin-left: auto; margin-right: auto; text-align:center;}
-
 .dropdown-item{cursor: pointer;}
 
 img{width:200px;}
 
+.contenido{width:100%; height:600px; margin-left: auto; margin-right: auto; text-align:center; padding:20px;}
+
+.pro_items{display:inline-block; margin:20px;}
+
 #con{width:75%; height:600px; background-color: silver; margin-left: auto; margin-right: auto;}
 
-/* #im{width: 12%;} */
+#pro{margin:20px;}
 
-/* .btdm{opacity:0; transition:3s; margin:auto; text-align:center;} */
+
 
 @media screen and (max-width: 500px){
   
 
-/* .contenido,#con{width:320px;} */
 
 @media screen{
   
@@ -78,18 +74,10 @@ img{width:200px;}
 </div>
 </header>
 
-<!-- <div id="menu" onclick="openMenu()" style="color:white;">
-  <h2 id="bper" onclick="openPer()" class="btdm">per</h2>
-  <h2 id="bpro" onclick="openPro()" class="btdm">pro</h2>
-  <h2 id="bace" onclick="openAce()" class="btdm">ace</h2>
-</div> -->
 
-<!-- <div style="height:25px;"></div> ???-->
-
-<!-- Example single danger button -->
 <div class="btn-group">
   <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Action
+    Menu
   </button>
   <div class="dropdown-menu">
     <h3 class="dropdown-item" onclick="openPer()"><i class="fa fa-user icm"></i>&nbsp; perfil</h3>
@@ -102,11 +90,12 @@ img{width:200px;}
 <div id="con">
 
 <!-- perfil -->
-<div id="per" class="contenido">
+<div id="per" class="contenido animate__animated animate__fadeIn">
 
 <h2>hola</h2>
 <br>
 <br>
+<p>Aun no hay mucho contenido en esta página ya que es un proyecto experimental que iré mejorando, pero puedes visitar algunos de mis proyectos en la sección "proyectos" en el "menú" y decirme que te parecieron o sugerirme algún cambio. también puedes escanear el código QR que está en la sección de “acertijos” y tratar de resolverlo."</p>
 <br>
 
 <!-- <iframe src="https://google.com/covid19-map/?hl=es-419&mid=/m/027rn" style="height:500px;width:500px;" title="Iframe Example"></iframe> -->
@@ -116,29 +105,42 @@ img{width:200px;}
 
 </div>
 <!-- proyectos (principal) -->
-<div id="pro" style="display:none;" class="contenido">
+<div id="pro" style="display:none;" class="">
+  
+  <div class="pro_items">
   <i class="fa fa-language animate__bounceIn"></i> <a href="https://eddyomar1.github.io/morseTr/" target="_blank" class="lkp animate__bounceIn">traductor morse</a> &nbsp; 
   <i class="fa fa-code animate__bounceIn"></i> <a href="https://github.com/eddyomar1/morseTr" target="_blank" class=" animate__bounceIn">code</a>
-   <br>
+  </div>
+
+  <!-- <br> -->
+  <div class="pro_items">
   <i class="fa fa-fighter-jet animate__bounceIn"></i> <a href="https://eddyomar1.github.io/ETOTU/" target="_blank"class="lkp animate__bounceIn">sputnik</a>&nbsp;
   <i class="fa fa-code animate__bounceIn"></i> <a href="https://github.com/eddyomar1/ETOTU" target="_blank" class=" animate__bounceIn">code</a>
-  <br>
+  </div>
+
+  <!-- <br> -->
+  <div class="pro_items">
   <i class="fa fa-gamepad animate__bounceIn"></i> <a href="https://eddyomar1.github.io/snake/" target="_blank" class="lkp animate__bounceIn"> snakeframe</a>&nbsp;
   <i class="fa fa-code animate__bounceIn"></i> <a href="https://github.com/eddyomar1/snake" target="_blank" class=" animate__bounceIn">code</a>
-  <br>
+  </div>
+
+  <!-- <br> -->
   <!-- sframenake -->
+  <div class="pro_items">
   <i class="fa fa-gamepad animate__bounceIn"></i> <a href="https://eddyomar1.github.io/tenisbot/" target="_blank" class="lkp animate__bounceIn">tenisbot</a>&nbsp;
   <i class="fa fa-code animate__bounceIn"></i> <a href="https://github.com/eddyomar1/tenisbot" target="_blank" class=" animate__bounceIn">code</a>
+  </div>
+
   <br>
 
 
 </div>
 <!-- acertijos -->
-<div id="ace" style="display:none;" class="contenido">
+<div id="ace" style="display:none;" class="contenido animate__animated animate__fadeIn">
 <br>
-  <p>Estos son algunos acertijos de diferentes dificultades</p>
+  <!-- <p>Estos son algunos acertijos de diferentes dificultades</p> -->
 
-  <h4>acertijo numero 3</h4>
+  <h4>acertijo número 3</h4>
 
 <img src="act3.jpeg" alt="acertijo #3">
 
@@ -151,43 +153,14 @@ img{width:200px;}
 
 <script>
 
-// () => {
-// var con = document.getElementById('con'); 
-// con.style.width = screen.width + 'px';
-// }
-
-
-// var header = document.getElementById("header");
-// header.innerHTML = 'hola';
-var width = screen.width;
-
-// --header.style.height = (screen.height/16) + 'px';
-
-// --header.style.width = (width<=500)?(width + (500-width)) + 'px':header.style.width = width + 'px';
-
-// --var menu = document.getElementById("menu");
-// --var count_menu = true;
 
 var per = document.getElementById("per");
 var pro = document.getElementById("pro");
 var ace = document.getElementById("ace");
 
-
-// --function openMenu(){
-  
-  // document.getElementsByClassName();
-
-// --var cla = document.getElementsByClassName('btdm');
-
-// --if(count_menu){ menu.style.height = 500 + 'px'; setTimeout(() => {menu.style.width = (screen.width/4) + 'px';}, 400); for(var x = 0;x<cla.length;x++){cla[x].style.opacity = 1}; count_menu = !count_menu; menu.style.left = 10 + 'px'; /*menu.style.fontSize = 20 + "px"*/}
-  
-// --else if(!count_menu){/*menu.style.width = 20 + 'px';*/ menu.style.height = 20 + 'px'; for(var x = 0;x<cla.length;x++){cla[x].style.opacity = 0}; count_menu = !count_menu; menu.style.left = -320 + 'px'; /*menu.style.fontSize = 0 + "px"*/}
-  
-  // --}
-
   function openPer(){
   
-per.style.display = "inline";
+per.style.display = "inline-block";
 pro.style.display = "none";
 ace.style.display = "none";
 
@@ -205,8 +178,7 @@ ace.style.display = "none";
   
 per.style.display = "none";
 pro.style.display = "none";
-ace.style.display = "inline";
-
+ace.style.display = "inline-block";
 
   }
 

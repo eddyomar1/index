@@ -1,206 +1,254 @@
 <!DOCTYPE html>
-<html>
-<head> 
-
-  <meta name="google-site-verification" content="LRicwNiMcixzT3wnVH-W334NMQEZGCmj2SqQWXjYgrA" />
-
-  <title>HT4</title>
-
-
-<link  rel="icon" href="alenn.png" type="image/png" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
-<!-- las apis van antes que el codigo naivo para evitar errores de interpretacion de los lenguajes-->
-
-<!-- font awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
-
-<!-- animation.style -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-<!-- cs.ss -->
-<link rel="stylesheet" href="cs.css">
-
-
-<!--  -->
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9159787908052653" crossorigin="anonymous"></script>
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9159787908052653" crossorigin="anonymous"></script>
-
-<!--  -->
-
-
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portafolio de Eddy Omar: proyectos web, juegos, ejercicios de programacion y recursos tecnicos.">
+  <meta name="google-site-verification" content="LRicwNiMcixzT3wnVH-W334NMQEZGCmj2SqQWXjYgrA">
+  <title>Eddy Omar | Portafolio</title>
+  <link rel="icon" href="img/alenn.png" type="image/png">
+  <link rel="stylesheet" href="cs.css">
 </head>
 <body>
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="Ir al inicio">
+      <span class="brand-mark">EO</span>
+      <span>Eddy Omar</span>
+    </a>
 
+    <button class="nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
 
-  
-<header id="header" align="center">
-<div id="des_menu">
- <h1 id="logo">H&!ML</h1>
- <div class="container">
-</div>
-</header>
+    <nav class="site-nav" aria-label="Navegacion principal">
+      <a href="#proyectos">Proyectos</a>
+      <a href="#habilidades">Habilidades</a>
+      <a href="#recursos">Recursos</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </header>
 
-<!-- boton de menu -->
-<div class="btn-group">
-  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Menu
-  </button>
-  <div class="dropdown-menu">
-    <h3 class="dropdown-item" onclick="openPer()"><i class="fa fa-user icm"></i>&nbsp; perfil</h3>
-    <h3 class="dropdown-item" onclick="openPro()"><i class="fa fa-list-ul icm"></i>&nbsp; proyectos</h3>
-    <h3 class="dropdown-item" onclick="openAce()"><i class="fa fa-puzzle-piece icm"></i>&nbsp; acertijos</h3>
-    <h3 class="dropdown-item" onclick="ofile()"><i class="fa fa-file-download"></i>&nbsp; .zip</h3>
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-copy">
+        <p class="eyebrow">Desarrollo web, juegos y tecnologia</p>
+        <h1>Construyo proyectos web simples, utiles y faciles de mejorar.</h1>
+        <p class="hero-text">
+          Este portafolio reune practicas, experimentos y proyectos publicados mientras sigo
+          fortaleciendo mis bases en frontend, logica de programacion y herramientas tecnicas.
+        </p>
+        <div class="hero-actions" aria-label="Acciones principales">
+          <a class="button button-primary" href="#proyectos">Ver proyectos</a>
+          <a class="button button-secondary" href="https://github.com/eddyomar1" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </div>
 
-  </div>
-</div>
+      <div class="hero-panel" aria-label="Resumen del portafolio">
+        <div class="code-monogram" aria-label="Animacion de las letras EO con referencias a programacion">
+          <div class="code-orbit" aria-hidden="true">
+            <span>&lt;/&gt;</span>
+            <span>{ }</span>
+            <span>()</span>
+          </div>
+          <div class="eo-lines" aria-hidden="true">
+            <span class="line line-e-top"></span>
+            <span class="line line-e-mid"></span>
+            <span class="line line-e-bottom"></span>
+            <span class="line line-e-left"></span>
+            <span class="line line-o"></span>
+          </div>
+          <span class="sr-only">EO</span>
+        </div>
+        <div>
+          <strong>Enfoque actual</strong>
+          <p>Frontend, JavaScript, practicas interactivas y organizacion de proyectos.</p>
+        </div>
+      </div>
+    </section>
 
-<div id="con">
+    <section class="section" id="proyectos">
+      <div class="section-heading">
+        <p class="eyebrow">Trabajo publicado</p>
+        <h2>Proyectos</h2>
+        <p>Una seleccion de ejercicios y aplicaciones pequenas que muestran practica con HTML, CSS y JavaScript.</p>
+      </div>
 
-<!-- perfil -->
-<div id="per" class="contenido animate__animated animate__fadeIn">
+      <div class="project-grid">
+        <article class="project-card featured">
+          <a class="project-image" href="https://eddyomar1.github.io/morseTr/" target="_blank" rel="noreferrer">
+            <img src="img/imors.png" alt="Vista previa del traductor de codigo morse">
+          </a>
+          <div class="project-content">
+            <p class="project-type">Herramienta web</p>
+            <h3>Traductor Morse</h3>
+            <p>Convierte texto a codigo morse y sirve como practica de manipulacion del DOM e interacciones basicas.</p>
+            <div class="project-links">
+              <a href="https://eddyomar1.github.io/morseTr/" target="_blank" rel="noreferrer">Demo</a>
+              <a href="https://github.com/eddyomar1/morseTr" target="_blank" rel="noreferrer">Codigo</a>
+            </div>
+          </div>
+        </article>
 
-<h2>hola</h2>
-<br>
-<br>
-<!-- bienvenida a los usuarios -->
+        <article class="project-card">
+          <a class="project-image" href="https://eddyomar1.github.io/ETOTU/" target="_blank" rel="noreferrer">
+            <img src="img/ietotu.png" alt="Vista previa del proyecto Sputnik">
+          </a>
+          <div class="project-content">
+            <p class="project-type">Web interactiva</p>
+            <h3>Sputnik</h3>
+            <p>Experimento visual sobre exploracion espacial con enfoque en estructura HTML y estilos CSS.</p>
+            <div class="project-links">
+              <a href="https://eddyomar1.github.io/ETOTU/" target="_blank" rel="noreferrer">Demo</a>
+              <a href="https://github.com/eddyomar1/ETOTU" target="_blank" rel="noreferrer">Codigo</a>
+            </div>
+          </div>
+        </article>
 
-<p>Aun no hay mucho contenido en esta página ya que es un proyecto experimental que iré mejorando, pero puedes visitar algunos de mis proyectos en la sección "proyectos" en el menú y decirme que te parecieron o sugerirme algún cambio. también puedes escanear el código QR que está en la sección de “acertijos” y tratar de resolverlo.</p>
-<!-- <p>¡Bienvenido a mi sitio web! Mi nombre es [Nombre], soy un joven estudiante de informática apasionado por la programación web y la electrónica. En esta página podrás encontrar algunos de mis proyectos más recientes y noticias interesantes relacionadas con estos temas.
+        <article class="project-card">
+          <a class="project-image" href="https://eddyomar1.github.io/snake/" target="_blank" rel="noreferrer">
+            <img src="img/isnkf.png" alt="Vista previa del juego Snakeframe">
+          </a>
+          <div class="project-content">
+            <p class="project-type">Juego</p>
+            <h3>Snakeframe</h3>
+            <p>Juego tipo snake desarrollado como practica de logica, movimiento y estados de juego.</p>
+            <div class="project-links">
+              <a href="https://eddyomar1.github.io/snake/" target="_blank" rel="noreferrer">Demo</a>
+              <a href="https://github.com/eddyomar1/snake" target="_blank" rel="noreferrer">Codigo</a>
+            </div>
+          </div>
+        </article>
 
-  En el apartado de programación web, encontrarás proyectos que he desarrollado utilizando herramientas como HTML, CSS y JavaScript. También puedes ver algunos de mis trabajos en lenguajes como PHP y Python.
-  
-  En el apartado de electrónica, podrás ver proyectos en los que he trabajado con microcontroladores y sensores, desde un sencillo control de iluminación hasta un sistema de riego automatizado.
-  
-  Además, también encontrarás noticias y actualizaciones sobre las últimas tendencias y desarrollos en el mundo de la programación web y la electrónica.
-  
-  Espero que disfrutes navegando por mi sitio y si tienes alguna pregunta o comentario, no dudes en ponerte en contacto conmigo. ¡Gracias por visitar!</p> -->
-<br>
+        <article class="project-card">
+          <a class="project-image" href="https://eddyomar1.github.io/tenisbot/" target="_blank" rel="noreferrer">
+            <img src="img/itenis.png" alt="Vista previa del juego Tenisbot">
+          </a>
+          <div class="project-content">
+            <p class="project-type">Juego</p>
+            <h3>Tenisbot</h3>
+            <p>Practica de juego estilo tenis con interaccion en pantalla y reglas simples.</p>
+            <div class="project-links">
+              <a href="https://eddyomar1.github.io/tenisbot/" target="_blank" rel="noreferrer">Demo</a>
+              <a href="https://github.com/eddyomar1/tenisbot" target="_blank" rel="noreferrer">Codigo</a>
+            </div>
+          </div>
+        </article>
 
-</div>
-<!-- proyectos (principal) -->
-<div id="pro" class="" style="display:none;">
-  
-    <!-- traductor morse -->
-  <div class="pro_items">
-    <a href="https://eddyomar1.github.io/morseTr" target="_blank">
-    <img src="img/imors.png" alt="prevista de la pagina" class="img_pro"></a>
-  <i class="fa fa-language animate__bounceIn"></i> <a href="https://eddyomar1.github.io/morseTr/" target="_blank" class="lkp animate__bounceIn">code morse</a> &nbsp; 
-  <i class="fa fa-code animate__bounceIn"></i> <a href="https://github.com/eddyomar1/morseTr" target="_blank" class=" animate__bounceIn">code</a>
-  </div>
+        <article class="project-card text-only">
+          <div class="project-content">
+            <p class="project-type">Aplicacion practica</p>
+            <h3>Horario</h3>
+            <p>Organizacion visual de horarios como ejercicio de maquetacion y estructura de contenido.</p>
+            <div class="project-links">
+              <a href="https://eddyomar1.github.io/horario/" target="_blank" rel="noreferrer">Demo</a>
+              <a href="https://github.com/eddyomar1/horario" target="_blank" rel="noreferrer">Codigo</a>
+            </div>
+          </div>
+        </article>
 
-  <!-- <br> -->
-    <!-- explorer to the univers -->
-  <div class="pro_items">
-    <a href="https://eddyomar1.github.io/ETOTU/" target="_blank">
-    <img src="img/ietotu.png" alt="prevista de la pagina" class="img_pro"></a>
-  <i class="fa fa-fighter-jet animate__bounceIn"></i> <a href="https://eddyomar1.github.io/ETOTU/" target="_blank"class="lkp animate__bounceIn">sputnik</a>&nbsp;
-  <i class="fa fa-code animate__bounceIn"></i> <a href="https://github.com/eddyomar1/ETOTU" target="_blank" class=" animate__bounceIn">code</a>
-  </div>
+        <article class="project-card text-only">
+          <div class="project-content">
+            <p class="project-type">Juego</p>
+            <h3>XO</h3>
+            <p>Tres en raya creado para practicar eventos, turnos y condiciones de victoria.</p>
+            <div class="project-links">
+              <a href="https://eddyomar1.github.io/XO/" target="_blank" rel="noreferrer">Demo</a>
+              <a href="https://github.com/eddyomar1/XO" target="_blank" rel="noreferrer">Codigo</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
 
-  <!-- <br> -->
-  <!-- sframenake -->
-  <div class="pro_items">
-  <img src="img/isnkf.png" alt="prevista de la pagina" class="img_pro">
-  <i class="fa fa-gamepad animate__bounceIn"></i> <a href="https://eddyomar1.github.io/snake/" target="_blank" class="lkp animate__bounceIn"> snakeframe</a>&nbsp;
-  <i class="fa fa-code animate__bounceIn"></i> <a href="https://github.com/eddyomar1/snake" target="_blank" class=" animate__bounceIn">code</a>
-  </div>
+    <section class="section split-section" id="habilidades">
+      <div class="section-heading">
+        <p class="eyebrow">Base tecnica</p>
+        <h2>Habilidades y certificados</h2>
+        <p>El sitio queda preparado para crecer con nuevas tecnologias, mejores descripciones y proyectos mas recientes.</p>
+      </div>
 
-  <!-- <br> -->
-  <!-- tenis -->
-  <div class="pro_items">
-  <img src="img/itenis.png" alt="" class="img_pro">
-  <i class="fa fa-gamepad animate__bounceIn"></i> <a href="https://eddyomar1.github.io/tenisbot/" target="_blank" class="lkp animate__bounceIn">tenisbot</a>&nbsp;
-  <i class="fa fa-code animate__bounceIn"></i> <a href="https://github.com/eddyomar1/tenisbot" target="_blank" class=" animate__bounceIn">code</a>
-  </div>
+      <div class="skills-layout">
+        <div class="skill-list" aria-label="Habilidades">
+          <span>HTML</span>
+          <span>CSS</span>
+          <span>JavaScript</span>
+          <span>Responsive Design</span>
+          <span>Python</span>
+          <span>PHP</span>
+          <span>SQL</span>
+          <span>Java</span>
+          <span>jQuery</span>
+        </div>
 
+        <div class="certificate-strip" aria-label="Certificados">
+          <a href="img/cer/HTML_cer.jpg" target="_blank" rel="noreferrer"><img src="img/cer/HTML_cer.jpg" alt="Certificado de HTML"></a>
+          <a href="img/cer/CSS_cer.jpg" target="_blank" rel="noreferrer"><img src="img/cer/CSS_cer.jpg" alt="Certificado de CSS"></a>
+          <a href="img/cer/JS_cer.jpg" target="_blank" rel="noreferrer"><img src="img/cer/JS_cer.jpg" alt="Certificado de JavaScript"></a>
+          <a href="img/cer/Python_cer.jpg" target="_blank" rel="noreferrer"><img src="img/cer/Python_cer.jpg" alt="Certificado de Python"></a>
+        </div>
+      </div>
+    </section>
 
-    <!-- <br> -->
-  <!-- horario -->
-  <div class="pro_items">
-  <i class="fa fa-book animate__bounceIn"></i> <a href="https://eddyomar1.github.io/horario/" target="_blank" class="lkp animate__bounceIn">Horario</a>&nbsp;
-  <i class="fa fa-code animate__bounceIn"></i> <a href="https://github.com/eddyomar1/horario" target="_blank" class=" animate__bounceIn">code</a>
-  </div>
+    <section class="section resources" id="recursos">
+      <div class="section-heading">
+        <p class="eyebrow">Extras</p>
+        <h2>Recursos y experimentos</h2>
+        <p>Materiales antiguos del proyecto conservados en una seccion propia para que no compitan con el portafolio principal.</p>
+      </div>
 
-    <!-- <br> -->
-  <!-- XO -->
-  <div class="pro_items">
-    <i class="fa fa-gamepad animate__bounceIn"></i> <a href="https://eddyomar1.github.io/XO/" target="_blank" class="lkp animate__bounceIn">XO</a>&nbsp;
-    <i class="fa fa-code animate__bounceIn"></i> <a href="https://github.com/eddyomar1/XO" target="_blank" class=" animate__bounceIn">code</a>
-    </div>
-  
-    <!-- <br> -->
-  <!-- https://eddyomar1.github.io/animacion-con-boton/ -->
-  <div class="pro_items">
-    <i class="fa fa-gamepad animate__bounceIn"></i> <a href="https://eddyomar1.github.io/animacion-con-boton/" target="_blank" class="lkp animate__bounceIn">XO</a>&nbsp;
-    <i class="fa fa-code animate__bounceIn"></i> <a href="https://github.com/eddyomar1/XO" target="_blank" class=" animate__bounceIn">code</a>
-    </div>
+      <div class="resource-grid">
+        <article class="resource-item">
+          <h3>Acertijo #3</h3>
+          <img src="img/act3.jpeg" alt="Imagen del acertijo numero 3">
+        </article>
 
+        <article class="resource-item">
+          <h3>Descargas</h3>
+          <p>Archivos tecnicos que estaban disponibles en la version anterior.</p>
+          <div class="download-list">
+            <a href="dw/LiquidCrystal_I2C-master.zip" download>LiquidCrystal I2C</a>
+            <a href="dw/arNano.zip" download>Driver Arduino Nano</a>
+          </div>
+        </article>
+      </div>
+    </section>
 
-</div>
-<!-- acertijos -->
-<div id="ace" style="display:none;" class="contenido animate__animated animate__fadeIn">
-<br>
-  <!-- <p>Estos son algunos acertijos de diferentes dificultades</p> -->
+    <section class="contact-section" id="contacto">
+      <div>
+        <p class="eyebrow">Contacto</p>
+        <h2>Sigamos construyendo.</h2>
+        <a class="email-link" href="mailto:eddyomarscb@gmail.com">
+          <svg class="email-icon" aria-hidden="true" viewBox="0 0 16 16" focusable="false">
+            <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697Zm6.761 4.134-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.142l-6.57-4.027L8 9.586l-1.239-.755Zm3.436-.588L16 11.801V4.697l-5.803 3.546Z"/>
+          </svg>
+          <span>eddyomarscb@gmail.com</span>
+        </a>
+      </div>
+      <a class="button button-primary" href="https://github.com/eddyomar1/index" target="_blank" rel="noreferrer">Repositorio del sitio</a>
+    </section>
+  </main>
 
-  <h4>acertijo #3</h4>
+  <aside class="site-mascot" aria-live="polite">
+    <div class="mascot-bubble" data-mascot-bubble>Revisa los proyectos, hay buenas pistas ahi.</div>
+    <button class="mascot-character" type="button" aria-label="Mascota del sitio">
+      <span class="mascot-antenna"></span>
+      <span class="mascot-head">
+        <span class="mascot-eye"></span>
+        <span class="mascot-eye"></span>
+      </span>
+      <span class="mascot-body">
+        <span class="mascot-code">&lt;/&gt;</span>
+      </span>
+    </button>
+  </aside>
 
-<img src="act3.jpeg" alt="acertijo #3">
+  <footer class="site-footer">
+    <p>Portafolio de Eddy Omar.</p>
+    <a href="#inicio">Volver arriba</a>
+  </footer>
 
-</div>
-
-<div id="fil" style="display:none;" class="contenido animate__animated animate__fadeIn">
-<br>
-<br>
-<br>
-
-<a href="dw/LiquidCrystal_I2C-master.zip" download>LiquidCrystal_I2C-master.zip</a>
-
-<br>
-<br>
-<br>
-
-<a href="dw/arNano.zip" download>Driver para arduino Nano</a>
-
-
-
-</div>
-
-</div>
-
-</div>
-
-
-<footer id="foot">
-
-  <div class="contenido">
-    <div class="foot_items">
-    <a href="https://github.com/eddyomar1/index"> <i class="fa fa-code"></i>Repositorio de esta pagina en GitHub <i class="fa fa-code"></i></a>
-    </div>
-
-<br>
-
-  </div>
-
-  <marquee behavior="" direction="">
-    
-    <p>YOLO</p>
-
-  </marquee>
-
-</footer>
-
-
-<script src="js.js"></script>
-
-
+  <script src="js.js"></script>
 </body>
 </html>

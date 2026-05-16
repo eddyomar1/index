@@ -21,6 +21,12 @@
     "Tambien puedo guiar al usuario sin estorbar.",
   ];
 
+  const VARIANTS = ["robot", "spider", "stickman"];
+
+  function getRandomVariant() {
+    return VARIANTS[Math.floor(Math.random() * VARIANTS.length)];
+  }
+
   function createMascot() {
     const mascot = document.createElement("aside");
     mascot.className = "eo-mascot eo-mascot-robot";
@@ -57,8 +63,12 @@
           <span class="eo-stickman-body"></span>
           <span class="eo-stickman-arm eo-arm-left"></span>
           <span class="eo-stickman-arm eo-arm-right"></span>
-          <span class="eo-stickman-leg eo-stick-leg-left"></span>
-          <span class="eo-stickman-leg eo-stick-leg-right"></span>
+          <span class="eo-stickman-leg eo-stick-leg-left">
+            <span class="eo-stickman-knee"></span>
+          </span>
+          <span class="eo-stickman-leg eo-stick-leg-right">
+            <span class="eo-stickman-knee"></span>
+          </span>
           <span class="eo-stickman-shadow"></span>
         </span>
       </button>
@@ -104,17 +114,40 @@
     const phrases = options.phrases || DEFAULT_PHRASES;
     const spiderPhrases = options.spiderPhrases || SPIDER_PHRASES;
     const stickmanPhrases = options.stickmanPhrases || STICKMAN_PHRASES;
-    const moveMs = options.moveMs || 7000;
-    const speakMs = options.speakMs || 11000;
+    const minMoveMs = options.minMoveMs || 60 * 1000;
+    const maxMoveMs = options.maxMoveMs || 5 * 60 * 1000;
+    const robotReturnMs = options.robotReturnMs || 60 * 1000;
     let phraseIndex = 0;
     let spiderPhraseIndex = 0;
     let stickmanPhraseIndex = 0;
     let speechTimer;
-    let variant = ["robot", "spider", "stickman"].includes(options.variant) ? options.variant : "robot";
+    let moveTimer;
+    let variant = VARIANTS.includes(options.variant) ? options.variant : getRandomVariant();
+    let robotCycleId = 0;
     let picker = null;
 
     if (options.pickerTarget) {
       picker = createPicker(options.pickerTarget, variant);
+    }
+
+    function getRandomMoveDelay() {
+      return Math.round(minMoveMs + Math.random() * (maxMoveMs - minMoveMs));
+    }
+
+    function setRobotOffscreenStart() {
+      const mascotWidth = mascot.offsetWidth || 128;
+      const mascotHeight = mascot.offsetHeight || 150;
+      const headerSpace = options.headerSpace || 84;
+      const exitsLeft = Math.random() > 0.5;
+      const x = exitsLeft ? -mascotWidth - 28 : window.innerWidth + 28;
+      const y = Math.round(headerSpace + 20 + Math.random() * Math.max(0, window.innerHeight - mascotHeight - headerSpace - 38));
+
+      mascot.style.setProperty("--eo-mascot-move-duration", "0ms");
+      mascot.style.setProperty("--eo-mascot-x", `${x}px`);
+      mascot.style.setProperty("--eo-mascot-y", `${y}px`);
+      mascot.classList.add("eo-is-offscreen");
+      mascot.classList.remove("eo-is-speaking");
+      mascot.getBoundingClientRect();
     }
 
     function move({ offscreen = false } = {}) {
@@ -127,20 +160,31 @@
       let x;
       let y;
 
-      if (offscreen && variant === "spider") {
+      if (offscreen && variant !== "stickman") {
         const exitsLeft = Math.random() > 0.5;
         minX = exitsLeft ? -mascotWidth - 28 : window.innerWidth + 28;
         maxX = minX;
+        mascot.classList.add("eo-is-offscreen");
+      } else {
+        mascot.classList.remove("eo-is-offscreen");
       }
 
       x = Math.round(minX + Math.random() * (maxX - minX));
 
       if (variant === "stickman") {
+        const currentX = mascot.getBoundingClientRect().left;
+        const strideDistance = options.stickmanStrideDistance || 30;
+        const stepDurationMs = options.stickmanStepMs || 550;
+        const distance = Math.abs(x - currentX);
+        const walkDurationMs = Math.min(6500, Math.max(900, (distance / strideDistance) * stepDurationMs));
+
+        mascot.style.setProperty("--eo-mascot-floor-gap", "-2px");
+        mascot.style.setProperty("--eo-mascot-move-duration", `${walkDurationMs}ms`);
+        mascot.style.setProperty("--eo-stickman-step-duration", `${stepDurationMs}ms`);
         mascot.style.setProperty("--eo-mascot-x", `${x}px`);
-        mascot.style.setProperty("--eo-mascot-floor-gap", "10px");
         mascot.classList.add("eo-is-walking");
-        window.setTimeout(() => mascot.classList.remove("eo-is-walking"), 3400);
-        return;
+        window.setTimeout(() => mascot.classList.remove("eo-is-walking"), walkDurationMs);
+        return walkDurationMs;
       }
 
       if (variant === "spider") {
@@ -162,17 +206,22 @@
           : Math.max(headerSpace, documentHeight - mascotHeight - padding);
 
         y = Math.round(minPageY + Math.random() * (maxPageY - minPageY));
-        mascot.style.setProperty("--eo-mascot-page-y", `${y}px`);
-        mascot.style.setProperty("--eo-mascot-y", `${Math.max(headerSpace, y - window.scrollY)}px`);
       } else {
         const maxY = Math.max(headerSpace, window.innerHeight - mascotHeight - padding);
         y = Math.round(headerSpace + Math.random() * (maxY - headerSpace));
-        mascot.style.setProperty("--eo-mascot-y", `${y}px`);
       }
 
+      mascot.style.setProperty("--eo-mascot-move-duration", "3400ms");
+      if (variant === "spider") {
+        mascot.style.setProperty("--eo-mascot-page-y", `${y}px`);
+        mascot.style.setProperty("--eo-mascot-y", `${Math.max(headerSpace, y - window.scrollY)}px`);
+      } else {
+        mascot.style.setProperty("--eo-mascot-y", `${y}px`);
+      }
       mascot.style.setProperty("--eo-mascot-x", `${x}px`);
       mascot.classList.add("eo-is-walking");
       window.setTimeout(() => mascot.classList.remove("eo-is-walking"), 3400);
+      return 3400;
     }
 
     function speak(customPhrase) {
@@ -194,6 +243,7 @@
       }
 
       bubble.textContent = phrase;
+      updateBubblePosition();
       mascot.classList.add("eo-is-speaking");
       window.clearTimeout(speechTimer);
       speechTimer = window.setTimeout(() => {
@@ -201,8 +251,32 @@
       }, 4200);
     }
 
-    function setVariant(nextVariant) {
-      variant = ["robot", "spider", "stickman"].includes(nextVariant) ? nextVariant : "robot";
+    function updateBubblePosition() {
+      mascot.classList.remove("eo-bubble-right", "eo-bubble-left", "eo-bubble-top", "eo-bubble-bottom");
+
+      const rect = mascot.getBoundingClientRect();
+      const bubbleWidth = Math.min(260, window.innerWidth - 48);
+      const bubbleHeight = 88;
+      const gap = 20;
+      const spaceRight = window.innerWidth - rect.right;
+      const spaceLeft = rect.left;
+      const spaceTop = rect.top;
+      const spaceBottom = window.innerHeight - rect.bottom;
+
+      if (spaceRight >= bubbleWidth + gap) {
+        mascot.classList.add("eo-bubble-right");
+      } else if (spaceLeft >= bubbleWidth + gap) {
+        mascot.classList.add("eo-bubble-left");
+      } else if (spaceTop >= bubbleHeight + gap) {
+        mascot.classList.add("eo-bubble-top");
+      } else {
+        mascot.classList.add(spaceBottom >= bubbleHeight + gap ? "eo-bubble-bottom" : "eo-bubble-top");
+      }
+    }
+
+    function setVariant(nextVariant, { announce = true } = {}) {
+      variant = VARIANTS.includes(nextVariant) ? nextVariant : getRandomVariant();
+      if (variant !== "robot") robotCycleId += 1;
       mascot.classList.toggle("eo-mascot-robot", variant === "robot");
       mascot.classList.toggle("eo-mascot-spider", variant === "spider");
       mascot.classList.toggle("eo-mascot-stickman", variant === "stickman");
@@ -212,8 +286,38 @@
         spider: "Modo arana activado.",
         stickman: "Modo stickman activado.",
       };
-      speak(modeMessage[variant]);
-      move();
+
+      if (variant === "robot") {
+        setRobotOffscreenStart();
+        runRobotCycle(announce ? modeMessage.robot : undefined);
+        return;
+      }
+
+      const duration = move();
+      window.setTimeout(() => speak(announce ? modeMessage[variant] : undefined), duration + 250);
+      scheduleMove();
+    }
+
+    function runRobotCycle(customPhrase) {
+      if (variant !== "robot") return;
+
+      const cycleId = robotCycleId + 1;
+      robotCycleId = cycleId;
+      window.clearTimeout(moveTimer);
+      const enterDuration = move();
+      window.setTimeout(() => {
+        if (cycleId !== robotCycleId || variant !== "robot") return;
+
+        speak(customPhrase);
+        window.setTimeout(() => {
+          if (cycleId !== robotCycleId || variant !== "robot") return;
+
+          const exitDuration = move({ offscreen: true });
+          window.setTimeout(() => {
+            if (cycleId === robotCycleId && variant === "robot") scheduleMove();
+          }, exitDuration + 250);
+        }, 4800);
+      }, enterDuration + 250);
     }
 
     if (character) {
@@ -223,8 +327,16 @@
           spider: "Subiendo por el DOM.",
           stickman: "Sigo caminando por el piso.",
         };
-        speak(clickPhrase[variant]);
-        move();
+
+      if (variant === "robot") {
+        setRobotOffscreenStart();
+        runRobotCycle(clickPhrase.robot);
+        return;
+      }
+
+      const duration = move();
+      window.setTimeout(() => speak(clickPhrase[variant]), duration + 250);
+      scheduleMove();
       });
     }
 
@@ -235,14 +347,45 @@
       });
     }
 
-    setVariant(variant);
-    window.setInterval(() => {
+    function runScheduledMove() {
       const shouldExit = variant === "spider" && Math.random() > 0.62;
-      move({ offscreen: shouldExit });
-      if (shouldExit) window.setTimeout(() => move(), 3600);
-    }, moveMs);
-    window.setInterval(() => speak(), speakMs);
-    window.addEventListener("resize", () => move());
+
+      if (shouldExit) {
+        const exitDuration = move({ offscreen: true });
+        window.setTimeout(() => {
+          const returnDuration = move();
+          window.setTimeout(() => {
+            speak();
+            scheduleMove();
+          }, returnDuration + 250);
+        }, exitDuration + 1200);
+        return;
+      }
+
+      const duration = move();
+      window.setTimeout(() => {
+        speak();
+        scheduleMove();
+      }, duration + 250);
+    }
+
+    function scheduleMove() {
+      window.clearTimeout(moveTimer);
+      moveTimer = window.setTimeout(
+        variant === "robot" ? runRobotCycle : runScheduledMove,
+        variant === "robot" ? robotReturnMs : getRandomMoveDelay()
+      );
+    }
+
+    setVariant(variant, { announce: false });
+    window.addEventListener("resize", () => {
+      if (variant === "robot" && mascot.classList.contains("eo-is-offscreen")) {
+        setRobotOffscreenStart();
+        return;
+      }
+
+      move();
+    });
 
     return {
       element: mascot,
@@ -258,9 +401,11 @@
     const autoTarget = document.querySelector("[data-eo-mascot-auto]");
     if (!autoTarget) return;
 
+    const pickerSelector = autoTarget.dataset.eoMascotPicker;
+
     init({
       variant: autoTarget.dataset.eoMascotVariant,
-      pickerTarget: document.querySelector(autoTarget.dataset.eoMascotPicker || ""),
+      pickerTarget: pickerSelector ? document.querySelector(pickerSelector) : null,
     });
   });
 })();

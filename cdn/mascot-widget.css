@@ -14,7 +14,9 @@
   z-index: var(--eo-mascot-z, 9999);
   width: 128px;
   pointer-events: none;
-  transition: left 3.4s ease-in-out, top 3.4s ease-in-out;
+  transform: scale(0.5);
+  transform-origin: bottom center;
+  transition: left var(--eo-mascot-move-duration, 3.4s) ease-in-out, top var(--eo-mascot-move-duration, 3.4s) ease-in-out;
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -26,8 +28,9 @@
 .eo-mascot.eo-mascot-stickman {
   position: fixed;
   top: auto;
-  bottom: var(--eo-mascot-floor-gap, 10px);
+  bottom: var(--eo-mascot-floor-gap, -2px);
   width: 112px;
+  transition: left var(--eo-mascot-move-duration, 3.4s) linear;
 }
 
 .eo-mascot.eo-is-walking .eo-mascot-character {
@@ -224,8 +227,7 @@
 }
 
 .eo-stickman-body,
-.eo-stickman-arm,
-.eo-stickman-leg {
+.eo-stickman-arm {
   position: absolute;
   left: 34px;
   width: 5px;
@@ -253,16 +255,54 @@
 }
 
 .eo-stickman-leg {
+  position: absolute;
+  left: 34px;
   top: 58px;
-  height: 34px;
+  width: 5px;
+  height: 22px;
+  background: var(--eo-mascot-ink);
+  border-radius: 999px;
+  transform-origin: top center;
+}
+
+.eo-stickman-leg::after {
+  position: absolute;
+  left: 0;
+  top: 18px;
+  width: 5px;
+  height: 24px;
+  background: var(--eo-mascot-ink);
+  border-radius: 999px;
+  content: "";
+  transform-origin: top center;
+}
+
+.eo-stickman-knee {
+  position: absolute;
+  left: -3px;
+  top: 16px;
+  z-index: 1;
+  width: 11px;
+  height: 11px;
+  background: var(--eo-mascot-gold);
+  border: 3px solid var(--eo-mascot-ink);
+  border-radius: 50%;
 }
 
 .eo-stick-leg-left {
-  transform: rotate(24deg);
+  transform: rotate(18deg);
+}
+
+.eo-stick-leg-left::after {
+  transform: rotate(-30deg);
 }
 
 .eo-stick-leg-right {
-  transform: rotate(-24deg);
+  transform: rotate(-22deg);
+}
+
+.eo-stick-leg-right::after {
+  transform: rotate(28deg);
 }
 
 .eo-stickman-shadow {
@@ -281,12 +321,24 @@
 
 .eo-mascot-stickman.eo-is-walking .eo-arm-left,
 .eo-mascot-stickman.eo-is-walking .eo-stick-leg-right {
-  animation: eo-stickman-forward 0.55s ease-in-out infinite alternate;
+  animation: eo-stickman-forward var(--eo-stickman-step-duration, 0.55s) ease-in-out infinite alternate;
+}
+
+.eo-mascot-stickman.eo-is-walking .eo-stick-leg-right::after {
+  animation: eo-stickman-calf-forward var(--eo-stickman-step-duration, 0.55s) ease-in-out infinite alternate;
 }
 
 .eo-mascot-stickman.eo-is-walking .eo-arm-right,
 .eo-mascot-stickman.eo-is-walking .eo-stick-leg-left {
-  animation: eo-stickman-back 0.55s ease-in-out infinite alternate;
+  animation: eo-stickman-back var(--eo-stickman-step-duration, 0.55s) ease-in-out infinite alternate;
+}
+
+.eo-mascot-stickman.eo-is-walking .eo-stick-leg-left::after {
+  animation: eo-stickman-calf-back var(--eo-stickman-step-duration, 0.55s) ease-in-out infinite alternate;
+}
+
+.eo-mascot-stickman.eo-is-walking .eo-stickman-body {
+  animation: eo-stickman-body-bob var(--eo-stickman-step-duration, 0.55s) ease-in-out infinite alternate;
 }
 
 .eo-mascot-stickman .eo-mascot-bubble {
@@ -295,16 +347,18 @@
 
 .eo-mascot-bubble {
   position: absolute;
-  right: 86px;
-  bottom: 82px;
-  width: min(220px, calc(100vw - 150px));
-  padding: 10px 12px;
+  left: auto;
+  right: auto;
+  top: auto;
+  bottom: auto;
+  width: min(260px, calc(100vw - 48px));
+  padding: 12px 14px;
   color: var(--eo-mascot-ink);
   background: var(--eo-mascot-surface);
   border: 1px solid var(--eo-mascot-line);
   border-radius: 8px;
   box-shadow: 0 14px 30px rgba(16, 24, 32, 0.16);
-  font-size: 0.88rem;
+  font-size: 1rem;
   font-weight: 750;
   line-height: 1.35;
   opacity: 0;
@@ -314,20 +368,87 @@
 
 .eo-mascot-bubble::after {
   position: absolute;
-  right: -8px;
-  bottom: 18px;
   width: 14px;
   height: 14px;
   background: var(--eo-mascot-surface);
+  content: "";
+}
+
+.eo-bubble-right .eo-mascot-bubble {
+  left: calc(100% + 14px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.eo-bubble-right .eo-mascot-bubble::after {
+  left: -8px;
+  top: calc(50% - 7px);
+  border-left: 1px solid var(--eo-mascot-line);
+  border-bottom: 1px solid var(--eo-mascot-line);
+  transform: rotate(45deg);
+}
+
+.eo-bubble-left .eo-mascot-bubble {
+  right: calc(100% + 14px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.eo-bubble-left .eo-mascot-bubble::after {
+  right: -8px;
+  top: calc(50% - 7px);
   border-right: 1px solid var(--eo-mascot-line);
   border-bottom: 1px solid var(--eo-mascot-line);
-  content: "";
   transform: rotate(-45deg);
+}
+
+.eo-bubble-top .eo-mascot-bubble {
+  left: 50%;
+  bottom: calc(100% + 14px);
+  transform: translateX(-50%) translateY(8px);
+}
+
+.eo-bubble-top .eo-mascot-bubble::after {
+  left: calc(50% - 7px);
+  bottom: -8px;
+  border-right: 1px solid var(--eo-mascot-line);
+  border-bottom: 1px solid var(--eo-mascot-line);
+  transform: rotate(45deg);
+}
+
+.eo-bubble-bottom .eo-mascot-bubble {
+  left: 50%;
+  top: calc(100% + 14px);
+  transform: translateX(-50%) translateY(8px);
+}
+
+.eo-bubble-bottom .eo-mascot-bubble::after {
+  left: calc(50% - 7px);
+  top: -8px;
+  border-left: 1px solid var(--eo-mascot-line);
+  border-top: 1px solid var(--eo-mascot-line);
+  transform: rotate(45deg);
 }
 
 .eo-is-speaking .eo-mascot-bubble {
   opacity: 1;
-  transform: translateY(0);
+}
+
+.eo-mascot.eo-is-offscreen .eo-mascot-bubble {
+  opacity: 0;
+}
+
+.eo-is-speaking.eo-bubble-right .eo-mascot-bubble,
+.eo-is-speaking.eo-bubble-left .eo-mascot-bubble {
+  transform: translateY(-50%);
+}
+
+.eo-is-speaking.eo-bubble-top .eo-mascot-bubble {
+  transform: translateX(-50%) translateY(0);
+}
+
+.eo-is-speaking.eo-bubble-bottom .eo-mascot-bubble {
+  transform: translateX(-50%) translateY(0);
 }
 
 .eo-mascot-picker {
@@ -465,13 +586,28 @@
 }
 
 @keyframes eo-stickman-forward {
-  0% { transform: rotate(34deg); }
-  100% { transform: rotate(-34deg); }
+  0% { transform: rotate(-26deg); }
+  100% { transform: rotate(24deg); }
 }
 
 @keyframes eo-stickman-back {
-  0% { transform: rotate(-34deg); }
-  100% { transform: rotate(34deg); }
+  0% { transform: rotate(26deg); }
+  100% { transform: rotate(-24deg); }
+}
+
+@keyframes eo-stickman-calf-forward {
+  0% { transform: rotate(42deg); }
+  100% { transform: rotate(-18deg); }
+}
+
+@keyframes eo-stickman-calf-back {
+  0% { transform: rotate(-42deg); }
+  100% { transform: rotate(18deg); }
+}
+
+@keyframes eo-stickman-body-bob {
+  0% { translate: 0 0; }
+  100% { translate: 0 -3px; }
 }
 
 @media (max-width: 720px) {
@@ -480,9 +616,7 @@
   }
 
   .eo-mascot-bubble {
-    right: 70px;
-    bottom: 76px;
-    width: min(190px, calc(100vw - 130px));
+    width: min(220px, calc(100vw - 36px));
   }
 }
 

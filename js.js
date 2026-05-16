@@ -49,10 +49,40 @@ let mascotPhraseIndex = 0;
 let spiderPhraseIndex = 0;
 let stickmanPhraseIndex = 0;
 let mascotSpeechTimer;
+let mascotMoveTimer;
 let mascotMode = "robot";
+let robotCycleId = 0;
+const mascotModes = ["robot", "spider", "stickman"];
+const minMascotMoveDelay = 60 * 1000;
+const maxMascotMoveDelay = 5 * 60 * 1000;
+const robotReturnDelay = 60 * 1000;
+
+function getRandomMascotMoveDelay() {
+  return Math.round(minMascotMoveDelay + Math.random() * (maxMascotMoveDelay - minMascotMoveDelay));
+}
+
+function getRandomMascotMode() {
+  return mascotModes[Math.floor(Math.random() * mascotModes.length)];
+}
+
+function setRobotOffscreenStart() {
+  if (!mascot) return;
+
+  const mascotWidth = mascot.offsetWidth || 128;
+  const exitsLeft = Math.random() > 0.5;
+  const x = exitsLeft ? -mascotWidth - 28 : window.innerWidth + 28;
+  const y = Math.round(104 + Math.random() * Math.max(0, window.innerHeight - (mascot.offsetHeight || 150) - 122));
+
+  mascot.style.setProperty("--mascot-move-duration", "0ms");
+  mascot.style.setProperty("--mascot-x", `${x}px`);
+  mascot.style.setProperty("--mascot-y", `${y}px`);
+  mascot.classList.add("is-offscreen");
+  mascot.classList.remove("is-speaking");
+  mascot.getBoundingClientRect();
+}
 
 function moveMascot({ offscreen = false } = {}) {
-  if (!mascot) return;
+  if (!mascot) return 0;
 
   const mascotWidth = mascot.offsetWidth || 128;
   const mascotHeight = mascot.offsetHeight || 150;
@@ -64,7 +94,7 @@ function moveMascot({ offscreen = false } = {}) {
   let x;
   let y;
 
-  if (offscreen && mascotMode === "spider") {
+  if (offscreen && mascotMode !== "stickman") {
     const exitsLeft = Math.random() > 0.5;
     minX = exitsLeft ? -mascotWidth - 28 : window.innerWidth + 28;
     maxX = minX;
@@ -76,11 +106,19 @@ function moveMascot({ offscreen = false } = {}) {
   x = Math.round(minX + Math.random() * (maxX - minX));
 
   if (mascotMode === "stickman") {
+    const currentX = mascot.getBoundingClientRect().left;
+    const strideDistance = 30;
+    const stepDurationMs = 550;
+    const distance = Math.abs(x - currentX);
+    const walkDurationMs = Math.min(6500, Math.max(900, (distance / strideDistance) * stepDurationMs));
+
+    mascot.style.setProperty("--mascot-floor-gap", "-2px");
+    mascot.style.setProperty("--mascot-move-duration", `${walkDurationMs}ms`);
+    mascot.style.setProperty("--stickman-step-duration", `${stepDurationMs}ms`);
     mascot.style.setProperty("--mascot-x", `${x}px`);
-    mascot.style.setProperty("--mascot-floor-gap", "10px");
     mascot.classList.add("is-walking");
-    window.setTimeout(() => mascot.classList.remove("is-walking"), 3400);
-    return;
+    window.setTimeout(() => mascot.classList.remove("is-walking"), walkDurationMs);
+    return walkDurationMs;
   }
 
   if (mascotMode === "spider") {
@@ -99,16 +137,21 @@ function moveMascot({ offscreen = false } = {}) {
       : Math.max(headerSpace, documentHeight - mascotHeight - padding);
 
     y = Math.round(minPageY + Math.random() * (maxPageY - minPageY));
+  } else {
+    y = Math.round(headerSpace + Math.random() * (maxY - headerSpace));
+  }
+
+  mascot.style.setProperty("--mascot-move-duration", "3400ms");
+  if (mascotMode === "spider") {
     mascot.style.setProperty("--mascot-page-y", `${y}px`);
     mascot.style.setProperty("--mascot-y", `${Math.max(headerSpace, y - window.scrollY)}px`);
   } else {
-    y = Math.round(headerSpace + Math.random() * (maxY - headerSpace));
     mascot.style.setProperty("--mascot-y", `${y}px`);
   }
-
   mascot.style.setProperty("--mascot-x", `${x}px`);
   mascot.classList.add("is-walking");
   window.setTimeout(() => mascot.classList.remove("is-walking"), 3400);
+  return 3400;
 }
 
 function speakMascot(customPhrase) {
@@ -132,6 +175,7 @@ function speakMascot(customPhrase) {
   }
 
   mascotBubble.textContent = phrase;
+  updateMascotBubblePosition();
   mascot.classList.add("is-speaking");
   window.clearTimeout(mascotSpeechTimer);
   mascotSpeechTimer = window.setTimeout(() => {
@@ -139,10 +183,36 @@ function speakMascot(customPhrase) {
   }, 4200);
 }
 
-function setMascotMode(nextMode) {
-  if (!mascot || !["robot", "spider", "stickman"].includes(nextMode)) return;
+function updateMascotBubblePosition() {
+  if (!mascot) return;
+
+  mascot.classList.remove("bubble-right", "bubble-left", "bubble-top", "bubble-bottom");
+
+  const rect = mascot.getBoundingClientRect();
+  const bubbleWidth = Math.min(260, window.innerWidth - 48);
+  const bubbleHeight = 88;
+  const gap = 20;
+  const spaceRight = window.innerWidth - rect.right;
+  const spaceLeft = rect.left;
+  const spaceTop = rect.top;
+  const spaceBottom = window.innerHeight - rect.bottom;
+
+  if (spaceRight >= bubbleWidth + gap) {
+    mascot.classList.add("bubble-right");
+  } else if (spaceLeft >= bubbleWidth + gap) {
+    mascot.classList.add("bubble-left");
+  } else if (spaceTop >= bubbleHeight + gap) {
+    mascot.classList.add("bubble-top");
+  } else {
+    mascot.classList.add(spaceBottom >= bubbleHeight + gap ? "bubble-bottom" : "bubble-top");
+  }
+}
+
+function setMascotMode(nextMode, { announce = true } = {}) {
+  if (!mascot || !mascotModes.includes(nextMode)) return;
 
   mascotMode = nextMode;
+  if (nextMode !== "robot") robotCycleId += 1;
   mascot.classList.toggle("mascot-mode-robot", nextMode === "robot");
   mascot.classList.toggle("mascot-mode-spider", nextMode === "spider");
   mascot.classList.toggle("mascot-mode-stickman", nextMode === "stickman");
@@ -156,22 +226,70 @@ function setMascotMode(nextMode) {
     spider: "Modo arana activado.",
     stickman: "Modo stickman activado.",
   };
-  speakMascot(modeMessage[nextMode]);
-  moveMascot();
+
+  if (nextMode === "robot") {
+    setRobotOffscreenStart();
+    runRobotCycle(announce ? modeMessage.robot : undefined);
+    return;
+  }
+
+  const duration = moveMascot();
+  window.setTimeout(() => speakMascot(announce ? modeMessage[nextMode] : undefined), duration + 250);
+  scheduleMascotMove();
 }
 
-if (mascot) {
-  moveMascot();
-  window.setInterval(() => {
-    const shouldExit = mascotMode === "spider" && Math.random() > 0.62;
-    moveMascot({ offscreen: shouldExit });
+function runRobotCycle(customPhrase) {
+  if (!mascot || mascotMode !== "robot") return;
 
-    if (shouldExit) {
-      window.setTimeout(() => moveMascot(), 3600);
-    }
-  }, 7000);
-  window.setInterval(() => speakMascot(), 11000);
-  window.addEventListener("resize", () => moveMascot());
+  const cycleId = robotCycleId + 1;
+  robotCycleId = cycleId;
+  window.clearTimeout(mascotMoveTimer);
+  const enterDuration = moveMascot();
+  window.setTimeout(() => {
+    if (cycleId !== robotCycleId || mascotMode !== "robot") return;
+
+    speakMascot(customPhrase);
+    window.setTimeout(() => {
+      if (cycleId !== robotCycleId || mascotMode !== "robot") return;
+
+      const exitDuration = moveMascot({ offscreen: true });
+      window.setTimeout(() => {
+        if (cycleId === robotCycleId && mascotMode === "robot") scheduleMascotMove();
+      }, exitDuration + 250);
+    }, 4800);
+  }, enterDuration + 250);
+}
+
+function runScheduledMascotMove() {
+  if (!mascot) return;
+
+  const shouldExit = mascotMode === "spider" && Math.random() > 0.62;
+
+  if (shouldExit) {
+    const exitDuration = moveMascot({ offscreen: true });
+    window.setTimeout(() => {
+      const returnDuration = moveMascot();
+      window.setTimeout(() => {
+        speakMascot();
+        scheduleMascotMove();
+      }, returnDuration + 250);
+    }, exitDuration + 1200);
+    return;
+  }
+
+  const duration = moveMascot();
+  window.setTimeout(() => {
+    speakMascot();
+    scheduleMascotMove();
+  }, duration + 250);
+}
+
+function scheduleMascotMove() {
+  window.clearTimeout(mascotMoveTimer);
+  mascotMoveTimer = window.setTimeout(
+    mascotMode === "robot" ? runRobotCycle : runScheduledMascotMove,
+    mascotMode === "robot" ? robotReturnDelay : getRandomMascotMoveDelay()
+  );
 }
 
 if (mascotButton) {
@@ -181,8 +299,16 @@ if (mascotButton) {
       spider: "Subiendo por el DOM.",
       stickman: "Sigo caminando por el piso.",
     };
-    speakMascot(clickPhrase[mascotMode]);
-    moveMascot();
+
+    if (mascotMode === "robot") {
+      setRobotOffscreenStart();
+      runRobotCycle(clickPhrase.robot);
+      return;
+    }
+
+    const duration = moveMascot();
+    window.setTimeout(() => speakMascot(clickPhrase[mascotMode]), duration + 250);
+    scheduleMascotMove();
   });
 }
 
@@ -191,3 +317,15 @@ mascotOptions.forEach((option) => {
     setMascotMode(option.dataset.mascotOption);
   });
 });
+
+if (mascot) {
+  setMascotMode(getRandomMascotMode(), { announce: false });
+  window.addEventListener("resize", () => {
+    if (mascotMode === "robot" && mascot.classList.contains("is-offscreen")) {
+      setRobotOffscreenStart();
+      return;
+    }
+
+    moveMascot();
+  });
+}

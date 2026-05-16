@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .mark {
+      fill: #101820;
+    }
+
+    .letters {
+      font: 800 24px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      fill: #ffffff;
+      letter-spacing: 0;
+      animation: eo-color 9s ease-in-out infinite;
+    }
+
+    @keyframes eo-color {
+      0%,
+      100% {
+        fill: #ffffff;
+      }
+
+      33% {
+        fill: #d8f2ee;
+      }
+
+      66% {
+        fill: #d99b2b;
+      }
+    }
+  </style>
+
+  <rect class="mark" width="64" height="64" rx="12" />
+  <text class="letters" x="32" y="40" text-anchor="middle">EO</text>
+</svg>

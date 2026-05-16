@@ -38,10 +38,11 @@ Coloca un contenedor donde quieras mostrar los botones:
 
 ## Opciones
 
-- `variant`: `"robot"` o `"spider"`.
+- `variant`: `"robot"`, `"spider"` o `"stickman"`.
 - `pickerTarget`: elemento donde se insertan los botones de seleccion.
 - `phrases`: arreglo de frases para el robot.
 - `spiderPhrases`: arreglo de frases para la arana.
+- `stickmanPhrases`: arreglo de frases para el stickman.
 - `moveMs`: frecuencia de movimiento en milisegundos.
 - `speakMs`: frecuencia de frases en milisegundos.
 - `headerSpace`: espacio superior reservado para evitar headers fijos.

@@ -184,6 +184,36 @@ a {
   border-radius: 0 10px 10px 0;
 }
 
+.picker-stickman {
+  position: relative;
+  width: 22px;
+  height: 24px;
+}
+
+.picker-stickman::before {
+  position: absolute;
+  left: 7px;
+  top: 1px;
+  width: 8px;
+  height: 8px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  content: "";
+}
+
+.picker-stickman::after {
+  position: absolute;
+  left: 10px;
+  top: 12px;
+  width: 2px;
+  height: 11px;
+  background: currentColor;
+  box-shadow:
+    -5px 4px 0 currentColor,
+    5px 4px 0 currentColor;
+  content: "";
+}
+
 .nav-toggle {
   display: none;
   width: 44px;
@@ -711,6 +741,13 @@ h3 {
   top: var(--mascot-page-y, 120px);
 }
 
+.site-mascot.mascot-mode-stickman {
+  position: fixed;
+  top: auto;
+  bottom: var(--mascot-floor-gap, 10px);
+  width: 112px;
+}
+
 .site-mascot.is-walking .mascot-character {
   animation: mascot-walk 0.45s ease-in-out infinite;
 }
@@ -730,7 +767,8 @@ h3 {
 }
 
 .robot-mascot,
-.spider-mascot {
+.spider-mascot,
+.stickman-mascot {
   grid-area: 1 / 1;
   align-self: end;
   justify-self: center;
@@ -740,15 +778,21 @@ h3 {
   display: grid;
 }
 
-.spider-mascot {
+.spider-mascot,
+.stickman-mascot {
   display: none;
 }
 
-.mascot-mode-spider .robot-mascot {
+.mascot-mode-spider .robot-mascot,
+.mascot-mode-stickman .robot-mascot {
   display: none;
 }
 
 .mascot-mode-spider .spider-mascot {
+  display: block;
+}
+
+.mascot-mode-stickman .stickman-mascot {
   display: block;
 }
 
@@ -920,6 +964,93 @@ h3 {
   opacity: 0;
 }
 
+.stickman-mascot {
+  position: relative;
+  width: 72px;
+  height: 96px;
+}
+
+.stickman-head {
+  position: absolute;
+  left: 24px;
+  top: 2px;
+  width: 24px;
+  height: 24px;
+  background: var(--surface);
+  border: 4px solid #101820;
+  border-radius: 50%;
+}
+
+.stickman-body,
+.stickman-arm,
+.stickman-leg {
+  position: absolute;
+  left: 34px;
+  width: 5px;
+  background: #101820;
+  border-radius: 999px;
+  transform-origin: top center;
+}
+
+.stickman-body {
+  top: 28px;
+  height: 32px;
+}
+
+.stickman-arm {
+  top: 34px;
+  height: 26px;
+}
+
+.arm-left {
+  transform: rotate(48deg);
+}
+
+.arm-right {
+  transform: rotate(-48deg);
+}
+
+.stickman-leg {
+  top: 58px;
+  height: 34px;
+}
+
+.stick-leg-left {
+  transform: rotate(24deg);
+}
+
+.stick-leg-right {
+  transform: rotate(-24deg);
+}
+
+.stickman-shadow {
+  position: absolute;
+  left: 14px;
+  bottom: 0;
+  width: 44px;
+  height: 6px;
+  background: rgba(16, 24, 32, 0.22);
+  border-radius: 50%;
+}
+
+.mascot-mode-stickman .mascot-character {
+  min-height: 100px;
+}
+
+.mascot-mode-stickman.is-walking .arm-left,
+.mascot-mode-stickman.is-walking .stick-leg-right {
+  animation: stickman-forward 0.55s ease-in-out infinite alternate;
+}
+
+.mascot-mode-stickman.is-walking .arm-right,
+.mascot-mode-stickman.is-walking .stick-leg-left {
+  animation: stickman-back 0.55s ease-in-out infinite alternate;
+}
+
+.mascot-mode-stickman .mascot-bubble {
+  bottom: 98px;
+}
+
 .mascot-bubble {
   position: absolute;
   right: 86px;
@@ -1069,6 +1200,26 @@ h3 {
   }
 }
 
+@keyframes stickman-forward {
+  0% {
+    transform: rotate(34deg);
+  }
+
+  100% {
+    transform: rotate(-34deg);
+  }
+}
+
+@keyframes stickman-back {
+  0% {
+    transform: rotate(-34deg);
+  }
+
+  100% {
+    transform: rotate(34deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1084,6 +1235,8 @@ h3 {
   .mascot-character,
   .mascot-eye,
   .spider-leg,
+  .stickman-arm,
+  .stickman-leg,
   .project-image img {
     animation: none;
     transition: none;

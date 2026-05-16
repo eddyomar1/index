@@ -38,8 +38,16 @@ const spiderPhrases = [
   "No olvides probar enlaces antes de publicar.",
 ];
 
+const stickmanPhrases = [
+  "Camino por el borde como si fuera el piso.",
+  "Voy patrullando la pagina.",
+  "Este suelo esta bastante estable.",
+  "Tambien puedo guiar al usuario sin estorbar.",
+];
+
 let mascotPhraseIndex = 0;
 let spiderPhraseIndex = 0;
+let stickmanPhraseIndex = 0;
 let mascotSpeechTimer;
 let mascotMode = "robot";
 
@@ -66,6 +74,14 @@ function moveMascot({ offscreen = false } = {}) {
   }
 
   x = Math.round(minX + Math.random() * (maxX - minX));
+
+  if (mascotMode === "stickman") {
+    mascot.style.setProperty("--mascot-x", `${x}px`);
+    mascot.style.setProperty("--mascot-floor-gap", "10px");
+    mascot.classList.add("is-walking");
+    window.setTimeout(() => mascot.classList.remove("is-walking"), 3400);
+    return;
+  }
 
   if (mascotMode === "spider") {
     const documentHeight = Math.max(
@@ -105,6 +121,11 @@ function speakMascot(customPhrase) {
     spiderPhraseIndex = (spiderPhraseIndex + 1) % spiderPhrases.length;
   }
 
+  if (!phrase && mascotMode === "stickman") {
+    phrase = stickmanPhrases[stickmanPhraseIndex];
+    stickmanPhraseIndex = (stickmanPhraseIndex + 1) % stickmanPhrases.length;
+  }
+
   if (!phrase) {
     phrase = mascotPhrases[mascotPhraseIndex];
     mascotPhraseIndex = (mascotPhraseIndex + 1) % mascotPhrases.length;
@@ -119,17 +140,23 @@ function speakMascot(customPhrase) {
 }
 
 function setMascotMode(nextMode) {
-  if (!mascot || !["robot", "spider"].includes(nextMode)) return;
+  if (!mascot || !["robot", "spider", "stickman"].includes(nextMode)) return;
 
   mascotMode = nextMode;
   mascot.classList.toggle("mascot-mode-robot", nextMode === "robot");
   mascot.classList.toggle("mascot-mode-spider", nextMode === "spider");
+  mascot.classList.toggle("mascot-mode-stickman", nextMode === "stickman");
   mascotOptions.forEach((option) => {
     const isActive = option.dataset.mascotOption === nextMode;
     option.classList.toggle("is-active", isActive);
     option.setAttribute("aria-pressed", String(isActive));
   });
-  speakMascot(nextMode === "spider" ? "Modo arana activado." : "Modo robot activado.");
+  const modeMessage = {
+    robot: "Modo robot activado.",
+    spider: "Modo arana activado.",
+    stickman: "Modo stickman activado.",
+  };
+  speakMascot(modeMessage[nextMode]);
   moveMascot();
 }
 
@@ -149,7 +176,12 @@ if (mascot) {
 
 if (mascotButton) {
   mascotButton.addEventListener("click", () => {
-    speakMascot(mascotMode === "spider" ? "Subiendo por el DOM." : "Hola, soy el ayudante del portafolio.");
+    const clickPhrase = {
+      robot: "Hola, soy el ayudante del portafolio.",
+      spider: "Subiendo por el DOM.",
+      stickman: "Sigo caminando por el piso.",
+    };
+    speakMascot(clickPhrase[mascotMode]);
     moveMascot();
   });
 }

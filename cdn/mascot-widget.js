@@ -14,6 +14,13 @@
     "No olvides probar enlaces antes de publicar.",
   ];
 
+  const STICKMAN_PHRASES = [
+    "Camino por el borde como si fuera el piso.",
+    "Voy patrullando la pagina.",
+    "Este suelo esta bastante estable.",
+    "Tambien puedo guiar al usuario sin estorbar.",
+  ];
+
   function createMascot() {
     const mascot = document.createElement("aside");
     mascot.className = "eo-mascot eo-mascot-robot";
@@ -45,6 +52,15 @@
             <span class="eo-spider-eye"></span>
           </span>
         </span>
+        <span class="eo-stickman" aria-hidden="true">
+          <span class="eo-stickman-head"></span>
+          <span class="eo-stickman-body"></span>
+          <span class="eo-stickman-arm eo-arm-left"></span>
+          <span class="eo-stickman-arm eo-arm-right"></span>
+          <span class="eo-stickman-leg eo-stick-leg-left"></span>
+          <span class="eo-stickman-leg eo-stick-leg-right"></span>
+          <span class="eo-stickman-shadow"></span>
+        </span>
       </button>
     `;
     document.body.appendChild(mascot);
@@ -61,6 +77,9 @@
       </button>
       <button class="eo-mascot-option" type="button" data-eo-mascot-option="spider" aria-label="Usar mascota arana">
         <span class="eo-picker-spider" aria-hidden="true"></span>
+      </button>
+      <button class="eo-mascot-option" type="button" data-eo-mascot-option="stickman" aria-label="Usar mascota stickman">
+        <span class="eo-picker-stickman" aria-hidden="true"></span>
       </button>
     `;
     target.appendChild(picker);
@@ -84,12 +103,14 @@
     const bubble = mascot.querySelector("[data-eo-mascot-bubble]");
     const phrases = options.phrases || DEFAULT_PHRASES;
     const spiderPhrases = options.spiderPhrases || SPIDER_PHRASES;
+    const stickmanPhrases = options.stickmanPhrases || STICKMAN_PHRASES;
     const moveMs = options.moveMs || 7000;
     const speakMs = options.speakMs || 11000;
     let phraseIndex = 0;
     let spiderPhraseIndex = 0;
+    let stickmanPhraseIndex = 0;
     let speechTimer;
-    let variant = options.variant === "spider" ? "spider" : "robot";
+    let variant = ["robot", "spider", "stickman"].includes(options.variant) ? options.variant : "robot";
     let picker = null;
 
     if (options.pickerTarget) {
@@ -113,6 +134,14 @@
       }
 
       x = Math.round(minX + Math.random() * (maxX - minX));
+
+      if (variant === "stickman") {
+        mascot.style.setProperty("--eo-mascot-x", `${x}px`);
+        mascot.style.setProperty("--eo-mascot-floor-gap", "10px");
+        mascot.classList.add("eo-is-walking");
+        window.setTimeout(() => mascot.classList.remove("eo-is-walking"), 3400);
+        return;
+      }
 
       if (variant === "spider") {
         const documentHeight = Math.max(
@@ -154,6 +183,11 @@
         spiderPhraseIndex = (spiderPhraseIndex + 1) % spiderPhrases.length;
       }
 
+      if (!phrase && variant === "stickman") {
+        phrase = stickmanPhrases[stickmanPhraseIndex];
+        stickmanPhraseIndex = (stickmanPhraseIndex + 1) % stickmanPhrases.length;
+      }
+
       if (!phrase) {
         phrase = phrases[phraseIndex];
         phraseIndex = (phraseIndex + 1) % phrases.length;
@@ -168,17 +202,28 @@
     }
 
     function setVariant(nextVariant) {
-      variant = nextVariant === "spider" ? "spider" : "robot";
+      variant = ["robot", "spider", "stickman"].includes(nextVariant) ? nextVariant : "robot";
       mascot.classList.toggle("eo-mascot-robot", variant === "robot");
       mascot.classList.toggle("eo-mascot-spider", variant === "spider");
+      mascot.classList.toggle("eo-mascot-stickman", variant === "stickman");
       setPickerState(picker, variant);
-      speak(variant === "spider" ? "Modo arana activado." : "Modo robot activado.");
+      const modeMessage = {
+        robot: "Modo robot activado.",
+        spider: "Modo arana activado.",
+        stickman: "Modo stickman activado.",
+      };
+      speak(modeMessage[variant]);
       move();
     }
 
     if (character) {
       character.addEventListener("click", () => {
-        speak(variant === "spider" ? "Subiendo por el DOM." : "Hola, soy el ayudante del portafolio.");
+        const clickPhrase = {
+          robot: "Hola, soy el ayudante del portafolio.",
+          spider: "Subiendo por el DOM.",
+          stickman: "Sigo caminando por el piso.",
+        };
+        speak(clickPhrase[variant]);
         move();
       });
     }

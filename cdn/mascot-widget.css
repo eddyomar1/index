@@ -213,6 +213,7 @@
   position: relative;
   width: 72px;
   height: 96px;
+  transform-origin: 50% 100%;
 }
 
 .eo-stickman-head {
@@ -289,6 +290,17 @@
   border-radius: 50%;
 }
 
+.eo-stickman-foot {
+  position: absolute;
+  left: -2px;
+  top: 39px;
+  width: 18px;
+  height: 5px;
+  background: var(--eo-mascot-ink);
+  border-radius: 999px;
+  transform-origin: 3px 50%;
+}
+
 .eo-stick-leg-left {
   transform: rotate(18deg);
 }
@@ -319,22 +331,38 @@
   min-height: 100px;
 }
 
+.eo-mascot-stickman.eo-is-walking-right .eo-stickman {
+  transform: scaleX(1);
+}
+
+.eo-mascot-stickman.eo-is-walking-left .eo-stickman {
+  transform: scaleX(-1);
+}
+
 .eo-mascot-stickman.eo-is-walking .eo-arm-left,
 .eo-mascot-stickman.eo-is-walking .eo-stick-leg-right {
-  animation: eo-stickman-forward var(--eo-stickman-step-duration, 0.55s) ease-in-out infinite alternate;
+  animation: eo-stickman-forward var(--eo-stickman-step-duration, 0.55s) cubic-bezier(0.45, 0, 0.25, 1) infinite alternate;
 }
 
 .eo-mascot-stickman.eo-is-walking .eo-stick-leg-right::after {
-  animation: eo-stickman-calf-forward var(--eo-stickman-step-duration, 0.55s) ease-in-out infinite alternate;
+  animation: eo-stickman-calf-forward var(--eo-stickman-step-duration, 0.55s) cubic-bezier(0.45, 0, 0.25, 1) infinite alternate;
+}
+
+.eo-mascot-stickman.eo-is-walking .eo-stick-leg-right .eo-stickman-foot {
+  animation: eo-stickman-foot-forward var(--eo-stickman-step-duration, 0.55s) cubic-bezier(0.45, 0, 0.25, 1) infinite alternate;
 }
 
 .eo-mascot-stickman.eo-is-walking .eo-arm-right,
 .eo-mascot-stickman.eo-is-walking .eo-stick-leg-left {
-  animation: eo-stickman-back var(--eo-stickman-step-duration, 0.55s) ease-in-out infinite alternate;
+  animation: eo-stickman-back var(--eo-stickman-step-duration, 0.55s) cubic-bezier(0.45, 0, 0.25, 1) infinite alternate;
 }
 
 .eo-mascot-stickman.eo-is-walking .eo-stick-leg-left::after {
-  animation: eo-stickman-calf-back var(--eo-stickman-step-duration, 0.55s) ease-in-out infinite alternate;
+  animation: eo-stickman-calf-back var(--eo-stickman-step-duration, 0.55s) cubic-bezier(0.45, 0, 0.25, 1) infinite alternate;
+}
+
+.eo-mascot-stickman.eo-is-walking .eo-stick-leg-left .eo-stickman-foot {
+  animation: eo-stickman-foot-back var(--eo-stickman-step-duration, 0.55s) cubic-bezier(0.45, 0, 0.25, 1) infinite alternate;
 }
 
 .eo-mascot-stickman.eo-is-walking .eo-stickman-body {
@@ -586,23 +614,39 @@
 }
 
 @keyframes eo-stickman-forward {
-  0% { transform: rotate(-26deg); }
-  100% { transform: rotate(24deg); }
+  0% { transform: rotate(-30deg); }
+  45% { transform: rotate(4deg); }
+  100% { transform: rotate(28deg); }
 }
 
 @keyframes eo-stickman-back {
-  0% { transform: rotate(26deg); }
-  100% { transform: rotate(-24deg); }
+  0% { transform: rotate(24deg); }
+  45% { transform: rotate(-8deg); }
+  100% { transform: rotate(-28deg); }
 }
 
 @keyframes eo-stickman-calf-forward {
-  0% { transform: rotate(42deg); }
-  100% { transform: rotate(-18deg); }
+  0% { transform: rotate(38deg); }
+  45% { transform: rotate(10deg); }
+  100% { transform: rotate(-24deg); }
 }
 
 @keyframes eo-stickman-calf-back {
-  0% { transform: rotate(-42deg); }
-  100% { transform: rotate(18deg); }
+  0% { transform: rotate(-24deg); }
+  45% { transform: rotate(-50deg); }
+  100% { transform: rotate(20deg); }
+}
+
+@keyframes eo-stickman-foot-forward {
+  0% { transform: rotate(16deg) translateX(2px); }
+  45% { transform: rotate(4deg) translateX(0); }
+  100% { transform: rotate(-14deg) translateX(-1px); }
+}
+
+@keyframes eo-stickman-foot-back {
+  0% { transform: rotate(-12deg) translateX(-1px); }
+  45% { transform: rotate(18deg) translateX(1px); }
+  100% { transform: rotate(22deg) translateX(2px); }
 }
 
 @keyframes eo-stickman-body-bob {

@@ -65,9 +65,11 @@
           <span class="eo-stickman-arm eo-arm-right"></span>
           <span class="eo-stickman-leg eo-stick-leg-left">
             <span class="eo-stickman-knee"></span>
+            <span class="eo-stickman-foot"></span>
           </span>
           <span class="eo-stickman-leg eo-stick-leg-right">
             <span class="eo-stickman-knee"></span>
+            <span class="eo-stickman-foot"></span>
           </span>
           <span class="eo-stickman-shadow"></span>
         </span>
@@ -177,13 +179,17 @@
         const stepDurationMs = options.stickmanStepMs || 550;
         const distance = Math.abs(x - currentX);
         const walkDurationMs = Math.min(6500, Math.max(900, (distance / strideDistance) * stepDurationMs));
+        const directionClass = x < currentX ? "eo-is-walking-left" : "eo-is-walking-right";
 
         mascot.style.setProperty("--eo-mascot-floor-gap", "-2px");
         mascot.style.setProperty("--eo-mascot-move-duration", `${walkDurationMs}ms`);
         mascot.style.setProperty("--eo-stickman-step-duration", `${stepDurationMs}ms`);
         mascot.style.setProperty("--eo-mascot-x", `${x}px`);
-        mascot.classList.add("eo-is-walking");
-        window.setTimeout(() => mascot.classList.remove("eo-is-walking"), walkDurationMs);
+        mascot.classList.remove("eo-is-walking-left", "eo-is-walking-right");
+        mascot.classList.add("eo-is-walking", directionClass);
+        window.setTimeout(() => {
+          mascot.classList.remove("eo-is-walking", "eo-is-walking-left", "eo-is-walking-right");
+        }, walkDurationMs);
         return walkDurationMs;
       }
 

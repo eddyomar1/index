@@ -111,13 +111,17 @@ function moveMascot({ offscreen = false } = {}) {
     const stepDurationMs = 550;
     const distance = Math.abs(x - currentX);
     const walkDurationMs = Math.min(6500, Math.max(900, (distance / strideDistance) * stepDurationMs));
+    const directionClass = x < currentX ? "is-walking-left" : "is-walking-right";
 
     mascot.style.setProperty("--mascot-floor-gap", "-2px");
     mascot.style.setProperty("--mascot-move-duration", `${walkDurationMs}ms`);
     mascot.style.setProperty("--stickman-step-duration", `${stepDurationMs}ms`);
     mascot.style.setProperty("--mascot-x", `${x}px`);
-    mascot.classList.add("is-walking");
-    window.setTimeout(() => mascot.classList.remove("is-walking"), walkDurationMs);
+    mascot.classList.remove("is-walking-left", "is-walking-right");
+    mascot.classList.add("is-walking", directionClass);
+    window.setTimeout(() => {
+      mascot.classList.remove("is-walking", "is-walking-left", "is-walking-right");
+    }, walkDurationMs);
     return walkDurationMs;
   }
 

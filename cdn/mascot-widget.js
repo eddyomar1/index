@@ -175,13 +175,17 @@
 
       if (variant === "stickman") {
         const currentX = mascot.getBoundingClientRect().left;
+        const floorTarget = options.stickmanFloorTarget || document.querySelector("footer") || document.body;
+        const floorRect = floorTarget.getBoundingClientRect();
+        const floorBottom = window.scrollY + floorRect.top + floorRect.height;
+        const pageY = Math.max(headerSpace, Math.round(floorBottom - mascotHeight + 2));
         const strideDistance = options.stickmanStrideDistance || 30;
         const stepDurationMs = options.stickmanStepMs || 550;
         const distance = Math.abs(x - currentX);
         const walkDurationMs = Math.min(6500, Math.max(900, (distance / strideDistance) * stepDurationMs));
         const directionClass = x < currentX ? "eo-is-walking-left" : "eo-is-walking-right";
 
-        mascot.style.setProperty("--eo-mascot-floor-gap", "-2px");
+        mascot.style.setProperty("--eo-mascot-page-y", `${pageY}px`);
         mascot.style.setProperty("--eo-mascot-move-duration", `${walkDurationMs}ms`);
         mascot.style.setProperty("--eo-stickman-step-duration", `${stepDurationMs}ms`);
         mascot.style.setProperty("--eo-mascot-x", `${x}px`);

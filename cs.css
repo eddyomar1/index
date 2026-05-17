@@ -744,11 +744,11 @@ h3 {
 }
 
 .site-mascot.mascot-mode-stickman {
-  position: fixed;
-  top: auto;
-  bottom: var(--mascot-floor-gap, -2px);
+  position: absolute;
+  top: var(--mascot-page-y, calc(100% - 128px));
+  bottom: auto;
   width: 112px;
-  transition: left var(--mascot-move-duration, 3.4s) linear;
+  transition: left var(--mascot-move-duration, 3.4s) linear, top 240ms ease;
 }
 
 .site-mascot.is-walking .mascot-character {

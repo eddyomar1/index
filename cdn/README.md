@@ -47,6 +47,7 @@ Coloca un contenedor donde quieras mostrar los botones:
 - `maxMoveMs`: espera maxima entre movimientos. Por defecto: `300000`.
 - `robotReturnMs`: tiempo que espera el robot fuera de pantalla antes de volver. Por defecto: `60000`.
 - `headerSpace`: espacio superior reservado para evitar headers fijos.
+- `stickmanFloorTarget`: elemento que el stickman usa como piso. Por defecto usa el primer `footer` de la pagina.
 - `stickmanStrideDistance`: pixeles aproximados que avanza por ciclo de paso.
 - `stickmanStepMs`: duracion de cada ciclo de paso en milisegundos.
 

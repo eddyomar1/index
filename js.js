@@ -20,6 +20,7 @@ const mascot = document.querySelector(".site-mascot");
 const mascotButton = document.querySelector(".mascot-character");
 const mascotBubble = document.querySelector("[data-mascot-bubble]");
 const mascotOptions = document.querySelectorAll("[data-mascot-option]");
+const siteFooter = document.querySelector(".site-footer");
 
 const mascotPhrases = [
   "Tip rapido: tus mejores proyectos deben estar arriba.",
@@ -107,13 +108,17 @@ function moveMascot({ offscreen = false } = {}) {
 
   if (mascotMode === "stickman") {
     const currentX = mascot.getBoundingClientRect().left;
+    const floorTarget = siteFooter || document.body;
+    const floorRect = floorTarget.getBoundingClientRect();
+    const floorBottom = window.scrollY + floorRect.top + floorRect.height;
+    const pageY = Math.max(headerSpace, Math.round(floorBottom - mascotHeight + 2));
     const strideDistance = 30;
     const stepDurationMs = 550;
     const distance = Math.abs(x - currentX);
     const walkDurationMs = Math.min(6500, Math.max(900, (distance / strideDistance) * stepDurationMs));
     const directionClass = x < currentX ? "is-walking-left" : "is-walking-right";
 
-    mascot.style.setProperty("--mascot-floor-gap", "-2px");
+    mascot.style.setProperty("--mascot-page-y", `${pageY}px`);
     mascot.style.setProperty("--mascot-move-duration", `${walkDurationMs}ms`);
     mascot.style.setProperty("--stickman-step-duration", `${stepDurationMs}ms`);
     mascot.style.setProperty("--mascot-x", `${x}px`);

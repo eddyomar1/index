@@ -26,11 +26,11 @@
 }
 
 .eo-mascot.eo-mascot-stickman {
-  position: fixed;
-  top: auto;
-  bottom: var(--eo-mascot-floor-gap, -2px);
+  position: absolute;
+  top: var(--eo-mascot-page-y, calc(100% - 128px));
+  bottom: auto;
   width: 112px;
-  transition: left var(--eo-mascot-move-duration, 3.4s) linear;
+  transition: left var(--eo-mascot-move-duration, 3.4s) linear, top 240ms ease;
 }
 
 .eo-mascot.eo-is-walking .eo-mascot-character {

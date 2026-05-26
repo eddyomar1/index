@@ -65,11 +65,15 @@
           <span class="eo-stickman-arm eo-arm-right"></span>
           <span class="eo-stickman-leg eo-stick-leg-left">
             <span class="eo-stickman-knee"></span>
-            <span class="eo-stickman-foot"></span>
+            <span class="eo-stickman-calf">
+              <span class="eo-stickman-foot"></span>
+            </span>
           </span>
           <span class="eo-stickman-leg eo-stick-leg-right">
             <span class="eo-stickman-knee"></span>
-            <span class="eo-stickman-foot"></span>
+            <span class="eo-stickman-calf">
+              <span class="eo-stickman-foot"></span>
+            </span>
           </span>
           <span class="eo-stickman-shadow"></span>
         </span>
@@ -124,6 +128,7 @@
     let stickmanPhraseIndex = 0;
     let speechTimer;
     let moveTimer;
+    let stickmanWalkTimer;
     let variant = VARIANTS.includes(options.variant) ? options.variant : getRandomVariant();
     let robotCycleId = 0;
     let picker = null;
@@ -179,19 +184,22 @@
         const floorRect = floorTarget.getBoundingClientRect();
         const floorBottom = window.scrollY + floorRect.top + floorRect.height;
         const pageY = Math.max(headerSpace, Math.round(floorBottom - mascotHeight + 2));
-        const strideDistance = options.stickmanStrideDistance || 30;
-        const stepDurationMs = options.stickmanStepMs || 550;
+        const strideDistance = options.stickmanStrideDistance || 22;
+        const stepDurationMs = options.stickmanStepMs || 620;
         const distance = Math.abs(x - currentX);
-        const walkDurationMs = Math.min(6500, Math.max(900, (distance / strideDistance) * stepDurationMs));
+        const walkDurationMs = Math.min(9000, Math.max(1100, (distance / strideDistance) * stepDurationMs));
         const directionClass = x < currentX ? "eo-is-walking-left" : "eo-is-walking-right";
+        const facingClass = x < currentX ? "eo-is-facing-left" : "eo-is-facing-right";
 
         mascot.style.setProperty("--eo-mascot-page-y", `${pageY}px`);
         mascot.style.setProperty("--eo-mascot-move-duration", `${walkDurationMs}ms`);
         mascot.style.setProperty("--eo-stickman-step-duration", `${stepDurationMs}ms`);
+        mascot.style.setProperty("--eo-stickman-step-delay", `${-stepDurationMs / 2}ms`);
         mascot.style.setProperty("--eo-mascot-x", `${x}px`);
-        mascot.classList.remove("eo-is-walking-left", "eo-is-walking-right");
-        mascot.classList.add("eo-is-walking", directionClass);
-        window.setTimeout(() => {
+        mascot.classList.remove("eo-is-walking-left", "eo-is-walking-right", "eo-is-facing-left", "eo-is-facing-right");
+        mascot.classList.add("eo-is-walking", directionClass, facingClass);
+        window.clearTimeout(stickmanWalkTimer);
+        stickmanWalkTimer = window.setTimeout(() => {
           mascot.classList.remove("eo-is-walking", "eo-is-walking-left", "eo-is-walking-right");
         }, walkDurationMs);
         return walkDurationMs;

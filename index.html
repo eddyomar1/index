@@ -8,7 +8,7 @@
   <title>Eddy Omar | Portafolio</title>
   <link rel="icon" href="./favicon.svg?v=20260516" type="image/svg+xml">
   <link rel="alternate icon" href="img/alenn.png" type="image/png">
-  <link rel="stylesheet" href="./cs.css?v=20260517b">
+  <link rel="stylesheet" href="./cs.css?v=20260525e">
 </head>
 <body>
   <header class="site-header">
@@ -27,6 +27,7 @@
       <a href="#proyectos">Proyectos</a>
       <a href="#habilidades">Habilidades</a>
       <a href="#recursos">Recursos</a>
+      <a href="#web3">Web3</a>
       <a href="#contacto">Contacto</a>
       <div class="mascot-picker" aria-label="Elegir mascota">
         <button class="mascot-option is-active" type="button" data-mascot-option="robot" aria-label="Usar mascota robot" aria-pressed="true">
@@ -227,6 +228,52 @@
       </div>
     </section>
 
+    <section class="section web3-section" id="web3">
+      <div class="section-heading">
+        <p class="eyebrow">Demo dApp</p>
+        <h2>Conexion Web3</h2>
+        <p>Una prueba interactiva para conectar una wallet, leer datos basicos de red y firmar un mensaje sin gastar gas.</p>
+      </div>
+
+      <div class="web3-console" data-web3-demo>
+        <div class="web3-panel">
+          <div class="web3-panel-header">
+            <span class="web3-status-dot" data-wallet-dot></span>
+            <div>
+              <h3>Wallet</h3>
+              <p data-wallet-status>Wallet no conectada.</p>
+            </div>
+          </div>
+
+          <div class="wallet-list" data-wallet-list aria-label="Hot wallets detectadas"></div>
+
+          <div class="web3-actions">
+            <button class="button button-primary" type="button" data-wallet-connect>Conectar wallet</button>
+            <button class="button button-secondary" type="button" data-wallet-sign disabled>Firmar mensaje</button>
+          </div>
+        </div>
+
+        <div class="web3-details" aria-label="Datos de la wallet conectada">
+          <div class="web3-detail">
+            <span>Address</span>
+            <strong data-wallet-address>-</strong>
+          </div>
+          <div class="web3-detail">
+            <span>Red</span>
+            <strong data-wallet-network>-</strong>
+          </div>
+          <div class="web3-detail">
+            <span>Balance</span>
+            <strong data-wallet-balance>-</strong>
+          </div>
+          <div class="web3-detail web3-signature">
+            <span>Firma</span>
+            <strong data-wallet-signature>-</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="contact-section" id="contacto">
       <div>
         <p class="eyebrow">Contacto</p>
@@ -276,11 +323,15 @@
         <span class="stickman-arm arm-right"></span>
         <span class="stickman-leg stick-leg-left">
           <span class="stickman-knee"></span>
-          <span class="stickman-foot"></span>
+          <span class="stickman-calf">
+            <span class="stickman-foot"></span>
+          </span>
         </span>
         <span class="stickman-leg stick-leg-right">
           <span class="stickman-knee"></span>
-          <span class="stickman-foot"></span>
+          <span class="stickman-calf">
+            <span class="stickman-foot"></span>
+          </span>
         </span>
         <span class="stickman-shadow"></span>
       </span>
@@ -292,6 +343,6 @@
     <a href="#inicio">Volver arriba</a>
   </footer>
 
-  <script src="./js.js?v=20260517b"></script>
+  <script src="./js.js?v=20260525e"></script>
 </body>
 </html>

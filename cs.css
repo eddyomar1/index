@@ -678,6 +678,173 @@ h3 {
   gap: 10px;
 }
 
+.web3-section {
+  background: #fff;
+  border-top: 1px solid var(--line);
+}
+
+.web3-console {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.web3-panel,
+.web3-detail {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(24, 33, 43, 0.06);
+}
+
+.web3-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 24px;
+}
+
+.web3-panel-header {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.web3-panel-header h3 {
+  margin-bottom: 4px;
+}
+
+.web3-panel-header p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.web3-status-dot {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  margin-top: 7px;
+  background: #b84a4a;
+  border: 3px solid rgba(184, 74, 74, 0.18);
+  border-radius: 50%;
+}
+
+.web3-status-dot.is-connected {
+  background: var(--accent);
+  border-color: rgba(15, 118, 110, 0.18);
+}
+
+.web3-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.wallet-list {
+  display: grid;
+  gap: 8px;
+}
+
+.wallet-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  width: 100%;
+  padding: 8px 10px;
+  color: var(--text);
+  background: #f7f4ee;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  text-align: left;
+}
+
+.wallet-option:hover,
+.wallet-option:focus-visible,
+.wallet-option.is-selected {
+  background: var(--accent-soft);
+  border-color: rgba(15, 118, 110, 0.38);
+  outline: none;
+}
+
+.wallet-icon,
+.wallet-fallback-icon {
+  display: grid;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  background: var(--surface-strong);
+  color: #fff;
+  border-radius: 7px;
+  font-size: 0.74rem;
+  font-weight: 900;
+}
+
+.wallet-icon {
+  background: transparent;
+}
+
+.wallet-option small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.wallet-empty {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.web3-actions .button {
+  cursor: pointer;
+}
+
+.web3-actions .button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.web3-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.web3-detail {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 20px;
+}
+
+.web3-detail span {
+  color: var(--accent-dark);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.web3-detail strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.web3-signature {
+  grid-column: 1 / -1;
+}
+
 .contact-section {
   display: flex;
   align-items: center;
@@ -1025,7 +1192,7 @@ h3 {
   transform-origin: top center;
 }
 
-.stickman-leg::after {
+.stickman-calf {
   position: absolute;
   left: 0;
   top: 18px;
@@ -1033,7 +1200,6 @@ h3 {
   height: 24px;
   background: #101820;
   border-radius: 999px;
-  content: "";
   transform-origin: top center;
 }
 
@@ -1051,20 +1217,21 @@ h3 {
 
 .stickman-foot {
   position: absolute;
-  left: -2px;
-  top: 39px;
-  width: 18px;
+  left: -1px;
+  top: 21px;
+  width: 17px;
   height: 5px;
   background: #101820;
   border-radius: 999px;
-  transform-origin: 3px 50%;
+  transform-origin: 2px 50%;
+  transform: rotate(-8deg) translateX(1px);
 }
 
 .stick-leg-left {
   transform: rotate(18deg);
 }
 
-.stick-leg-left::after {
+.stick-leg-left .stickman-calf {
   transform: rotate(-30deg);
 }
 
@@ -1072,7 +1239,7 @@ h3 {
   transform: rotate(-22deg);
 }
 
-.stick-leg-right::after {
+.stick-leg-right .stickman-calf {
   transform: rotate(28deg);
 }
 
@@ -1090,42 +1257,51 @@ h3 {
   min-height: 100px;
 }
 
+.mascot-mode-stickman.is-facing-right .stickman-mascot,
 .mascot-mode-stickman.is-walking-right .stickman-mascot {
   transform: scaleX(1);
 }
 
+.mascot-mode-stickman.is-facing-left .stickman-mascot,
 .mascot-mode-stickman.is-walking-left .stickman-mascot {
   transform: scaleX(-1);
 }
 
 .mascot-mode-stickman.is-walking .arm-left,
 .mascot-mode-stickman.is-walking .stick-leg-right {
-  animation: stickman-forward var(--stickman-step-duration, 0.55s) cubic-bezier(0.45, 0, 0.25, 1) infinite alternate;
+  animation: stickman-limb-cycle var(--stickman-step-duration, 0.55s) cubic-bezier(0.45, 0, 0.25, 1) infinite;
 }
 
-.mascot-mode-stickman.is-walking .stick-leg-right::after {
-  animation: stickman-calf-forward var(--stickman-step-duration, 0.55s) cubic-bezier(0.45, 0, 0.25, 1) infinite alternate;
+.mascot-mode-stickman.is-walking .stick-leg-right .stickman-calf {
+  animation: stickman-calf-cycle var(--stickman-step-duration, 0.55s) cubic-bezier(0.45, 0, 0.25, 1) infinite;
 }
 
-.mascot-mode-stickman.is-walking .stick-leg-right .stickman-foot {
-  animation: stickman-foot-forward var(--stickman-step-duration, 0.55s) cubic-bezier(0.45, 0, 0.25, 1) infinite alternate;
+.mascot-mode-stickman.is-walking .stick-leg-right .stickman-calf .stickman-foot {
+  animation: stickman-foot-cycle var(--stickman-step-duration, 0.55s) cubic-bezier(0.45, 0, 0.25, 1) infinite;
 }
 
 .mascot-mode-stickman.is-walking .arm-right,
 .mascot-mode-stickman.is-walking .stick-leg-left {
-  animation: stickman-back var(--stickman-step-duration, 0.55s) cubic-bezier(0.45, 0, 0.25, 1) infinite alternate;
+  animation: stickman-limb-cycle var(--stickman-step-duration, 0.55s) cubic-bezier(0.45, 0, 0.25, 1) infinite;
+  animation-delay: var(--stickman-step-delay, -275ms);
 }
 
-.mascot-mode-stickman.is-walking .stick-leg-left::after {
-  animation: stickman-calf-back var(--stickman-step-duration, 0.55s) cubic-bezier(0.45, 0, 0.25, 1) infinite alternate;
+.mascot-mode-stickman.is-walking .stick-leg-left .stickman-calf {
+  animation: stickman-calf-cycle var(--stickman-step-duration, 0.55s) cubic-bezier(0.45, 0, 0.25, 1) infinite;
+  animation-delay: var(--stickman-step-delay, -275ms);
 }
 
-.mascot-mode-stickman.is-walking .stick-leg-left .stickman-foot {
-  animation: stickman-foot-back var(--stickman-step-duration, 0.55s) cubic-bezier(0.45, 0, 0.25, 1) infinite alternate;
+.mascot-mode-stickman.is-walking .stick-leg-left .stickman-calf .stickman-foot {
+  animation: stickman-foot-cycle var(--stickman-step-duration, 0.55s) cubic-bezier(0.45, 0, 0.25, 1) infinite;
+  animation-delay: var(--stickman-step-delay, -275ms);
 }
 
 .mascot-mode-stickman.is-walking .stickman-body {
-  animation: stickman-body-bob var(--stickman-step-duration, 0.55s) ease-in-out infinite alternate;
+  animation: stickman-body-bob var(--stickman-step-duration, 0.55s) ease-in-out infinite;
+}
+
+.mascot-mode-stickman.is-walking .stickman-shadow {
+  animation: stickman-shadow-cycle var(--stickman-step-duration, 0.55s) ease-in-out infinite;
 }
 
 .mascot-mode-stickman .mascot-bubble {
@@ -1346,87 +1522,69 @@ h3 {
   }
 }
 
-@keyframes stickman-forward {
-  0% {
-    transform: rotate(-30deg);
-  }
-
-  45% {
-    transform: rotate(4deg);
-  }
-
-  100% {
-    transform: rotate(28deg);
-  }
-}
-
-@keyframes stickman-back {
+@keyframes stickman-limb-cycle {
   0% {
     transform: rotate(24deg);
   }
 
-  45% {
-    transform: rotate(-8deg);
-  }
-
-  100% {
+  24% {
     transform: rotate(-28deg);
   }
-}
 
-@keyframes stickman-calf-forward {
-  0% {
-    transform: rotate(38deg);
+  52% {
+    transform: rotate(-6deg);
   }
 
-  45% {
-    transform: rotate(10deg);
-  }
-
-  100% {
-    transform: rotate(-24deg);
-  }
-}
-
-@keyframes stickman-calf-back {
-  0% {
-    transform: rotate(-24deg);
-  }
-
-  45% {
-    transform: rotate(-50deg);
+  76% {
+    transform: rotate(28deg);
   }
 
   100% {
-    transform: rotate(20deg);
+    transform: rotate(24deg);
   }
 }
 
-@keyframes stickman-foot-forward {
+@keyframes stickman-calf-cycle {
   0% {
-    transform: rotate(16deg) translateX(2px);
+    transform: rotate(8deg);
   }
 
-  45% {
-    transform: rotate(4deg) translateX(0);
+  20% {
+    transform: rotate(36deg);
+  }
+
+  42% {
+    transform: rotate(-12deg);
+  }
+
+  68% {
+    transform: rotate(22deg);
   }
 
   100% {
-    transform: rotate(-14deg) translateX(-1px);
+    transform: rotate(8deg);
   }
 }
 
-@keyframes stickman-foot-back {
+@keyframes stickman-foot-cycle {
   0% {
-    transform: rotate(-12deg) translateX(-1px);
+    transform: rotate(-8deg) translateX(1px);
   }
 
-  45% {
-    transform: rotate(18deg) translateX(1px);
+  22% {
+    transform: rotate(-16deg) translateX(0) translateY(-1px);
+  }
+
+  50% {
+    transform: rotate(-3deg) translateX(1px);
+  }
+
+  76% {
+    transform: rotate(8deg) translateX(2px);
   }
 
   100% {
-    transform: rotate(22deg) translateX(2px);
+    transform: rotate(-8deg) translateX(1px);
   }
 }
 
@@ -1435,10 +1593,32 @@ h3 {
     translate: 0 0;
   }
 
-  100% {
+  50% {
     translate: 0 -3px;
   }
+
+  100% {
+    translate: 0 0;
+  }
 }
+
+@keyframes stickman-shadow-cycle {
+  0% {
+    transform: scaleX(1);
+    opacity: 0.78;
+  }
+
+  50% {
+    transform: scaleX(0.82);
+    opacity: 0.58;
+  }
+
+  100% {
+    transform: scaleX(1);
+    opacity: 0.78;
+  }
+}
+
 
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -1457,6 +1637,10 @@ h3 {
   .spider-leg,
   .stickman-arm,
   .stickman-leg,
+  .stickman-calf,
+  .stickman-foot,
+  .stickman-body,
+  .stickman-shadow,
   .project-image img {
     animation: none;
     transition: none;
@@ -1470,7 +1654,8 @@ h3 {
 @media (max-width: 920px) {
   .hero,
   .skills-layout,
-  .resource-grid {
+  .resource-grid,
+  .web3-console {
     grid-template-columns: 1fr;
   }
 
@@ -1527,7 +1712,8 @@ h3 {
   }
 
   .project-grid,
-  .certificate-strip {
+  .certificate-strip,
+  .web3-details {
     grid-template-columns: 1fr;
   }
 

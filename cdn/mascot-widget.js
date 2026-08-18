@@ -21,14 +21,7 @@
     "Tambien puedo guiar al usuario sin estorbar.",
   ];
 
-  const OWL_PHRASES = [
-    "Veo bugs escondidos entre las ramas del DOM.",
-    "Modo buho neon: observando el codigo.",
-    "Si algo parpadea raro, revisa los estilos.",
-    "Una buena interfaz tambien necesita mirada critica.",
-  ];
-
-  const VARIANTS = ["robot", "spider", "stickman", "owl"];
+  const VARIANTS = ["robot", "spider", "stickman"];
 
   function getRandomVariant() {
     return VARIANTS[Math.floor(Math.random() * VARIANTS.length)];
@@ -84,33 +77,6 @@
           </span>
           <span class="eo-stickman-shadow"></span>
         </span>
-        <span class="eo-owl" aria-hidden="true">
-          <svg class="eo-owl-svg" viewBox="0 0 96 142" focusable="false">
-            <path class="eo-owl-fill eo-owl-fill-body" d="M5 6 43 28c2-9 8-15 15-15s14 6 17 15L91 6l-7 30c5 9 4 18-4 27l-14 20 19 19-4 36-19-30-8 20-6-11-6 11-8-20-19 30-4-36 19-19-14-20c-8-9-9-18-4-27L5 6Z" />
-            <path class="eo-owl-fill eo-owl-fill-face-left" d="M16 44c7-12 25-11 31 4L34 80 17 59Z" />
-            <path class="eo-owl-fill eo-owl-fill-face-right" d="M80 44c-7-12-25-11-31 4l13 32 17-21Z" />
-            <path class="eo-owl-fill eo-owl-fill-wing-left" d="M22 78 11 102l4 36 19-30Z" />
-            <path class="eo-owl-fill eo-owl-fill-wing-right" d="M74 78l11 24-4 36-19-30Z" />
-            <path class="eo-owl-line eo-owl-ear-left" d="M43 28 5 6l7 30 24 12" />
-            <path class="eo-owl-line eo-owl-ear-right" d="M53 28 91 6l-7 30-24 12" />
-            <path class="eo-owl-line eo-owl-head-left" d="M11 37c5-14 19-24 37-24" />
-            <path class="eo-owl-line eo-owl-head-right" d="M85 37C80 23 66 13 48 13" />
-            <path class="eo-owl-line eo-owl-face-left" d="M16 44c7-12 25-11 31 4L34 80 17 59" />
-            <path class="eo-owl-line eo-owl-face-right" d="M80 44c-7-12-25-11-31 4l13 32 17-21" />
-            <path class="eo-owl-line eo-owl-brow-left" d="M22 41 40 51" />
-            <path class="eo-owl-line eo-owl-brow-right" d="M74 41 56 51" />
-            <circle class="eo-owl-eye eo-owl-eye-left" cx="28" cy="54" r="6" />
-            <circle class="eo-owl-eye eo-owl-eye-right" cx="68" cy="54" r="6" />
-            <path class="eo-owl-line eo-owl-beak" d="M44 63 48 73l4-10" />
-            <path class="eo-owl-line eo-owl-chest" d="M30 83 48 105 66 83" />
-            <path class="eo-owl-line eo-owl-wing-left" d="M22 78 11 102l4 36 19-30" />
-            <path class="eo-owl-line eo-owl-wing-right" d="M74 78l11 24-4 36-19-30" />
-            <path class="eo-owl-line eo-owl-body-left" d="M34 111 42 128l6-11" />
-            <path class="eo-owl-line eo-owl-body-right" d="M62 111 54 128l-6-11" />
-            <path class="eo-owl-line eo-owl-foot-left" d="M34 132v8m8-8 3 9m-14-9-3 9" />
-            <path class="eo-owl-line eo-owl-foot-right" d="M62 132v8m-8-8-3 9m14-9 3 9" />
-          </svg>
-        </span>
       </button>
     `;
     document.body.appendChild(mascot);
@@ -130,9 +96,6 @@
       </button>
       <button class="eo-mascot-option" type="button" data-eo-mascot-option="stickman" aria-label="Usar mascota stickman">
         <span class="eo-picker-stickman" aria-hidden="true"></span>
-      </button>
-      <button class="eo-mascot-option" type="button" data-eo-mascot-option="owl" aria-label="Usar mascota buho neon">
-        <span class="eo-picker-owl" aria-hidden="true"></span>
       </button>
     `;
     target.appendChild(picker);
@@ -157,14 +120,12 @@
     const phrases = options.phrases || DEFAULT_PHRASES;
     const spiderPhrases = options.spiderPhrases || SPIDER_PHRASES;
     const stickmanPhrases = options.stickmanPhrases || STICKMAN_PHRASES;
-    const owlPhrases = options.owlPhrases || OWL_PHRASES;
     const minMoveMs = options.minMoveMs || 60 * 1000;
     const maxMoveMs = options.maxMoveMs || 5 * 60 * 1000;
     const robotReturnMs = options.robotReturnMs || 60 * 1000;
     let phraseIndex = 0;
     let spiderPhraseIndex = 0;
     let stickmanPhraseIndex = 0;
-    let owlPhraseIndex = 0;
     let speechTimer;
     let moveTimer;
     let stickmanWalkTimer;
@@ -294,11 +255,6 @@
         stickmanPhraseIndex = (stickmanPhraseIndex + 1) % stickmanPhrases.length;
       }
 
-      if (!phrase && variant === "owl") {
-        phrase = owlPhrases[owlPhraseIndex];
-        owlPhraseIndex = (owlPhraseIndex + 1) % owlPhrases.length;
-      }
-
       if (!phrase) {
         phrase = phrases[phraseIndex];
         phraseIndex = (phraseIndex + 1) % phrases.length;
@@ -342,13 +298,11 @@
       mascot.classList.toggle("eo-mascot-robot", variant === "robot");
       mascot.classList.toggle("eo-mascot-spider", variant === "spider");
       mascot.classList.toggle("eo-mascot-stickman", variant === "stickman");
-      mascot.classList.toggle("eo-mascot-owl", variant === "owl");
       setPickerState(picker, variant);
       const modeMessage = {
         robot: "Modo robot activado.",
         spider: "Modo arana activado.",
         stickman: "Modo stickman activado.",
-        owl: "Modo buho neon activado.",
       };
 
       if (variant === "robot") {
@@ -390,7 +344,6 @@
           robot: "Hola, soy el ayudante del portafolio.",
           spider: "Subiendo por el DOM.",
           stickman: "Sigo caminando por el piso.",
-          owl: "Estoy vigilando el codigo desde la oscuridad.",
         };
 
       if (variant === "robot") {

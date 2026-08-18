@@ -1,8 +1,26 @@
 # Portafolio de Eddy Omar
 
-Portafolio personal estático con proyectos web, certificados, recursos técnicos, una demo Web3 y un panel opcional para administrar proyectos. Conserva el contenido de la versión HTML original y está preparado para publicarse como proyecto de GitHub Pages en:
+**[Ver el portafolio en línea](https://eddyomar1.github.io/index/)**
 
-<https://eddyomar1.github.io/index/>
+Este es el repositorio del portafolio profesional de Eddy Omar. La forma recomendada de conocer el
+trabajo es visitar el sitio publicado: no es necesario clonar ni descargar el repositorio.
+
+## Sobre el portafolio
+
+El sitio reúne una selección de proyectos, prácticas y trabajos técnicos. El enfoque profesional
+principal está en programación, desarrollo de software y aplicaciones web, junto con programación
+de microcontroladores y experiencia previa en electrónica industrial.
+
+En el sitio encontrarás:
+
+- Proyectos web, juegos y experimentos de programación.
+- Una sección independiente para documentar proyectos de electrónica industrial con fotografías y
+  contexto técnico.
+- Tecnologías y áreas de crecimiento profesional.
+- Una demostración Web3 que no realiza transacciones.
+- Formas sencillas de contactar a Eddy Omar.
+
+Este README conserva también la documentación técnica necesaria para mantener y publicar el sitio.
 
 ## Stack
 
@@ -14,6 +32,41 @@ Portafolio personal estático con proyectos web, certificados, recursos técnico
 - GitHub Actions y `gh-pages` para publicar la carpeta `out/`.
 
 No hay API Routes, servidor persistente, middleware, Server Actions ni código que necesite un runtime de Node.js en producción.
+
+## Añadir proyectos de electrónica industrial
+
+Los casos de electrónica industrial se administran en `data/industrial-projects.json`. Mientras el
+archivo esté vacío, el sitio muestra una presentación breve indicando que los casos están en
+preparación.
+
+Para añadir uno:
+
+1. Optimiza la fotografía y guárdala en una carpeta como `public/img/industrial/`.
+2. Añade una entrada con `id`, `title`, `summary`, `role`, `year`, `image_path`, `image_alt` y `tags`.
+3. Usa únicamente información que pueda hacerse pública. No muestres nombres de clientes, placas,
+   ubicaciones, diagramas confidenciales ni datos visibles en pantallas sin autorización.
+
+Ejemplo sintético de estructura:
+
+```json
+{
+  "id": "caso-demostrativo",
+  "title": "Título público del proyecto",
+  "summary": "Breve explicación del contexto, la participación y el resultado.",
+  "role": "Rol desempeñado",
+  "year": "2026",
+  "image_path": "/img/industrial/caso-demostrativo.webp",
+  "image_alt": "Descripción accesible de la fotografía",
+  "tags": ["Microcontroladores", "Diagnóstico"]
+}
+```
+
+## Previsualizaciones animadas
+
+Las tarjetas de proyectos pueden incorporar más adelante una animación al pasar el cursor o recibir
+el foco. Para mantener el sitio ligero conviene usar un video corto, silencioso y en bucle en formato
+WebM o MP4, conservando la imagen actual como portada y alternativa para móviles o movimiento
+reducido. No es necesario convertir todas las demostraciones en GIF.
 
 ## Requisitos
 
@@ -179,7 +232,9 @@ Los archivos de entrada que existían antes de Next.js se conservaron en:
 - `legacy-static/js.js`
 - `legacy-static/loading.css`
 
-Las copias incluyen los cambios locales que ya estaban presentes al iniciar la migración, incluida la mascota búho neón. Los binarios no se duplicaron: imágenes, descargas, favicon y el widget CDN viven bajo `public/`.
+Las copias incluyen los cambios locales que ya estaban presentes al iniciar la migración. La versión
+activa conserva únicamente las mascotas robot, araña y stickman. Los binarios no se duplicaron:
+imágenes, descargas, favicon y el widget CDN viven bajo `public/`.
 
 ## Privacidad y seguridad
 

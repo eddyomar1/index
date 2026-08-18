@@ -3,6 +3,7 @@ import Mascot from '@/components/Mascot';
 
 const navigation = [
   { href: '#proyectos', label: 'Proyectos' },
+  { href: '#electronica', label: 'Electrónica' },
   { href: '#habilidades', label: 'Habilidades' },
   { href: '#recursos', label: 'Recursos' },
   { href: '#web3', label: 'Web3' },

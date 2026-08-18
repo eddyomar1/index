@@ -2,32 +2,21 @@ import Head from 'next/head';
 import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import IndustrialProjects from '@/components/IndustrialProjects';
 import ProjectsList from '@/components/ProjectsList';
 import Web3Demo from '@/components/Web3Demo';
 import { withBasePath } from '@/lib/basePath';
 
 const skills = [
-  'HTML',
-  'CSS',
+  'HTML y CSS',
   'JavaScript',
-  'Responsive Design',
+  'TypeScript',
+  'React y Next.js',
   'Python',
   'PHP',
   'SQL',
-  'Java',
-  'jQuery',
-];
-
-const certificates = [
-  { name: 'HTML', file: 'HTML_cer.jpg' },
-  { name: 'CSS', file: 'CSS_cer.jpg' },
-  { name: 'JavaScript', file: 'JS_cer.jpg' },
-  { name: 'Responsive Web Design', file: 'RWD_cer.jpg' },
-  { name: 'Python', file: 'Python_cer.jpg' },
-  { name: 'PHP', file: 'PHP_cer.jpg' },
-  { name: 'SQL', file: 'SQL_cer.jpg' },
-  { name: 'Java', file: 'Java_cer.jpg' },
-  { name: 'jQuery', file: 'jQuery_cer.jpg' },
+  'Git y GitHub',
+  'Programación de microcontroladores',
 ];
 
 function SectionHeading({
@@ -57,8 +46,15 @@ export default function HomePage() {
         <title>Eddy Omar | Portafolio</title>
         <meta
           name="description"
-          content="Portafolio de Eddy Omar: proyectos web, juegos, ejercicios de programación y recursos técnicos."
+          content="Portafolio profesional de Eddy Omar con proyectos de desarrollo web y software, programación de microcontroladores y experiencia en electrónica industrial."
         />
+        <meta property="og:title" content="Eddy Omar | Portafolio profesional" />
+        <meta
+          property="og:description"
+          content="Proyectos de software, desarrollo web, microcontroladores y electrónica industrial realizados por Eddy Omar."
+        />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://eddyomar1.github.io/index/" />
         <meta
           name="google-site-verification"
           content="LRicwNiMcixzT3wnVH-W334NMQEZGCmj2SqQWXjYgrA"
@@ -80,13 +76,14 @@ export default function HomePage() {
           <div className="hero-grid" aria-hidden="true" />
           <div className="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.25fr_0.75fr]">
             <div>
-              <p className="eyebrow text-amber-300">Desarrollo web, juegos y tecnología</p>
+              <p className="eyebrow text-amber-300">Software, web y sistemas embebidos</p>
               <h1 className="mt-5 max-w-4xl text-5xl leading-[0.98] font-black tracking-[-0.06em] text-balance sm:text-7xl">
-                Construyo proyectos web simples, útiles y fáciles de mejorar.
+                Un portafolio de proyectos, aprendizaje y trabajo técnico.
               </h1>
               <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
-                Este portafolio reúne prácticas, experimentos y proyectos publicados mientras sigo
-                fortaleciendo mis bases en frontend, lógica de programación y herramientas técnicas.
+                Aquí presento proyectos en los que he trabajado y otras cosas que he construido.
+                Profesionalmente me estoy enfocando en programación, desarrollo de software y
+                microcontroladores, apoyándome también en mi experiencia con electrónica industrial.
               </p>
               <div className="mt-9 flex flex-wrap gap-4" aria-label="Acciones principales">
                 <a className="button-primary" href="#proyectos">
@@ -123,7 +120,8 @@ export default function HomePage() {
                   Enfoque actual
                 </strong>
                 <p className="mt-2 leading-7 text-slate-300">
-                  Frontend, JavaScript, prácticas interactivas y organización de proyectos.
+                  Desarrollo de software, aplicaciones web y programación de microcontroladores para
+                  crear soluciones claras, prácticas y bien documentadas.
                 </p>
               </div>
             </div>
@@ -131,24 +129,33 @@ export default function HomePage() {
         </section>
 
         <section className="section-shell" id="proyectos">
-          <SectionHeading eyebrow="Trabajo publicado" title="Proyectos">
-            Una selección de ejercicios y aplicaciones pequeñas que muestran práctica con HTML, CSS
-            y JavaScript.
+          <SectionHeading eyebrow="Software y web" title="Proyectos de programación">
+            Una selección de aplicaciones, juegos y experimentos que muestran cómo trabajo con
+            interfaces, lógica y desarrollo de software.
           </SectionHeading>
           <ProjectsList />
         </section>
 
-        <section className="border-y border-slate-900/10 bg-white/65" id="habilidades">
+        <section className="border-y border-slate-900/10 bg-white/65" id="electronica">
           <div className="section-shell">
-            <SectionHeading eyebrow="Base técnica" title="Habilidades y certificados">
-              Tecnologías que forman mi base y certificados que documentan el aprendizaje detrás de
-              los proyectos.
+            <SectionHeading eyebrow="Experiencia técnica" title="Electrónica industrial">
+              Un espacio separado para documentar trabajos técnicos reales, el contexto de cada
+              proyecto y las soluciones en las que participé.
             </SectionHeading>
+            <IndustrialProjects />
+          </div>
+        </section>
 
-            <div className="grid gap-10 lg:grid-cols-[0.6fr_1.4fr]">
+        <section className="section-shell" id="habilidades">
+          <SectionHeading eyebrow="Perfil técnico" title="Tecnologías y áreas de enfoque">
+            Herramientas que utilizo y áreas en las que quiero seguir creciendo profesionalmente.
+          </SectionHeading>
+
+          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="rounded-[1.75rem] border border-slate-900/10 bg-white p-7 shadow-lg sm:p-8">
               <div>
                 <h3 className="text-sm font-black tracking-[0.15em] text-slate-500 uppercase">
-                  Herramientas
+                  Tecnologías
                 </h3>
                 <div className="mt-5 flex flex-wrap gap-3" aria-label="Habilidades">
                   {skills.map((skill) => (
@@ -161,41 +168,25 @@ export default function HomePage() {
                   ))}
                 </div>
               </div>
+            </div>
 
-              <div>
-                <h3 className="text-sm font-black tracking-[0.15em] text-slate-500 uppercase">
-                  Certificados
-                </h3>
-                <div
-                  className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3"
-                  aria-label="Certificados"
-                >
-                  {certificates.map((certificate) => {
-                    const path = withBasePath(`/img/cer/${certificate.file}`);
-                    return (
-                      <a
-                        className="group overflow-hidden rounded-2xl border border-slate-900/10 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-teal-700"
-                        href={path}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        key={certificate.file}
-                      >
-                        <img
-                          className="aspect-[1.42/1] w-full object-cover transition group-hover:scale-[1.02]"
-                          src={path}
-                          alt={`Certificado de ${certificate.name}`}
-                          width="1754"
-                          height="1238"
-                          loading="lazy"
-                        />
-                        <span className="block px-3 py-2 text-xs font-bold text-slate-700">
-                          {certificate.name}
-                        </span>
-                      </a>
-                    );
-                  })}
-                </div>
-              </div>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+              <article className="rounded-[1.5rem] bg-[#101820] p-6 text-white shadow-lg">
+                <p className="eyebrow text-amber-300">Enfoque profesional</p>
+                <h3 className="mt-3 text-2xl font-black">Desarrollo de software</h3>
+                <p className="mt-3 leading-7 text-slate-300">
+                  Aplicaciones web, interfaces mantenibles, lógica de programación y proyectos que
+                  resuelvan necesidades concretas.
+                </p>
+              </article>
+              <article className="rounded-[1.5rem] bg-teal-800 p-6 text-white shadow-lg">
+                <p className="eyebrow text-amber-300">Integración técnica</p>
+                <h3 className="mt-3 text-2xl font-black">Microcontroladores</h3>
+                <p className="mt-3 leading-7 text-teal-50/85">
+                  Programación y experimentación con sistemas embebidos, conectando software con
+                  dispositivos y conocimientos de electrónica.
+                </p>
+              </article>
             </div>
           </div>
         </section>

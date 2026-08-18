@@ -17,6 +17,7 @@ declare global {
 
 const scriptId = 'eo-mascot-widget-script';
 const stylesheetId = 'eo-mascot-widget-styles';
+const mascotAssetVersion = '20260818a';
 
 export default function Mascot() {
   const pickerRef = useRef<HTMLDivElement>(null);
@@ -39,7 +40,7 @@ export default function Mascot() {
       const stylesheet = document.createElement('link');
       stylesheet.id = stylesheetId;
       stylesheet.rel = 'stylesheet';
-      stylesheet.href = withBasePath('/cdn/mascot-widget.css');
+      stylesheet.href = withBasePath(`/cdn/mascot-widget.css?v=${mascotAssetVersion}`);
       document.head.appendChild(stylesheet);
     }
 
@@ -52,7 +53,7 @@ export default function Mascot() {
 
     const script = document.createElement('script');
     script.id = scriptId;
-    script.src = withBasePath('/cdn/mascot-widget.js');
+    script.src = withBasePath(`/cdn/mascot-widget.js?v=${mascotAssetVersion}`);
     script.async = true;
     script.addEventListener('load', initialize, { once: true });
     document.body.appendChild(script);

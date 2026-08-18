@@ -1,0 +1,361 @@
+@import 'tailwindcss';
+
+:root {
+  color-scheme: light;
+  --paper: #f7f4ee;
+  --ink: #101820;
+  --teal: #0f766e;
+  --gold: #d99b2b;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6.5rem;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background:
+    radial-gradient(circle at 10% 20%, rgb(15 118 110 / 0.07), transparent 30rem), var(--paper);
+  color: var(--ink);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+a,
+input,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+  cursor: pointer;
+}
+
+::selection {
+  background: #f7c95e;
+  color: var(--ink);
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 10000;
+  translate: 0 -180%;
+  border-radius: 0.75rem;
+  background: white;
+  padding: 0.75rem 1rem;
+  font-weight: 800;
+  color: var(--ink);
+  transition: translate 160ms ease;
+}
+
+.skip-link:focus {
+  translate: 0;
+}
+
+.section-shell {
+  width: min(100%, 86rem);
+  margin-inline: auto;
+  padding: 6rem clamp(1.25rem, 4vw, 2rem);
+}
+
+.eyebrow {
+  color: var(--teal);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.button-primary,
+.button-secondary-dark {
+  display: inline-flex;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: 0.85rem;
+  padding: 0.85rem 1.35rem;
+  font-weight: 900;
+  transition:
+    translate 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.button-primary {
+  background: #f7c95e;
+  color: var(--ink);
+}
+
+.button-primary:hover,
+.button-secondary-dark:hover {
+  translate: 0 -2px;
+}
+
+.button-primary:hover {
+  background: #ffdb83;
+}
+
+.button-secondary-dark {
+  border: 1px solid rgb(255 255 255 / 0.22);
+  background: rgb(255 255 255 / 0.06);
+  color: white;
+}
+
+.button-secondary-dark:hover {
+  border-color: rgb(255 255 255 / 0.45);
+  background: rgb(255 255 255 / 0.1);
+}
+
+.button-primary:focus-visible,
+.button-secondary-dark:focus-visible,
+.download-link:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 4px;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 38px 38px;
+  mask-image: linear-gradient(to bottom, black, transparent 95%);
+}
+
+.code-monogram {
+  position: relative;
+  display: grid;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 0.13);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(15 118 110 / 0.42), transparent 68%);
+}
+
+.code-monogram::before,
+.code-monogram::after {
+  position: absolute;
+  border: 1px solid rgb(247 201 94 / 0.27);
+  border-radius: 50%;
+  content: '';
+}
+
+.code-monogram::before {
+  inset: 9%;
+}
+
+.code-monogram::after {
+  inset: 20%;
+}
+
+.eo-letter {
+  color: white;
+  font-size: clamp(4.2rem, 10vw, 7rem);
+  font-weight: 950;
+  letter-spacing: -0.11em;
+  line-height: 1;
+  text-shadow: 10px 12px 0 rgb(217 155 43 / 0.2);
+  translate: -0.04em 0;
+}
+
+.code-symbol {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  min-width: 2.6rem;
+  min-height: 2.6rem;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 0.2);
+  border-radius: 50%;
+  background: #101820;
+  color: #f7c95e;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.7rem;
+  font-weight: 900;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.3);
+}
+
+.symbol-one {
+  top: 3%;
+  left: 15%;
+}
+
+.symbol-two {
+  top: 21%;
+  right: -1%;
+}
+
+.symbol-three {
+  right: 12%;
+  bottom: 3%;
+}
+
+.download-link {
+  display: flex;
+  min-height: 5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid rgb(15 118 110 / 0.2);
+  border-radius: 1rem;
+  background: #f0fdfa;
+  padding: 1.25rem;
+  font-weight: 900;
+  color: #115e59;
+  transition:
+    background-color 180ms ease,
+    translate 180ms ease;
+}
+
+.download-link:hover {
+  translate: 0 -2px;
+  background: #ccfbf1;
+}
+
+.admin-panel,
+.admin-notice {
+  border: 1px solid rgb(15 23 42 / 0.1);
+  border-radius: 1.5rem;
+  background: white;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  box-shadow: 0 18px 55px rgb(16 24 32 / 0.08);
+}
+
+.admin-notice {
+  max-width: 48rem;
+}
+
+.admin-notice h2 {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.admin-notice p {
+  margin-top: 0.75rem;
+  line-height: 1.7;
+  color: #475569;
+}
+
+.admin-notice code {
+  border-radius: 0.35rem;
+  background: #e2e8f0;
+  padding: 0.1rem 0.3rem;
+  color: #0f172a;
+}
+
+.admin-notice-error {
+  border-color: rgb(185 28 28 / 0.25);
+  background: #fef2f2;
+}
+
+.admin-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.admin-input {
+  display: block;
+  width: 100%;
+  margin-top: 0.45rem;
+  border: 1px solid rgb(15 23 42 / 0.16);
+  border-radius: 0.8rem;
+  background: white;
+  padding: 0.75rem 0.9rem;
+  color: #0f172a;
+  outline: none;
+}
+
+.admin-input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 4px rgb(15 118 110 / 0.1);
+}
+
+.admin-button,
+.admin-button-secondary {
+  min-height: 2.75rem;
+  border-radius: 0.75rem;
+  padding: 0.65rem 1.1rem;
+  font-weight: 900;
+}
+
+.admin-button {
+  background: var(--teal);
+  color: white;
+}
+
+.admin-button:hover {
+  background: #115e59;
+}
+
+.admin-button-secondary {
+  border: 1px solid rgb(15 23 42 / 0.15);
+  color: #0f172a;
+}
+
+.admin-button:focus-visible,
+.admin-button-secondary:focus-visible,
+.admin-link:focus-visible {
+  outline: 3px solid #f59e0b;
+  outline-offset: 3px;
+}
+
+.admin-button:disabled,
+.admin-button-secondary:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.admin-link {
+  font-weight: 800;
+  color: #0f766e;
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+@media (max-width: 767px) {
+  .section-shell {
+    padding-block: 4.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  /* The roaming widget can cover essential copy on narrow screens. */
+  .eo-mascot,
+  .mascot-controls {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

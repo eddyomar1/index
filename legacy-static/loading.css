@@ -1,0 +1,31 @@
+@keyframes ld{
+
+0% {    height: 0em; border-radius: 0% 0% 0% 0%; transform: rotateZ(-1400deg);}
+25% {border-radius: 80% 0% 90% 0%; transform: rotateZ(1400deg);}
+50% {border-radius: 0% 40% 50% 0%; transform: rotateZ(700);}
+75% {border-radius: 60% 10% 60% 70%; transform: rotateZ(-1400deg);}
+100% {    height: 20em;border-radius: 100%; transform: rotateZ(-350);}
+
+
+}
+
+#loading{
+    background-color: mediumaquamarine;
+    position: fixed;
+    width: 100em;
+    height: 100em;
+    z-index: 1000;
+
+}
+
+#cosa{
+
+    background-color: lime;
+    width: 20em;
+    height: 30em;
+    margin: 0 auto;
+    margin-top: 15em;
+
+animation: ld 5s infinite alternate;
+
+}

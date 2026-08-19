@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="border-t border-slate-900/10 bg-[#f7f4ee] px-5 py-8 sm:px-8">
       <div className="mx-auto flex max-w-7xl flex-col gap-4 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p>Portafolio de Eddy Omar · Desarrollado con Next.js, React y TypeScript.</p>
+          <p>Portafolio de Eddy Omar SB · Desarrollado con Next.js, React y TypeScript.</p>
           <p className="mt-1 text-xs text-slate-500">
             Estilos con Tailwind CSS · Formulario conectado a Supabase o Formspree cuando están
             disponibles.

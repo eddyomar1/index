@@ -22,6 +22,12 @@ const skills = [
   'SQL',
   'Git y GitHub',
   'Programación de microcontroladores',
+  'Arduino',
+  'PIC',
+  'ESP32',
+  'ESP8266',
+  'Electrónica industrial',
+  'Linux',
 ];
 
 function SectionHeading({
@@ -73,15 +79,15 @@ export default function HomePage({ industrialImages }: HomePageProps) {
   return (
     <>
       <Head>
-        <title>Eddy Omar | Portafolio</title>
+        <title>Eddy Omar SB | Portafolio</title>
         <meta
           name="description"
-          content="Portafolio profesional de Eddy Omar con proyectos de desarrollo web y software, programación de microcontroladores y experiencia en electrónica industrial."
+          content="Portafolio profesional de Eddy Omar SB con proyectos de desarrollo web y software, programación de microcontroladores y experiencia en electrónica industrial."
         />
-        <meta property="og:title" content="Eddy Omar | Portafolio profesional" />
+        <meta property="og:title" content="Eddy Omar SB | Portafolio profesional" />
         <meta
           property="og:description"
-          content="Proyectos de software, desarrollo web, microcontroladores y electrónica industrial realizados por Eddy Omar."
+          content="Proyectos de software, desarrollo web, microcontroladores y electrónica industrial realizados por Eddy Omar SB."
         />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="https://eddyomar1.github.io/index/" />
@@ -170,8 +176,8 @@ export default function HomePage({ industrialImages }: HomePageProps) {
         <section className="border-y border-slate-900/10 bg-white/65" id="electronica">
           <div className="section-shell">
             <SectionHeading eyebrow="Experiencia técnica" title="Electrónica industrial">
-              Un espacio separado para documentar trabajos técnicos reales, el contexto de cada
-              proyecto y las soluciones en las que participé.
+              Un espacio separado para documentar trabajos técnicos y algunas soluciones en las que
+              participé.
             </SectionHeading>
             <IndustrialProjects images={industrialImages} />
           </div>

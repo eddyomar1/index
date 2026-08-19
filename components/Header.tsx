@@ -40,7 +40,7 @@ export default function Header() {
           <span className="grid size-11 place-items-center rounded-xl bg-amber-400 text-sm tracking-[-0.04em] text-slate-950 transition group-hover:-rotate-3">
             EO
           </span>
-          <span className="text-lg">Eddy Omar</span>
+          <span className="text-lg">Eddy Omar SB</span>
         </a>
 
         <button

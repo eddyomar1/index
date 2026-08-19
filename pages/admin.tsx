@@ -6,7 +6,7 @@ export default function AdminPage() {
   return (
     <>
       <Head>
-        <title>Administrar proyectos | Eddy Omar</title>
+        <title>Administrar proyectos | Eddy Omar SB</title>
         <meta name="robots" content="noindex, nofollow" />
         <link rel="icon" href={withBasePath('/favicon.svg')} type="image/svg+xml" />
       </Head>

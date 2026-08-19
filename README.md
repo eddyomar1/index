@@ -1,8 +1,8 @@
-# Portafolio de Eddy Omar
+# Portafolio de Eddy Omar SB
 
 **[Visitar mi portafolio](https://eddyomar1.github.io/index/)**
 
-Hola, soy Eddy Omar. En este portafolio reúno algunos proyectos, prácticas y trabajos técnicos que
+Hola, soy Eddy Omar SB. En este portafolio reúno algunos proyectos, prácticas y trabajos técnicos que
 he realizado a lo largo de mi aprendizaje y experiencia profesional.
 
 Mi intención es mostrar de forma sencilla lo que he construido, las tecnologías con las que he

@@ -7,9 +7,9 @@ trabajo es visitar el sitio publicado: no es necesario clonar ni descargar el re
 
 ## Sobre el portafolio
 
-El sitio reúne una selección de proyectos, prácticas y trabajos técnicos. El enfoque profesional
-principal está en programación, desarrollo de software y aplicaciones web, junto con programación
-de microcontroladores y experiencia previa en electrónica industrial.
+El sitio reúne una selección de proyectos, prácticas y trabajos técnicos. Refleja experiencia en
+programación, desarrollo de software, aplicaciones web y microcontroladores, áreas en las que Eddy
+Omar continúa aprendiendo, junto con su experiencia previa en electrónica industrial.
 
 En el sitio encontrarás:
 
@@ -41,7 +41,7 @@ preparación.
 
 Para añadir uno:
 
-1. Optimiza la fotografía y guárdala en una carpeta como `public/img/industrial/`.
+1. Optimiza la fotografía y guárdala en `public/img/industrial/`.
 2. Añade una entrada con `id`, `title`, `summary`, `role`, `year`, `image_path`, `image_alt` y `tags`.
 3. Usa únicamente información que pueda hacerse pública. No muestres nombres de clientes, placas,
    ubicaciones, diagramas confidenciales ni datos visibles en pantallas sin autorización.
@@ -116,7 +116,7 @@ GitHub Pages sirve este repositorio bajo `/index/`. La variable `NEXT_PUBLIC_BAS
 - Local: valor vacío y URL `/`.
 - Producción: `/index` y URL `/index/`.
 
-`lib/basePath.ts` agrega ese prefijo a imágenes, descargas, favicon y assets de `public/`. No se usa `assetPrefix`.
+`lib/basePath.ts` agrega ese prefijo a imágenes, favicon y otros assets de `public/`. No se usa `assetPrefix`.
 
 ## Variables de entorno
 
@@ -233,8 +233,8 @@ Los archivos de entrada que existían antes de Next.js se conservaron en:
 - `legacy-static/loading.css`
 
 Las copias incluyen los cambios locales que ya estaban presentes al iniciar la migración. La versión
-activa conserva únicamente las mascotas robot, araña y stickman. Los binarios no se duplicaron:
-imágenes, descargas, favicon y el widget CDN viven bajo `public/`.
+activa conserva únicamente las mascotas robot y araña; ninguna aparece hasta que el visitante la
+selecciona. Las imágenes, el favicon y el widget CDN viven bajo `public/`.
 
 ## Privacidad y seguridad
 
@@ -247,4 +247,3 @@ imágenes, descargas, favicon y el widget CDN viven bajo `public/`.
 - Revisa privacidad, retención y entrenamiento de cada proveedor antes de procesar información real.
 - Mantén RLS activo y no expongas claves `service_role` o secretas.
 - No confirmes `.env.local`.
-- `public/dw/arNano/CH341SER.EXE` es un binario heredado: consérvalo como descarga histórica, pero analízalo con herramientas de seguridad antes de ejecutarlo.

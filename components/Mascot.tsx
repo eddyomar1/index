@@ -17,7 +17,7 @@ declare global {
 
 const scriptId = 'eo-mascot-widget-script';
 const stylesheetId = 'eo-mascot-widget-styles';
-const mascotAssetVersion = '20260818a';
+const mascotAssetVersion = '20260818b';
 
 export default function Mascot() {
   const pickerRef = useRef<HTMLDivElement>(null);
@@ -30,7 +30,7 @@ export default function Mascot() {
       if (existing) return;
 
       const instance = window.PortfolioMascot.init({
-        variant: 'random',
+        variant: 'none',
         pickerTarget: pickerRef.current,
       });
       instance.element.dataset.portfolioMascotReact = 'true';

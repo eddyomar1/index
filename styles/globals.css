@@ -121,8 +121,7 @@ a {
 }
 
 .button-primary:focus-visible,
-.button-secondary-dark:focus-visible,
-.download-link:focus-visible {
+.button-secondary-dark:focus-visible {
   outline: 3px solid white;
   outline-offset: 4px;
 }
@@ -174,9 +173,36 @@ a {
   translate: -0.04em 0;
 }
 
-.code-symbol {
+.code-orbit {
   position: absolute;
   z-index: 2;
+  border-radius: 50%;
+  animation: code-orbit 20s linear infinite;
+}
+
+.code-orbit-one {
+  inset: 3%;
+  animation-delay: -2s;
+  animation-duration: 18s;
+}
+
+.code-orbit-two {
+  inset: 9%;
+  animation-delay: -8s;
+  animation-direction: reverse;
+  animation-duration: 24s;
+}
+
+.code-orbit-three {
+  inset: 20%;
+  animation-delay: -10s;
+  animation-duration: 15s;
+}
+
+.code-symbol {
+  position: absolute;
+  top: 0;
+  left: 50%;
   display: grid;
   min-width: 2.6rem;
   min-height: 2.6rem;
@@ -189,43 +215,36 @@ a {
   font-size: 0.7rem;
   font-weight: 900;
   box-shadow: 0 10px 30px rgb(0 0 0 / 0.3);
+  translate: -50% -50%;
+  animation: code-counter-orbit 20s linear infinite;
 }
 
-.symbol-one {
-  top: 3%;
-  left: 15%;
+.code-orbit-one .code-symbol {
+  animation-delay: -2s;
+  animation-duration: 18s;
 }
 
-.symbol-two {
-  top: 21%;
-  right: -1%;
+.code-orbit-two .code-symbol {
+  animation-delay: -8s;
+  animation-direction: reverse;
+  animation-duration: 24s;
 }
 
-.symbol-three {
-  right: 12%;
-  bottom: 3%;
+.code-orbit-three .code-symbol {
+  animation-delay: -10s;
+  animation-duration: 15s;
 }
 
-.download-link {
-  display: flex;
-  min-height: 5rem;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  border: 1px solid rgb(15 118 110 / 0.2);
-  border-radius: 1rem;
-  background: #f0fdfa;
-  padding: 1.25rem;
-  font-weight: 900;
-  color: #115e59;
-  transition:
-    background-color 180ms ease,
-    translate 180ms ease;
+@keyframes code-orbit {
+  to {
+    rotate: 360deg;
+  }
 }
 
-.download-link:hover {
-  translate: 0 -2px;
-  background: #ccfbf1;
+@keyframes code-counter-orbit {
+  to {
+    rotate: -360deg;
+  }
 }
 
 .admin-panel,

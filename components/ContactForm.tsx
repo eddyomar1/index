@@ -20,7 +20,7 @@ function validate(values: FormValues): string {
 }
 
 async function submitToFormspree(values: FormValues): Promise<void> {
-  if (!formspreeId) throw new Error('Formspree no está configurado.');
+  if (!formspreeId) throw new Error('El formulario no está disponible.');
 
   const response = await fetch(`https://formspree.io/f/${encodeURIComponent(formspreeId)}`, {
     method: 'POST',
@@ -28,7 +28,7 @@ async function submitToFormspree(values: FormValues): Promise<void> {
     body: JSON.stringify(values),
   });
 
-  if (!response.ok) throw new Error('Formspree no pudo recibir el mensaje.');
+  if (!response.ok) throw new Error('No se pudo enviar el mensaje.');
 }
 
 export default function ContactForm() {

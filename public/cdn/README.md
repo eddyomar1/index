@@ -1,6 +1,6 @@
 # EO Mascot Widget
 
-Widget reutilizable para agregar las mascotas robot, arana o stickman a cualquier pagina.
+Widget reutilizable para agregar las mascotas robot o arana a cualquier pagina.
 
 ## Uso desde GitHub Pages
 
@@ -16,7 +16,7 @@ Inicializa el widget:
 ```html
 <script>
   PortfolioMascot.init({
-    variant: "random"
+    variant: "none"
   });
 </script>
 ```
@@ -38,18 +38,14 @@ Coloca un contenedor donde quieras mostrar los botones:
 
 ## Opciones
 
-- `variant`: `"robot"`, `"spider"`, `"stickman"` o `"random"`. Por defecto elige una mascota al azar.
+- `variant`: `"robot"`, `"spider"` o `"none"`. Por defecto no muestra ninguna mascota hasta que el visitante elige una.
 - `pickerTarget`: elemento donde se insertan los botones de seleccion.
 - `phrases`: arreglo de frases para el robot.
 - `spiderPhrases`: arreglo de frases para la arana.
-- `stickmanPhrases`: arreglo de frases para el stickman.
 - `minMoveMs`: espera minima entre movimientos. Por defecto: `60000`.
 - `maxMoveMs`: espera maxima entre movimientos. Por defecto: `300000`.
 - `robotReturnMs`: tiempo que espera el robot fuera de pantalla antes de volver. Por defecto: `60000`.
 - `headerSpace`: espacio superior reservado para evitar headers fijos.
-- `stickmanFloorTarget`: elemento que el stickman usa como piso. Por defecto usa el primer `footer` de la pagina.
-- `stickmanStrideDistance`: pixeles aproximados que avanza por ciclo de paso.
-- `stickmanStepMs`: duracion de cada ciclo de paso en milisegundos.
 
 ## Ejemplo con frases personalizadas
 

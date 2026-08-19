@@ -81,9 +81,10 @@ export default function HomePage() {
                 Un portafolio de proyectos, aprendizaje y trabajo técnico.
               </h1>
               <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
-                Aquí presento proyectos en los que he trabajado y otras cosas que he construido.
-                Profesionalmente me estoy enfocando en programación, desarrollo de software y
-                microcontroladores, apoyándome también en mi experiencia con electrónica industrial.
+                Aquí presento proyectos en los que he trabajado y otras cosas que he construido. He
+                adquirido experiencia en programación, desarrollo de software y microcontroladores,
+                áreas en las que continúo aprendiendo y desarrollándome, apoyándome también en mi
+                experiencia con electrónica industrial.
               </p>
               <div className="mt-9 flex flex-wrap gap-4" aria-label="Acciones principales">
                 <a className="button-primary" href="#proyectos">
@@ -102,14 +103,14 @@ export default function HomePage() {
 
             <div className="relative mx-auto w-full max-w-md rounded-[2rem] border border-white/15 bg-white/[0.06] p-7 shadow-2xl backdrop-blur sm:p-9">
               <div className="code-monogram" aria-label="Monograma EO inspirado en programación">
-                <span className="code-symbol symbol-one" aria-hidden="true">
-                  &lt;/&gt;
+                <span className="code-orbit code-orbit-one" aria-hidden="true">
+                  <span className="code-symbol">&lt;/&gt;</span>
                 </span>
-                <span className="code-symbol symbol-two" aria-hidden="true">
-                  {'{ }'}
+                <span className="code-orbit code-orbit-two" aria-hidden="true">
+                  <span className="code-symbol">{'{ }'}</span>
                 </span>
-                <span className="code-symbol symbol-three" aria-hidden="true">
-                  ()
+                <span className="code-orbit code-orbit-three" aria-hidden="true">
+                  <span className="code-symbol">()</span>
                 </span>
                 <span className="eo-letter" aria-hidden="true">
                   EO
@@ -117,11 +118,11 @@ export default function HomePage() {
               </div>
               <div className="mt-8 border-t border-white/15 pt-6">
                 <strong className="text-xs tracking-[0.18em] text-amber-300 uppercase">
-                  Enfoque actual
+                  Áreas de interés
                 </strong>
                 <p className="mt-2 leading-7 text-slate-300">
                   Desarrollo de software, aplicaciones web y programación de microcontroladores para
-                  crear soluciones claras, prácticas y bien documentadas.
+                  crear soluciones claras y prácticas.
                 </p>
               </div>
             </div>
@@ -172,11 +173,11 @@ export default function HomePage() {
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
               <article className="rounded-[1.5rem] bg-[#101820] p-6 text-white shadow-lg">
-                <p className="eyebrow text-amber-300">Enfoque profesional</p>
+                <p className="eyebrow text-amber-300">Experiencia práctica</p>
                 <h3 className="mt-3 text-2xl font-black">Desarrollo de software</h3>
                 <p className="mt-3 leading-7 text-slate-300">
-                  Aplicaciones web, interfaces mantenibles, lógica de programación y proyectos que
-                  resuelvan necesidades concretas.
+                  He trabajado con aplicaciones web, interfaces y lógica de programación, mientras
+                  continúo ampliando mis conocimientos mediante proyectos prácticos.
                 </p>
               </article>
               <article className="rounded-[1.5rem] bg-teal-800 p-6 text-white shadow-lg">
@@ -197,7 +198,7 @@ export default function HomePage() {
             disponibles sin competir con el trabajo principal.
           </SectionHeading>
 
-          <div className="grid gap-6 lg:grid-cols-3">
+          <div className="max-w-md">
             <article className="rounded-[1.75rem] bg-[#101820] p-6 text-white shadow-xl">
               <p className="eyebrow text-amber-300">Experimento</p>
               <h3 className="mt-3 text-2xl font-black">Acertijo #3</h3>
@@ -209,32 +210,6 @@ export default function HomePage() {
                 height="512"
                 loading="lazy"
               />
-            </article>
-
-            <article className="flex flex-col rounded-[1.75rem] border border-slate-900/10 bg-white p-7 shadow-lg lg:col-span-2">
-              <p className="eyebrow">Archivos técnicos</p>
-              <h3 className="mt-3 text-3xl font-black tracking-tight text-slate-950">Descargas</h3>
-              <p className="mt-3 max-w-2xl leading-7 text-slate-600">
-                Recursos que ya estaban disponibles en la versión anterior del portafolio.
-              </p>
-              <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                <a
-                  className="download-link"
-                  href={withBasePath('/dw/LiquidCrystal_I2C-master.zip')}
-                  download
-                >
-                  <span>LiquidCrystal I2C</span>
-                  <span aria-hidden="true">↓</span>
-                </a>
-                <a className="download-link" href={withBasePath('/dw/arNano.zip')} download>
-                  <span>Driver Arduino Nano</span>
-                  <span aria-hidden="true">↓</span>
-                </a>
-              </div>
-              <p className="mt-auto pt-8 text-xs leading-5 text-slate-500">
-                Los archivos se conservan como material legado. Revisa cualquier ejecutable con tus
-                herramientas de seguridad antes de usarlo.
-              </p>
             </article>
           </div>
         </section>
@@ -257,8 +232,8 @@ export default function HomePage() {
                 Sigamos construyendo.
               </h2>
               <p className="mt-6 max-w-xl text-lg leading-8 text-teal-50/85">
-                Cuéntame qué quieres crear o mejorar. El formulario usa Supabase o Formspree solo si
-                están configurados; siempre puedes escribir directamente por correo.
+                Cuéntame qué quieres crear o mejorar. Puedes usar el formulario o escribirme
+                directamente por correo.
               </p>
               <a
                 className="mt-8 inline-flex font-black text-white underline decoration-amber-300 decoration-2 underline-offset-8"

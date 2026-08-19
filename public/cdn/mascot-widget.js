@@ -1,7 +1,7 @@
 (function () {
-  const DEFAULT_PHRASES = [
+  const ROBOT_PHRASES = [
     "Tip rapido: tus mejores proyectos deben estar arriba.",
-    "Un README claro tambien vende tu trabajo.",
+    "Un README claro tambien presenta tu trabajo.",
     "Si algo se rompe, mira primero la consola.",
     "Pequenos commits, menos drama.",
     "Prueba el sitio en movil antes de publicarlo.",
@@ -11,29 +11,19 @@
     "Voy a revisar los bordes de la pagina.",
     "A veces desaparezco, pero vuelvo con ideas.",
     "La web tambien tiene rincones interesantes.",
-    "No olvides probar enlaces antes de publicar.",
+    "No olvides probar los enlaces antes de publicar.",
   ];
 
-  const STICKMAN_PHRASES = [
-    "Camino por el borde como si fuera el piso.",
-    "Voy patrullando la pagina.",
-    "Este suelo esta bastante estable.",
-    "Tambien puedo guiar al usuario sin estorbar.",
-  ];
-
-  const VARIANTS = ["robot", "spider", "stickman"];
-
-  function getRandomVariant() {
-    return VARIANTS[Math.floor(Math.random() * VARIANTS.length)];
-  }
+  const VARIANTS = ["robot", "spider"];
 
   function createMascot() {
     const mascot = document.createElement("aside");
-    mascot.className = "eo-mascot eo-mascot-robot";
+    mascot.className = "eo-mascot eo-is-inactive";
     mascot.setAttribute("aria-live", "polite");
+    mascot.setAttribute("aria-hidden", "true");
     mascot.innerHTML = `
       <div class="eo-mascot-bubble" data-eo-mascot-bubble></div>
-      <button class="eo-mascot-character" type="button" aria-label="Mascota del sitio">
+      <button class="eo-mascot-character" type="button" aria-label="Interactuar con la mascota">
         <span class="eo-robot" aria-hidden="true">
           <span class="eo-robot-antenna"></span>
           <span class="eo-robot-head">
@@ -58,48 +48,25 @@
             <span class="eo-spider-eye"></span>
           </span>
         </span>
-        <span class="eo-stickman" aria-hidden="true">
-          <span class="eo-stickman-head"></span>
-          <span class="eo-stickman-body"></span>
-          <span class="eo-stickman-arm eo-arm-left"></span>
-          <span class="eo-stickman-arm eo-arm-right"></span>
-          <span class="eo-stickman-leg eo-stick-leg-left">
-            <span class="eo-stickman-knee"></span>
-            <span class="eo-stickman-calf">
-              <span class="eo-stickman-foot"></span>
-            </span>
-          </span>
-          <span class="eo-stickman-leg eo-stick-leg-right">
-            <span class="eo-stickman-knee"></span>
-            <span class="eo-stickman-calf">
-              <span class="eo-stickman-foot"></span>
-            </span>
-          </span>
-          <span class="eo-stickman-shadow"></span>
-        </span>
       </button>
     `;
     document.body.appendChild(mascot);
     return mascot;
   }
 
-  function createPicker(target, activeVariant) {
+  function createPicker(target) {
     const picker = document.createElement("div");
     picker.className = "eo-mascot-picker";
     picker.setAttribute("aria-label", "Elegir mascota");
     picker.innerHTML = `
-      <button class="eo-mascot-option" type="button" data-eo-mascot-option="robot" aria-label="Usar mascota robot">
+      <button class="eo-mascot-option" type="button" data-eo-mascot-option="robot" aria-label="Usar mascota robot" aria-pressed="false">
         <span class="eo-picker-robot" aria-hidden="true"></span>
       </button>
-      <button class="eo-mascot-option" type="button" data-eo-mascot-option="spider" aria-label="Usar mascota arana">
+      <button class="eo-mascot-option" type="button" data-eo-mascot-option="spider" aria-label="Usar mascota arana" aria-pressed="false">
         <span class="eo-picker-spider" aria-hidden="true"></span>
-      </button>
-      <button class="eo-mascot-option" type="button" data-eo-mascot-option="stickman" aria-label="Usar mascota stickman">
-        <span class="eo-picker-stickman" aria-hidden="true"></span>
       </button>
     `;
     target.appendChild(picker);
-    setPickerState(picker, activeVariant);
     return picker;
   }
 
@@ -117,244 +84,209 @@
     const mascot = options.element || createMascot();
     const character = mascot.querySelector(".eo-mascot-character");
     const bubble = mascot.querySelector("[data-eo-mascot-bubble]");
-    const phrases = options.phrases || DEFAULT_PHRASES;
-    const spiderPhrases = options.spiderPhrases || SPIDER_PHRASES;
-    const stickmanPhrases = options.stickmanPhrases || STICKMAN_PHRASES;
+    const phrases = {
+      robot: options.phrases || ROBOT_PHRASES,
+      spider: options.spiderPhrases || SPIDER_PHRASES,
+    };
+    const phraseIndexes = { robot: 0, spider: 0 };
     const minMoveMs = options.minMoveMs || 60 * 1000;
     const maxMoveMs = options.maxMoveMs || 5 * 60 * 1000;
     const robotReturnMs = options.robotReturnMs || 60 * 1000;
-    let phraseIndex = 0;
-    let spiderPhraseIndex = 0;
-    let stickmanPhraseIndex = 0;
-    let speechTimer;
-    let moveTimer;
-    let stickmanWalkTimer;
-    let variant = VARIANTS.includes(options.variant) ? options.variant : getRandomVariant();
-    let robotCycleId = 0;
+    let variant = null;
     let picker = null;
+    let speechTimer;
+    let flowTimers = [];
 
-    if (options.pickerTarget) {
-      picker = createPicker(options.pickerTarget, variant);
+    if (options.pickerTarget) picker = createPicker(options.pickerTarget);
+
+    function queue(callback, delay) {
+      const timer = window.setTimeout(callback, delay);
+      flowTimers.push(timer);
+      return timer;
+    }
+
+    function clearFlow() {
+      flowTimers.forEach((timer) => window.clearTimeout(timer));
+      flowTimers = [];
+      mascot.classList.remove("eo-is-walking");
     }
 
     function getRandomMoveDelay() {
       return Math.round(minMoveMs + Math.random() * (maxMoveMs - minMoveMs));
     }
 
-    function setRobotOffscreenStart() {
+    function setOffscreenStart() {
+      if (!variant) return;
+
       const mascotWidth = mascot.offsetWidth || 128;
       const mascotHeight = mascot.offsetHeight || 150;
       const headerSpace = options.headerSpace || 84;
       const exitsLeft = Math.random() > 0.5;
       const x = exitsLeft ? -mascotWidth - 28 : window.innerWidth + 28;
-      const y = Math.round(headerSpace + 20 + Math.random() * Math.max(0, window.innerHeight - mascotHeight - headerSpace - 38));
+      const viewportY = Math.round(
+        headerSpace +
+          20 +
+          Math.random() * Math.max(0, window.innerHeight - mascotHeight - headerSpace - 38),
+      );
 
       mascot.style.setProperty("--eo-mascot-move-duration", "0ms");
       mascot.style.setProperty("--eo-mascot-x", `${x}px`);
-      mascot.style.setProperty("--eo-mascot-y", `${y}px`);
+      mascot.style.setProperty("--eo-mascot-y", `${viewportY}px`);
+      mascot.style.setProperty("--eo-mascot-page-y", `${window.scrollY + viewportY}px`);
       mascot.classList.add("eo-is-offscreen");
       mascot.classList.remove("eo-is-speaking");
       mascot.getBoundingClientRect();
     }
 
-    function move({ offscreen = false } = {}) {
+    function move({ offscreen = false, duration = 3400 } = {}) {
+      if (!variant) return 0;
+
       const mascotWidth = mascot.offsetWidth || 128;
       const mascotHeight = mascot.offsetHeight || 150;
       const padding = 18;
       const headerSpace = options.headerSpace || 84;
-      let minX = padding;
-      let maxX = Math.max(padding, window.innerWidth - mascotWidth - padding);
       let x;
-      let y;
 
-      if (offscreen && variant !== "stickman") {
-        const exitsLeft = Math.random() > 0.5;
-        minX = exitsLeft ? -mascotWidth - 28 : window.innerWidth + 28;
-        maxX = minX;
+      if (offscreen) {
+        x = Math.random() > 0.5 ? -mascotWidth - 28 : window.innerWidth + 28;
         mascot.classList.add("eo-is-offscreen");
       } else {
+        const maxX = Math.max(padding, window.innerWidth - mascotWidth - padding);
+        x = Math.round(padding + Math.random() * (maxX - padding));
         mascot.classList.remove("eo-is-offscreen");
       }
 
-      x = Math.round(minX + Math.random() * (maxX - minX));
-
-      if (variant === "stickman") {
-        const currentX = mascot.getBoundingClientRect().left;
-        const floorTarget = options.stickmanFloorTarget || document.querySelector("footer") || document.body;
-        const floorRect = floorTarget.getBoundingClientRect();
-        const floorBottom = window.scrollY + floorRect.top + floorRect.height;
-        const pageY = Math.max(headerSpace, Math.round(floorBottom - mascotHeight + 2));
-        const strideDistance = options.stickmanStrideDistance || 22;
-        const stepDurationMs = options.stickmanStepMs || 620;
-        const distance = Math.abs(x - currentX);
-        const walkDurationMs = Math.min(9000, Math.max(1100, (distance / strideDistance) * stepDurationMs));
-        const directionClass = x < currentX ? "eo-is-walking-left" : "eo-is-walking-right";
-        const facingClass = x < currentX ? "eo-is-facing-left" : "eo-is-facing-right";
-
-        mascot.style.setProperty("--eo-mascot-page-y", `${pageY}px`);
-        mascot.style.setProperty("--eo-mascot-move-duration", `${walkDurationMs}ms`);
-        mascot.style.setProperty("--eo-stickman-step-duration", `${stepDurationMs}ms`);
-        mascot.style.setProperty("--eo-stickman-step-delay", `${-stepDurationMs / 2}ms`);
-        mascot.style.setProperty("--eo-mascot-x", `${x}px`);
-        mascot.classList.remove("eo-is-walking-left", "eo-is-walking-right", "eo-is-facing-left", "eo-is-facing-right");
-        mascot.classList.add("eo-is-walking", directionClass, facingClass);
-        window.clearTimeout(stickmanWalkTimer);
-        stickmanWalkTimer = window.setTimeout(() => {
-          mascot.classList.remove("eo-is-walking", "eo-is-walking-left", "eo-is-walking-right");
-        }, walkDurationMs);
-        return walkDurationMs;
-      }
+      mascot.style.setProperty("--eo-mascot-move-duration", `${duration}ms`);
+      mascot.style.setProperty("--eo-mascot-x", `${x}px`);
 
       if (variant === "spider") {
         const documentHeight = Math.max(
           document.body.scrollHeight,
           document.documentElement.scrollHeight,
-          window.innerHeight
+          window.innerHeight,
         );
         const visibleTop = window.scrollY + headerSpace;
         const visibleBottom = Math.min(
           window.scrollY + window.innerHeight - mascotHeight - padding,
-          documentHeight - mascotHeight - padding
+          documentHeight - mascotHeight - padding,
         );
-        const canUseViewport = visibleBottom > visibleTop;
-        const shouldVisitCurrentSection = Math.random() > 0.35;
-        const minPageY = shouldVisitCurrentSection && canUseViewport ? visibleTop : headerSpace;
-        const maxPageY = shouldVisitCurrentSection && canUseViewport
-          ? visibleBottom
-          : Math.max(headerSpace, documentHeight - mascotHeight - padding);
-
-        y = Math.round(minPageY + Math.random() * (maxPageY - minPageY));
+        const minY = Math.min(visibleTop, visibleBottom);
+        const maxY = Math.max(visibleTop, visibleBottom);
+        const pageY = Math.round(minY + Math.random() * (maxY - minY));
+        mascot.style.setProperty("--eo-mascot-page-y", `${pageY}px`);
       } else {
         const maxY = Math.max(headerSpace, window.innerHeight - mascotHeight - padding);
-        y = Math.round(headerSpace + Math.random() * (maxY - headerSpace));
+        const viewportY = Math.round(headerSpace + Math.random() * (maxY - headerSpace));
+        mascot.style.setProperty("--eo-mascot-y", `${viewportY}px`);
       }
 
-      mascot.style.setProperty("--eo-mascot-move-duration", "3400ms");
-      if (variant === "spider") {
-        mascot.style.setProperty("--eo-mascot-page-y", `${y}px`);
-        mascot.style.setProperty("--eo-mascot-y", `${Math.max(headerSpace, y - window.scrollY)}px`);
-      } else {
-        mascot.style.setProperty("--eo-mascot-y", `${y}px`);
-      }
-      mascot.style.setProperty("--eo-mascot-x", `${x}px`);
       mascot.classList.add("eo-is-walking");
-      window.setTimeout(() => mascot.classList.remove("eo-is-walking"), 3400);
-      return 3400;
-    }
-
-    function speak(customPhrase) {
-      let phrase = customPhrase;
-
-      if (!phrase && variant === "spider") {
-        phrase = spiderPhrases[spiderPhraseIndex];
-        spiderPhraseIndex = (spiderPhraseIndex + 1) % spiderPhrases.length;
-      }
-
-      if (!phrase && variant === "stickman") {
-        phrase = stickmanPhrases[stickmanPhraseIndex];
-        stickmanPhraseIndex = (stickmanPhraseIndex + 1) % stickmanPhrases.length;
-      }
-
-      if (!phrase) {
-        phrase = phrases[phraseIndex];
-        phraseIndex = (phraseIndex + 1) % phrases.length;
-      }
-
-      bubble.textContent = phrase;
-      updateBubblePosition();
-      mascot.classList.add("eo-is-speaking");
-      window.clearTimeout(speechTimer);
-      speechTimer = window.setTimeout(() => {
-        mascot.classList.remove("eo-is-speaking");
-      }, 4200);
+      queue(() => mascot.classList.remove("eo-is-walking"), duration);
+      return duration;
     }
 
     function updateBubblePosition() {
-      mascot.classList.remove("eo-bubble-right", "eo-bubble-left", "eo-bubble-top", "eo-bubble-bottom");
+      mascot.classList.remove(
+        "eo-bubble-right",
+        "eo-bubble-left",
+        "eo-bubble-top",
+        "eo-bubble-bottom",
+      );
 
       const rect = mascot.getBoundingClientRect();
       const bubbleWidth = Math.min(260, window.innerWidth - 48);
       const bubbleHeight = 88;
       const gap = 20;
-      const spaceRight = window.innerWidth - rect.right;
-      const spaceLeft = rect.left;
-      const spaceTop = rect.top;
-      const spaceBottom = window.innerHeight - rect.bottom;
 
-      if (spaceRight >= bubbleWidth + gap) {
+      if (window.innerWidth - rect.right >= bubbleWidth + gap) {
         mascot.classList.add("eo-bubble-right");
-      } else if (spaceLeft >= bubbleWidth + gap) {
+      } else if (rect.left >= bubbleWidth + gap) {
         mascot.classList.add("eo-bubble-left");
-      } else if (spaceTop >= bubbleHeight + gap) {
+      } else if (rect.top >= bubbleHeight + gap) {
         mascot.classList.add("eo-bubble-top");
       } else {
-        mascot.classList.add(spaceBottom >= bubbleHeight + gap ? "eo-bubble-bottom" : "eo-bubble-top");
+        mascot.classList.add("eo-bubble-bottom");
       }
     }
 
-    function setVariant(nextVariant, { announce = true } = {}) {
-      variant = VARIANTS.includes(nextVariant) ? nextVariant : getRandomVariant();
-      if (variant !== "robot") robotCycleId += 1;
-      mascot.classList.toggle("eo-mascot-robot", variant === "robot");
-      mascot.classList.toggle("eo-mascot-spider", variant === "spider");
-      mascot.classList.toggle("eo-mascot-stickman", variant === "stickman");
-      setPickerState(picker, variant);
-      const modeMessage = {
-        robot: "Modo robot activado.",
-        spider: "Modo arana activado.",
-        stickman: "Modo stickman activado.",
-      };
+    function speak(customPhrase) {
+      if (!variant) return;
 
-      if (variant === "robot") {
-        setRobotOffscreenStart();
-        runRobotCycle(announce ? modeMessage.robot : undefined);
+      const variantPhrases = phrases[variant];
+      const index = phraseIndexes[variant];
+      const phrase = customPhrase || variantPhrases[index];
+
+      if (!customPhrase) phraseIndexes[variant] = (index + 1) % variantPhrases.length;
+
+      bubble.textContent = phrase;
+      updateBubblePosition();
+      mascot.classList.add("eo-is-speaking");
+      window.clearTimeout(speechTimer);
+      speechTimer = window.setTimeout(() => mascot.classList.remove("eo-is-speaking"), 4200);
+    }
+
+    function scheduleMove() {
+      if (!variant) return;
+      queue(
+        variant === "robot" ? runRobotCycle : runSpiderCycle,
+        variant === "robot" ? robotReturnMs : getRandomMoveDelay(),
+      );
+    }
+
+    function finishMove(duration, customPhrase) {
+      queue(() => {
+        speak(customPhrase);
+        scheduleMove();
+      }, duration + 250);
+    }
+
+    function enterFromEdge(customPhrase) {
+      setOffscreenStart();
+      queue(() => finishMove(move(), customPhrase), 60);
+    }
+
+    function runRobotCycle() {
+      if (variant !== "robot") return;
+      clearFlow();
+      const exitDuration = move({ offscreen: true });
+      queue(() => finishMove(move(), undefined), exitDuration + 1200);
+    }
+
+    function runSpiderCycle() {
+      if (variant !== "spider") return;
+      clearFlow();
+
+      if (Math.random() > 0.62) {
+        const exitDuration = move({ offscreen: true });
+        queue(() => finishMove(move(), undefined), exitDuration + 1200);
         return;
       }
 
-      const duration = move();
-      window.setTimeout(() => speak(announce ? modeMessage[variant] : undefined), duration + 250);
-      scheduleMove();
+      finishMove(move(), undefined);
     }
 
-    function runRobotCycle(customPhrase) {
-      if (variant !== "robot") return;
+    function setVariant(nextVariant) {
+      if (!VARIANTS.includes(nextVariant) || nextVariant === variant) return;
 
-      const cycleId = robotCycleId + 1;
-      robotCycleId = cycleId;
-      window.clearTimeout(moveTimer);
-      const enterDuration = move();
-      window.setTimeout(() => {
-        if (cycleId !== robotCycleId || variant !== "robot") return;
-
-        speak(customPhrase);
-        window.setTimeout(() => {
-          if (cycleId !== robotCycleId || variant !== "robot") return;
-
-          const exitDuration = move({ offscreen: true });
-          window.setTimeout(() => {
-            if (cycleId === robotCycleId && variant === "robot") scheduleMove();
-          }, exitDuration + 250);
-        }, 4800);
-      }, enterDuration + 250);
+      clearFlow();
+      window.clearTimeout(speechTimer);
+      mascot.classList.remove("eo-is-speaking");
+      variant = nextVariant;
+      mascot.classList.remove("eo-is-inactive");
+      mascot.classList.toggle("eo-mascot-robot", variant === "robot");
+      mascot.classList.toggle("eo-mascot-spider", variant === "spider");
+      mascot.setAttribute("aria-hidden", "false");
+      setPickerState(picker, variant);
+      enterFromEdge(variant === "robot" ? "Modo robot activado." : "Modo arana activado.");
     }
 
     if (character) {
       character.addEventListener("click", () => {
-        const clickPhrase = {
-          robot: "Hola, soy el ayudante del portafolio.",
-          spider: "Subiendo por el DOM.",
-          stickman: "Sigo caminando por el piso.",
-        };
-
-      if (variant === "robot") {
-        setRobotOffscreenStart();
-        runRobotCycle(clickPhrase.robot);
-        return;
-      }
-
-      const duration = move();
-      window.setTimeout(() => speak(clickPhrase[variant]), duration + 250);
-      scheduleMove();
+        if (!variant) return;
+        clearFlow();
+        window.clearTimeout(speechTimer);
+        mascot.classList.remove("eo-is-speaking");
+        finishMove(move(), undefined);
       });
     }
 
@@ -365,52 +297,17 @@
       });
     }
 
-    function runScheduledMove() {
-      const shouldExit = variant === "spider" && Math.random() > 0.62;
+    if (VARIANTS.includes(options.variant)) setVariant(options.variant);
 
-      if (shouldExit) {
-        const exitDuration = move({ offscreen: true });
-        window.setTimeout(() => {
-          const returnDuration = move();
-          window.setTimeout(() => {
-            speak();
-            scheduleMove();
-          }, returnDuration + 250);
-        }, exitDuration + 1200);
-        return;
-      }
-
-      const duration = move();
-      window.setTimeout(() => {
-        speak();
-        scheduleMove();
-      }, duration + 250);
-    }
-
-    function scheduleMove() {
-      window.clearTimeout(moveTimer);
-      moveTimer = window.setTimeout(
-        variant === "robot" ? runRobotCycle : runScheduledMove,
-        variant === "robot" ? robotReturnMs : getRandomMoveDelay()
-      );
-    }
-
-    setVariant(variant, { announce: false });
     window.addEventListener("resize", () => {
-      if (variant === "robot" && mascot.classList.contains("eo-is-offscreen")) {
-        setRobotOffscreenStart();
-        return;
-      }
-
-      move();
+      if (!variant) return;
+      clearFlow();
+      if (mascot.classList.contains("eo-is-offscreen")) setOffscreenStart();
+      else move({ duration: 500 });
+      scheduleMove();
     });
 
-    return {
-      element: mascot,
-      move,
-      speak,
-      setVariant,
-    };
+    return { element: mascot, move, speak, setVariant };
   }
 
   window.PortfolioMascot = { init };
@@ -420,7 +317,6 @@
     if (!autoTarget) return;
 
     const pickerSelector = autoTarget.dataset.eoMascotPicker;
-
     init({
       variant: autoTarget.dataset.eoMascotVariant,
       pickerTarget: pickerSelector ? document.querySelector(pickerSelector) : null,

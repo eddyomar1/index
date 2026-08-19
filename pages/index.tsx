@@ -1,3 +1,6 @@
+import { readdir } from 'node:fs/promises';
+import path from 'node:path';
+import type { GetStaticProps } from 'next';
 import Head from 'next/head';
 import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';
@@ -6,6 +9,7 @@ import IndustrialProjects from '@/components/IndustrialProjects';
 import ProjectsList from '@/components/ProjectsList';
 import Web3Demo from '@/components/Web3Demo';
 import { withBasePath } from '@/lib/basePath';
+import type { IndustrialImage } from '@/types/industrialProject';
 
 const skills = [
   'HTML y CSS',
@@ -39,7 +43,32 @@ function SectionHeading({
   );
 }
 
-export default function HomePage() {
+interface HomePageProps {
+  industrialImages: IndustrialImage[];
+}
+
+export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
+  const industrialDirectory = path.join(process.cwd(), 'public', 'img', 'industrial');
+  let fileNames: string[] = [];
+
+  try {
+    fileNames = await readdir(industrialDirectory);
+  } catch {
+    fileNames = [];
+  }
+
+  const industrialImages = fileNames
+    .filter((fileName) => /\.(?:avif|jpe?g|png|webp)$/i.test(fileName))
+    .sort((first, second) => first.localeCompare(second, 'es', { numeric: true }))
+    .map((fileName, index) => ({
+      image_path: `/img/industrial/${encodeURIComponent(fileName)}`,
+      image_alt: `Trabajo de electrónica industrial, fotografía ${index + 1}`,
+    }));
+
+  return { props: { industrialImages } };
+};
+
+export default function HomePage({ industrialImages }: HomePageProps) {
   return (
     <>
       <Head>
@@ -143,7 +172,7 @@ export default function HomePage() {
               Un espacio separado para documentar trabajos técnicos reales, el contexto de cada
               proyecto y las soluciones en las que participé.
             </SectionHeading>
-            <IndustrialProjects />
+            <IndustrialProjects images={industrialImages} />
           </div>
         </section>
 

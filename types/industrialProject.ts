@@ -8,3 +8,8 @@ export interface IndustrialProject {
   image_alt: string;
   tags: string[];
 }
+
+export interface IndustrialImage {
+  image_path: string;
+  image_alt: string;
+}

@@ -1,11 +1,15 @@
+import { useState } from 'react';
 import industrialProjectsData from '@/data/industrial-projects.json';
 import { withBasePath } from '@/lib/basePath';
-import type { IndustrialProject } from '@/types/industrialProject';
+import type { IndustrialImage, IndustrialProject } from '@/types/industrialProject';
 
 const industrialProjects = industrialProjectsData as IndustrialProject[];
 
-export default function IndustrialProjects() {
-  if (!industrialProjects.length) {
+export default function IndustrialProjects({ images }: { images: IndustrialImage[] }) {
+  const [showAllImages, setShowAllImages] = useState(false);
+  const visibleImages = showAllImages ? images : images.slice(0, 12);
+
+  if (!industrialProjects.length && !images.length) {
     return (
       <div className="grid overflow-hidden rounded-[1.75rem] border border-slate-900/10 bg-white shadow-lg lg:grid-cols-[0.7fr_1.3fr]">
         <div className="grid min-h-64 place-items-center bg-[linear-gradient(135deg,#101820,#0f766e)] p-8 text-white">
@@ -39,6 +43,58 @@ export default function IndustrialProjects() {
             ))}
           </div>
         </div>
+      </div>
+    );
+  }
+
+  if (!industrialProjects.length) {
+    return (
+      <div>
+        <div className="mb-8 max-w-3xl rounded-[1.5rem] border border-slate-900/10 bg-white p-6 shadow-lg sm:p-8">
+          <p className="eyebrow">Galería de trabajos</p>
+          <h3 className="mt-3 text-3xl font-black tracking-tight text-slate-950">
+            Proyectos de electrónica industrial
+          </h3>
+          <p className="mt-4 text-lg leading-8 text-slate-600">
+            Una selección de fotografías de trabajos en tableros eléctricos, montaje, cableado,
+            protección, monitoreo y soluciones de control.
+          </p>
+        </div>
+
+        <div className="columns-1 gap-4 sm:columns-2 lg:columns-3 xl:columns-4">
+          {visibleImages.map((image, index) => (
+            <a
+              className="group mb-4 block break-inside-avoid overflow-hidden rounded-2xl border border-slate-900/10 bg-white shadow-lg focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-amber-500"
+              href={withBasePath(image.image_path)}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Abrir ${image.image_alt}`}
+              key={image.image_path}
+            >
+              <img
+                className="h-auto w-full transition duration-300 group-hover:scale-[1.025]"
+                src={withBasePath(image.image_path)}
+                alt={image.image_alt}
+                width="1280"
+                height="960"
+                loading={index < 4 ? 'eager' : 'lazy'}
+              />
+            </a>
+          ))}
+        </div>
+
+        {images.length > 12 ? (
+          <div className="mt-8 flex justify-center">
+            <button
+              className="inline-flex min-h-12 items-center justify-center rounded-xl bg-teal-800 px-6 font-black text-white transition hover:bg-teal-900 focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-amber-500"
+              type="button"
+              aria-expanded={showAllImages}
+              onClick={() => setShowAllImages((current) => !current)}
+            >
+              {showAllImages ? 'Mostrar menos' : `Ver todas las fotografías (${images.length})`}
+            </button>
+          </div>
+        ) : null}
       </div>
     );
   }

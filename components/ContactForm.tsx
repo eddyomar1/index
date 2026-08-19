@@ -11,11 +11,16 @@ interface FormValues {
 }
 
 const emptyForm: FormValues = { name: '', email: '', message: '' };
+const fieldLimits = { name: 100, email: 254, message: 5000 } as const;
 
 function validate(values: FormValues): string {
   if (values.name.trim().length < 2) return 'Escribe tu nombre (al menos 2 caracteres).';
+  if (values.name.trim().length > fieldLimits.name) return 'El nombre es demasiado largo.';
   if (!/^\S+@\S+\.\S+$/.test(values.email.trim())) return 'Escribe un correo electrónico válido.';
+  if (values.email.trim().length > fieldLimits.email)
+    return 'El correo electrónico es demasiado largo.';
   if (values.message.trim().length < 10) return 'El mensaje debe tener al menos 10 caracteres.';
+  if (values.message.trim().length > fieldLimits.message) return 'El mensaje es demasiado largo.';
   return '';
 }
 
@@ -33,6 +38,7 @@ async function submitToFormspree(values: FormValues): Promise<void> {
 
 export default function ContactForm() {
   const [values, setValues] = useState<FormValues>(emptyForm);
+  const [website, setWebsite] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [feedback, setFeedback] = useState('');
 
@@ -42,6 +48,16 @@ export default function ContactForm() {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    // This field is hidden from people. Silently accept it when a basic bot fills it.
+    if (website) {
+      setValues(emptyForm);
+      setWebsite('');
+      setStatus('success');
+      setFeedback('Gracias. Tu mensaje fue enviado correctamente.');
+      return;
+    }
+
     const validationMessage = validate(values);
 
     if (validationMessage) {
@@ -109,6 +125,24 @@ export default function ContactForm() {
       onSubmit={handleSubmit}
       noValidate
     >
+      <div
+        className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden"
+        aria-hidden="true"
+      >
+        <label htmlFor="contact-website">
+          Sitio web
+          <input
+            id="contact-website"
+            name="website"
+            type="text"
+            autoComplete="off"
+            tabIndex={-1}
+            value={website}
+            onChange={(event) => setWebsite(event.target.value)}
+          />
+        </label>
+      </div>
+
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="text-sm font-bold" htmlFor="contact-name">
           Nombre
@@ -119,6 +153,7 @@ export default function ContactForm() {
             type="text"
             autoComplete="name"
             minLength={2}
+            maxLength={fieldLimits.name}
             required
             value={values.name}
             onChange={(event) => update('name', event.target.value)}
@@ -133,6 +168,7 @@ export default function ContactForm() {
             name="email"
             type="email"
             autoComplete="email"
+            maxLength={fieldLimits.email}
             required
             value={values.email}
             onChange={(event) => update('email', event.target.value)}
@@ -147,6 +183,7 @@ export default function ContactForm() {
           id="contact-message"
           name="message"
           minLength={10}
+          maxLength={fieldLimits.message}
           required
           value={values.message}
           onChange={(event) => update('message', event.target.value)}

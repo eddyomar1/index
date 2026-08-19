@@ -118,11 +118,54 @@ using ((select auth.uid()) = owner_id);
 -- messages should be reviewed only through a trusted server/dashboard context.
 create table if not exists public.contact_messages (
   id uuid primary key default gen_random_uuid(),
-  name text not null,
-  email text not null,
-  message text not null,
+  name text not null
+    constraint contact_messages_name_length check (char_length(btrim(name)) between 2 and 100),
+  email text not null
+    constraint contact_messages_email_length check (char_length(btrim(email)) between 5 and 254),
+  message text not null
+    constraint contact_messages_message_length check (char_length(btrim(message)) between 10 and 5000),
   created_at timestamptz not null default now()
 );
+
+-- Also add the limits when this script is run against a table created by an
+-- earlier version. NOT VALID avoids blocking the migration because of old
+-- rows, while PostgreSQL still applies each constraint to future messages.
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint
+    where conname = 'contact_messages_name_length'
+      and conrelid = 'public.contact_messages'::regclass
+  ) then
+    alter table public.contact_messages
+      add constraint contact_messages_name_length
+      check (char_length(btrim(name)) between 2 and 100) not valid;
+  end if;
+
+  if not exists (
+    select 1 from pg_constraint
+    where conname = 'contact_messages_email_length'
+      and conrelid = 'public.contact_messages'::regclass
+  ) then
+    alter table public.contact_messages
+      add constraint contact_messages_email_length
+      check (char_length(btrim(email)) between 5 and 254) not valid;
+  end if;
+
+  if not exists (
+    select 1 from pg_constraint
+    where conname = 'contact_messages_message_length'
+      and conrelid = 'public.contact_messages'::regclass
+  ) then
+    alter table public.contact_messages
+      add constraint contact_messages_message_length
+      check (char_length(btrim(message)) between 10 and 5000) not valid;
+  end if;
+end
+$$;
+
+create index if not exists contact_messages_created_at_idx
+  on public.contact_messages (created_at desc);
 
 alter table public.contact_messages enable row level security;
 

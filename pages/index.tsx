@@ -9,6 +9,7 @@ import IndustrialProjects from '@/components/IndustrialProjects';
 import ProjectsList from '@/components/ProjectsList';
 import Web3Demo from '@/components/Web3Demo';
 import { withBasePath } from '@/lib/basePath';
+import { portfolioFeatures } from '@/lib/features';
 import type { IndustrialImage } from '@/types/industrialProject';
 
 const skills = [
@@ -221,27 +222,29 @@ export default function HomePage({ industrialImages }: HomePageProps) {
           </div>
         </section>
 
-        <section className="section-shell" id="recursos">
-          <SectionHeading eyebrow="Extras" title="Recursos y experimentos">
-            Materiales históricos del proyecto conservados en su propia sección para que sigan
-            disponibles sin competir con el trabajo principal.
-          </SectionHeading>
+        {portfolioFeatures.extras ? (
+          <section className="section-shell" id="recursos">
+            <SectionHeading eyebrow="Extras" title="Recursos y experimentos">
+              Materiales históricos del proyecto conservados en su propia sección para que sigan
+              disponibles sin competir con el trabajo principal.
+            </SectionHeading>
 
-          <div className="max-w-md">
-            <article className="rounded-[1.75rem] bg-[#101820] p-6 text-white shadow-xl">
-              <p className="eyebrow text-amber-300">Experimento</p>
-              <h3 className="mt-3 text-2xl font-black">Acertijo #3</h3>
-              <img
-                className="mt-6 aspect-square w-full rounded-2xl object-cover"
-                src={withBasePath('/img/act3.jpeg')}
-                alt="Código QR del acertijo número 3"
-                width="512"
-                height="512"
-                loading="lazy"
-              />
-            </article>
-          </div>
-        </section>
+            <div className="max-w-md">
+              <article className="rounded-[1.75rem] bg-[#101820] p-6 text-white shadow-xl">
+                <p className="eyebrow text-amber-300">Experimento</p>
+                <h3 className="mt-3 text-2xl font-black">Acertijo #3</h3>
+                <img
+                  className="mt-6 aspect-square w-full rounded-2xl object-cover"
+                  src={withBasePath('/img/act3.jpeg')}
+                  alt="Código QR del acertijo número 3"
+                  width="512"
+                  height="512"
+                  loading="lazy"
+                />
+              </article>
+            </div>
+          </section>
+        ) : null}
 
         <section className="border-y border-slate-900/10 bg-white/65" id="web3">
           <div className="section-shell">

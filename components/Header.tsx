@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import Mascot from '@/components/Mascot';
+import { portfolioFeatures } from '@/lib/features';
 
 const navigation = [
   { href: '#proyectos', label: 'Proyectos' },
   { href: '#electronica', label: 'Electrónica' },
   { href: '#habilidades', label: 'Habilidades' },
-  { href: '#recursos', label: 'Recursos' },
+  ...(portfolioFeatures.extras ? [{ href: '#recursos', label: 'Recursos' }] : []),
   { href: '#web3', label: 'Web3' },
   { href: '#contacto', label: 'Contacto' },
 ];

@@ -21,6 +21,14 @@ export default function ProjectsList() {
     };
   }, []);
 
+  const displayedProjects = projects
+    .filter((project) => project.id !== 'horario')
+    .sort((first, second) => {
+      if (first.id === 'sputnik') return -1;
+      if (second.id === 'sputnik') return 1;
+      return first.sort_order - second.sort_order;
+    });
+
   return (
     <>
       {warning ? (
@@ -32,9 +40,9 @@ export default function ProjectsList() {
         </p>
       ) : null}
 
-      {projects.length ? (
+      {displayedProjects.length ? (
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {projects.map((project, index) => (
+          {displayedProjects.map((project, index) => (
             <ProjectCard key={project.id} project={project} featured={index === 0} />
           ))}
         </div>

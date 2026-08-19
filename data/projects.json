@@ -1,26 +1,74 @@
 [
   {
-    "id": "traductor-morse",
-    "title": "Traductor Morse",
-    "description": "Convierte texto a código morse y sirve como práctica de manipulación del DOM e interacciones básicas.",
-    "project_type": "Herramienta web",
-    "demo_url": "https://eddyomar1.github.io/morseTr/",
-    "repo_url": "https://github.com/eddyomar1/morseTr",
-    "image_path": "/img/imors.png",
-    "image_alt": "Vista previa del traductor de código morse",
-    "sort_order": 1,
-    "published": true
-  },
-  {
     "id": "sputnik",
     "title": "Sputnik",
-    "description": "Experimento visual sobre exploración espacial con enfoque en estructura HTML y estilos CSS.",
+    "description": "Experiencia web interactiva inspirada en la exploración espacial, creada para experimentar con composición visual, navegación y animaciones mediante HTML, CSS y JavaScript.",
     "project_type": "Web interactiva",
     "demo_url": "https://eddyomar1.github.io/ETOTU/",
     "repo_url": "https://github.com/eddyomar1/ETOTU",
     "image_path": "/img/ietotu.png",
     "image_alt": "Vista previa del proyecto Sputnik",
+    "sort_order": 1,
+    "published": true
+  },
+  {
+    "id": "traductor-morse",
+    "title": "Traductor Morse",
+    "description": "Herramienta interactiva que convierte texto a código Morse para practicar manipulación del DOM, transformación de datos e interacción directa con el usuario.",
+    "project_type": "Herramienta web",
+    "demo_url": "https://eddyomar1.github.io/morseTr/",
+    "repo_url": "https://github.com/eddyomar1/morseTr",
+    "image_path": "/img/imors.png",
+    "image_alt": "Vista previa del traductor de código morse",
     "sort_order": 2,
+    "published": true
+  },
+  {
+    "id": "cad",
+    "title": "P3W — Bocetos 3D",
+    "description": "Herramienta web para crear bocetos 3D de cuartos eléctricos, añadir gabinetes y canaletas, trabajar con distintas unidades y exportar la escena en formato GLTF.",
+    "project_type": "Diseño 3D",
+    "demo_url": "https://eddyomar1.github.io/cad/",
+    "repo_url": "https://github.com/eddyomar1/cad",
+    "image_path": "/img/icad.png",
+    "image_alt": "Interfaz 3D para diseñar cuartos eléctricos con gabinetes y herramientas de edición",
+    "sort_order": 3,
+    "published": true
+  },
+  {
+    "id": "rpg",
+    "title": "RPG Battle Arena 3D",
+    "description": "Juego de batalla por turnos con personajes 3D, clases, acciones de ataque, defensa y curación, enemigos progresivos y una vista alternativa en 2D.",
+    "project_type": "Juego 3D",
+    "demo_url": "https://eddyomar1.github.io/rpg/",
+    "repo_url": "https://github.com/eddyomar1/rpg",
+    "image_path": "/img/irpg.png",
+    "image_alt": "Arena de batalla RPG con personajes 3D, estadísticas y controles de combate",
+    "sort_order": 4,
+    "published": true
+  },
+  {
+    "id": "baka",
+    "title": "BAKA",
+    "description": "Aplicación de escritorio para gestionar respaldos de dispositivos iPhone, comprimir copias y explorar o exportar los archivos desde una interfaz organizada.",
+    "project_type": "Aplicación de escritorio",
+    "demo_url": null,
+    "repo_url": "https://github.com/eddyomar1/Baka",
+    "image_path": "/img/ibaka.png",
+    "image_alt": "Interfaz de BAKA para crear y administrar respaldos de un iPhone conectado",
+    "sort_order": 5,
+    "published": true
+  },
+  {
+    "id": "animacion-con-boton",
+    "title": "Animación con botón",
+    "description": "Animación interactiva creada con canvas, sprites, eventos y temporizadores de JavaScript para controlar una breve secuencia de movimiento y disparo.",
+    "project_type": "Animación interactiva",
+    "demo_url": "https://eddyomar1.github.io/animacion-con-boton/",
+    "repo_url": "https://github.com/eddyomar1/animacion-con-boton",
+    "image_path": "/img/ianimacion-boton.png",
+    "image_alt": "Personaje animado realizando un disparo dentro de un canvas con botones de control",
+    "sort_order": 6,
     "published": true
   },
   {
@@ -32,7 +80,7 @@
     "repo_url": "https://github.com/eddyomar1/snake",
     "image_path": "/img/isnkf.png",
     "image_alt": "Vista previa del juego Snakeframe",
-    "sort_order": 3,
+    "sort_order": 7,
     "published": true
   },
   {
@@ -44,19 +92,7 @@
     "repo_url": "https://github.com/eddyomar1/tenisbot",
     "image_path": "/img/itenis.png",
     "image_alt": "Vista previa del juego Tenisbot",
-    "sort_order": 4,
-    "published": true
-  },
-  {
-    "id": "horario",
-    "title": "Horario",
-    "description": "Organización visual de horarios como ejercicio de maquetación y estructura de contenido.",
-    "project_type": "Aplicación práctica",
-    "demo_url": "https://eddyomar1.github.io/horario/",
-    "repo_url": "https://github.com/eddyomar1/horario",
-    "image_path": null,
-    "image_alt": null,
-    "sort_order": 5,
+    "sort_order": 8,
     "published": true
   },
   {
@@ -68,7 +104,7 @@
     "repo_url": "https://github.com/eddyomar1/XO",
     "image_path": null,
     "image_alt": null,
-    "sort_order": 6,
+    "sort_order": 9,
     "published": true
   }
 ]

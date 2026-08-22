@@ -74,11 +74,13 @@ export default function ContactForm() {
       email: values.email.trim(),
       message: values.message.trim(),
     };
+    let supabaseAttempted = false;
 
     try {
       const client = getSupabaseClient();
 
       if (client) {
+        supabaseAttempted = true;
         try {
           const { error } = await client.from('contact_messages').insert(payload);
           if (!error) {
@@ -108,7 +110,11 @@ export default function ContactForm() {
       }
 
       setStatus('error');
-      setFeedback(`El envío automático no está configurado. Escríbeme a ${portfolioEmail}.`);
+      setFeedback(
+        supabaseAttempted
+          ? `No se pudo enviar el mensaje. Escríbeme a ${portfolioEmail}.`
+          : `El envío automático no está configurado. Escríbeme a ${portfolioEmail}.`,
+      );
     } catch (error) {
       const message = error instanceof Error ? error.message : 'No se pudo enviar el mensaje.';
       setStatus('error');
@@ -212,6 +218,9 @@ export default function ContactForm() {
         aria-live="polite"
       >
         {feedback}
+      </p>
+      <p className="mt-2 text-xs leading-5 text-slate-500">
+        Usaré los datos enviados únicamente para responder a tu mensaje.
       </p>
     </form>
   );

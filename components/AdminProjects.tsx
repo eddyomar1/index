@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import type { Session } from '@supabase/supabase-js';
 import { createProject, deleteProject, getProjects, updateProject } from '@/lib/projects';
+import { getSafeExternalUrl, getSafeImagePath } from '@/lib/safeUrl';
 import { getSupabaseClient, isSupabaseConfigured, isSupabaseEnabled } from '@/lib/supabase';
 import type { Project, ProjectInput } from '@/types/project';
 
@@ -151,6 +152,21 @@ export default function AdminProjects() {
 
     if (!form.title.trim() || !form.description.trim() || !form.project_type.trim()) {
       setFeedback('Título, descripción y tipo son obligatorios.');
+      setIsError(true);
+      return;
+    }
+
+    if (
+      (form.demo_url && !getSafeExternalUrl(form.demo_url)) ||
+      (form.repo_url && !getSafeExternalUrl(form.repo_url))
+    ) {
+      setFeedback('Las URLs de demo y código deben ser direcciones HTTPS válidas.');
+      setIsError(true);
+      return;
+    }
+
+    if (form.image_path && !getSafeImagePath(form.image_path)) {
+      setFeedback('La imagen debe usar una ruta local dentro de /img/.');
       setIsError(true);
       return;
     }
@@ -340,6 +356,7 @@ export default function AdminProjects() {
             <input
               className="admin-input"
               id="project-title"
+              maxLength={160}
               required
               value={form.title}
               onChange={(event) => setForm({ ...form, title: event.target.value })}
@@ -350,6 +367,7 @@ export default function AdminProjects() {
             <input
               className="admin-input"
               id="project-type"
+              maxLength={80}
               required
               value={form.project_type}
               onChange={(event) => setForm({ ...form, project_type: event.target.value })}
@@ -360,6 +378,7 @@ export default function AdminProjects() {
             <textarea
               className="admin-input min-h-28 resize-y"
               id="project-description"
+              maxLength={2000}
               required
               value={form.description}
               onChange={(event) => setForm({ ...form, description: event.target.value })}
@@ -373,6 +392,8 @@ export default function AdminProjects() {
                 className="admin-input"
                 id="project-demo"
                 type="url"
+                maxLength={2048}
+                placeholder="https://…"
                 value={form.demo_url ?? ''}
                 onChange={(event) => setForm({ ...form, demo_url: event.target.value })}
               />
@@ -383,6 +404,8 @@ export default function AdminProjects() {
                 className="admin-input"
                 id="project-repo"
                 type="url"
+                maxLength={2048}
+                placeholder="https://…"
                 value={form.repo_url ?? ''}
                 onChange={(event) => setForm({ ...form, repo_url: event.target.value })}
               />
@@ -394,6 +417,7 @@ export default function AdminProjects() {
             <input
               className="admin-input"
               id="project-image"
+              maxLength={500}
               value={form.image_path ?? ''}
               onChange={(event) => setForm({ ...form, image_path: event.target.value })}
             />
@@ -403,6 +427,7 @@ export default function AdminProjects() {
             <input
               className="admin-input"
               id="project-image-alt"
+              maxLength={300}
               value={form.image_alt ?? ''}
               onChange={(event) => setForm({ ...form, image_alt: event.target.value })}
             />

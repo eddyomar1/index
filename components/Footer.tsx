@@ -1,5 +1,3 @@
-import { withBasePath } from '@/lib/basePath';
-
 export default function Footer() {
   return (
     <footer className="border-t border-slate-900/10 bg-[#f7f4ee] px-5 py-8 sm:px-8">
@@ -14,9 +12,6 @@ export default function Footer() {
         <div className="flex flex-wrap gap-x-5 gap-y-2 font-bold text-slate-900">
           <a className="hover:text-teal-700" href="#inicio">
             Volver arriba
-          </a>
-          <a className="hover:text-teal-700" href={withBasePath('/admin/')}>
-            Administrar proyectos
           </a>
           <a
             className="hover:text-teal-700"

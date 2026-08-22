@@ -1,6 +1,10 @@
 import Head from 'next/head';
+import type { GetStaticProps } from 'next';
 import AdminProjects from '@/components/AdminProjects';
 import { withBasePath } from '@/lib/basePath';
+
+export const getStaticProps: GetStaticProps = () =>
+  process.env.ENABLE_ADMIN_PAGE === 'true' ? { props: {} } : { notFound: true };
 
 export default function AdminPage() {
   return (

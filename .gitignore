@@ -8,9 +8,31 @@ out/
 # Local environment files (keep the documented template)
 .env*
 !.env.example
+.envrc
+
+# Credentials and private key material
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+credentials.json
+secrets.json
+
+# Local databases, exports, and Supabase state
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+*.backup
+*.bak
+supabase/.branches/
+supabase/.temp/
 
 # Tooling and operating-system files
 *.log
 .DS_Store
 coverage/
 *.tsbuildinfo
+.vercel/

@@ -1,4 +1,5 @@
 import localProjectsData from '@/data/projects.json';
+import generatedProjectsData from '@/data/github-projects.generated.json';
 import { getSupabaseClient, isSupabaseConfigured, isSupabaseEnabled } from '@/lib/supabase';
 import type { Project, ProjectInput } from '@/types/project';
 
@@ -13,7 +14,28 @@ interface GetProjectsOptions {
   ownerId?: string;
 }
 
-const localProjects = (localProjectsData as Project[])
+function projectKey(project: Project): string {
+  return project.repo_url?.trim().toLowerCase() || project.id.trim().toLowerCase();
+}
+
+function mergeProjects(primaryProjects: Project[], additionalProjects: Project[]): Project[] {
+  const projects = new Map<string, Project>();
+
+  for (const project of [...primaryProjects, ...additionalProjects]) {
+    const key = projectKey(project);
+    if (!projects.has(key)) projects.set(key, project);
+  }
+
+  return [...projects.values()].sort((left, right) => left.sort_order - right.sort_order);
+}
+
+const generatedProjects = (generatedProjectsData as Project[]).filter(
+  (project) => project.published,
+);
+const localProjects = mergeProjects(
+  (localProjectsData as Project[]).filter((project) => project.published),
+  generatedProjects,
+)
   .filter((project) => project.published)
   .sort((left, right) => left.sort_order - right.sort_order);
 
@@ -50,7 +72,10 @@ export async function getProjects(options: GetProjectsOptions = {}): Promise<Pro
       throw error;
     }
 
-    return { projects: (data ?? []) as Project[], source: 'supabase' };
+    return {
+      projects: mergeProjects((data ?? []) as Project[], generatedProjects),
+      source: 'supabase',
+    };
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Error desconocido';
 

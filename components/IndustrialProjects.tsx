@@ -61,8 +61,11 @@ export default function IndustrialProjects({ images }: { images: IndustrialImage
           </p>
         </div>
 
-        <div className="columns-1 gap-4 sm:columns-2 lg:columns-3 xl:columns-4">
-          {visibleImages.map((image, index) => (
+        <div
+          className="columns-1 gap-4 sm:columns-2 lg:columns-3 xl:columns-4"
+          id="industrial-gallery"
+        >
+          {visibleImages.map((image) => (
             <a
               className="group mb-4 block break-inside-avoid overflow-hidden rounded-2xl border border-slate-900/10 bg-white shadow-lg focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-amber-500"
               href={withBasePath(image.image_path)}
@@ -77,7 +80,8 @@ export default function IndustrialProjects({ images }: { images: IndustrialImage
                 alt={image.image_alt}
                 width="1280"
                 height="960"
-                loading={index < 4 ? 'eager' : 'lazy'}
+                loading="eager"
+                decoding="async"
               />
             </a>
           ))}
@@ -88,6 +92,7 @@ export default function IndustrialProjects({ images }: { images: IndustrialImage
             <button
               className="inline-flex min-h-12 items-center justify-center rounded-xl bg-teal-800 px-6 font-black text-white transition hover:bg-teal-900 focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-amber-500"
               type="button"
+              aria-controls="industrial-gallery"
               aria-expanded={showAllImages}
               onClick={() => setShowAllImages((current) => !current)}
             >

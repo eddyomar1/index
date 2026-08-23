@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build --webpack",
+    "projects:sync": "node scripts/sync-github-projects.mjs",
     "security:check": "bash scripts/security-check.sh",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",

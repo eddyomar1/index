@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+  schedule:
+    - cron: '17 12 * * 1'
   workflow_dispatch:
 
 permissions:
@@ -38,6 +40,11 @@ jobs:
 
       - name: Install dependencies
         run: npm ci --ignore-scripts
+
+      - name: Discover public GitHub projects
+        run: npm run projects:sync
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Audit dependencies
         run: npm audit --audit-level=high

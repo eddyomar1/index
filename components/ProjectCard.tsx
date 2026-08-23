@@ -21,6 +21,20 @@ function ExternalLink({ href, children }: { href: string; children: React.ReactN
   );
 }
 
+function UnavailableLink({ children }: { children: React.ReactNode }) {
+  return (
+    <span
+      className="inline-flex cursor-not-allowed items-center gap-1 font-bold text-slate-400"
+      aria-disabled="true"
+      title="Enlace no disponible"
+    >
+      {children}
+      <span aria-hidden="true">—</span>
+      <span className="sr-only">no disponible</span>
+    </span>
+  );
+}
+
 export default function ProjectCard({ project, featured = false }: ProjectCardProps) {
   const demoUrl = getSafeExternalUrl(project.demo_url);
   const repoUrl = getSafeExternalUrl(project.repo_url);
@@ -48,15 +62,22 @@ export default function ProjectCard({ project, featured = false }: ProjectCardPr
             alt={project.image_alt || `Vista previa de ${project.title}`}
             width="1366"
             height="768"
-            loading={featured ? 'eager' : 'lazy'}
+            loading="eager"
+            decoding="async"
           />
         </a>
       ) : (
         <div
-          className="flex min-h-28 items-end bg-[linear-gradient(135deg,#101820,#164e63)] p-6 text-5xl font-black tracking-[-0.08em] text-white/20"
-          aria-hidden="true"
+          className="flex min-h-56 flex-col items-start justify-end bg-[linear-gradient(135deg,#101820,#164e63)] p-6"
+          role="img"
+          aria-label={`Vista previa pendiente de ${project.title}`}
         >
-          EO/{String(project.sort_order).padStart(2, '0')}
+          <span className="text-5xl font-black tracking-[-0.08em] text-white/20" aria-hidden="true">
+            EO/{String(project.sort_order).padStart(2, '0')}
+          </span>
+          <span className="mt-3 text-xs font-black tracking-[0.16em] text-white/65 uppercase">
+            Vista previa pendiente
+          </span>
         </div>
       )}
 
@@ -67,8 +88,16 @@ export default function ProjectCard({ project, featured = false }: ProjectCardPr
         <h3 className="text-2xl font-black tracking-tight text-slate-950">{project.title}</h3>
         <p className="mt-3 flex-1 leading-7 text-slate-600">{project.description}</p>
         <div className="mt-6 flex flex-wrap gap-5" aria-label={`Enlaces de ${project.title}`}>
-          {demoUrl ? <ExternalLink href={demoUrl}>Demo</ExternalLink> : null}
-          {repoUrl ? <ExternalLink href={repoUrl}>Código</ExternalLink> : null}
+          {demoUrl ? (
+            <ExternalLink href={demoUrl}>Demo</ExternalLink>
+          ) : (
+            <UnavailableLink>Demo</UnavailableLink>
+          )}
+          {repoUrl ? (
+            <ExternalLink href={repoUrl}>Código</ExternalLink>
+          ) : (
+            <UnavailableLink>Código</UnavailableLink>
+          )}
         </div>
       </div>
     </article>

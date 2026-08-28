@@ -1,0 +1,74 @@
+[
+  {
+    "id": "github-stdcrud",
+    "title": "Stdcrud",
+    "description": "crear mi crud estandart.",
+    "project_type": "Proyecto web",
+    "demo_url": null,
+    "repo_url": "https://github.com/eddyomar1/stdcrud",
+    "image_path": null,
+    "image_alt": null,
+    "sort_order": 10,
+    "published": true
+  },
+  {
+    "id": "github-pet-feeder",
+    "title": "Pet feeder",
+    "description": "Dispensador de agua y alimento automatizado para mascotas domesticas.",
+    "project_type": "Sistemas embebidos",
+    "demo_url": null,
+    "repo_url": "https://github.com/eddyomar1/pet-feeder",
+    "image_path": null,
+    "image_alt": null,
+    "sort_order": 11,
+    "published": true
+  },
+  {
+    "id": "github-fastduino",
+    "title": "Fastduino",
+    "description": "una herramienta para codear mas rápido en Arduino",
+    "project_type": "Proyecto de software",
+    "demo_url": null,
+    "repo_url": "https://github.com/eddyomar1/fastduino",
+    "image_path": null,
+    "image_alt": null,
+    "sort_order": 12,
+    "published": true
+  },
+  {
+    "id": "github-playground",
+    "title": "Playground",
+    "description": "Proyecto público desarrollado principalmente con HTML. Consulta la demo o el código para conocerlo en detalle.",
+    "project_type": "Proyecto web",
+    "demo_url": "https://eddyomar1.github.io/playground/",
+    "repo_url": "https://github.com/eddyomar1/playground",
+    "image_path": null,
+    "image_alt": null,
+    "sort_order": 13,
+    "published": true
+  },
+  {
+    "id": "github-sayes",
+    "title": "Sayes",
+    "description": "Proyecto público desarrollado principalmente con HTML. Consulta la demo o el código para conocerlo en detalle.",
+    "project_type": "Proyecto web",
+    "demo_url": "https://eddyomar1.github.io/sayes/",
+    "repo_url": "https://github.com/eddyomar1/sayes",
+    "image_path": null,
+    "image_alt": null,
+    "sort_order": 14,
+    "published": true
+  },
+  {
+    "id": "github-byte-man",
+    "title": "BYTE MAN",
+    "description": "En este proyecto se crean imágenes tipo Sprites para la pantalla GMG12864-06D con la librería ST7565.",
+    "project_type": "Biblioteca para Arduino",
+    "demo_url": null,
+    "repo_url": "https://github.com/eddyomar1/BYTE-MAN",
+    "image_path": null,
+    "image_alt": null,
+    "sort_order": 15,
+    "published": true
+  }
+]

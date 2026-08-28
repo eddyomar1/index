@@ -23,4 +23,4 @@ números de serie, códigos QR, credenciales, diagramas confidenciales y pantall
 También elimina metadatos de ubicación cuando existan.
 
 Para reportar de forma responsable una vulnerabilidad que no deba hacerse pública, escribe a
-[eddyomarscb@gmail.com](mailto:eddyomarscb@gmail.com) en lugar de abrir una incidencia pública.
+[eddyomarwk@gmail.com](mailto:eddyomarwk@gmail.com) en lugar de abrir una incidencia pública.

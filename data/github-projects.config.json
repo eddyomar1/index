@@ -1,0 +1,6 @@
+{
+  "username": "eddyomar1",
+  "exclude_repositories": ["index", "eddyomar1"],
+  "include_topics": ["portfolio-project", "portfolio"],
+  "exclude_topics": ["portfolio-hidden"]
+}

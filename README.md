@@ -43,7 +43,7 @@ cuando estos servicios están disponibles.
 
 Si quieres conversar sobre algún proyecto, colaboración o idea, puedes encontrarme en:
 
-- [Correo electrónico](mailto:eddyomarscb@gmail.com)
+- [Correo electrónico](mailto:eddyomarwk@gmail.com)
 - [GitHub](https://github.com/eddyomar1)
 - [Formulario del portafolio](https://eddyomar1.github.io/index/#contacto)
 

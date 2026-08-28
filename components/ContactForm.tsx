@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { getSupabaseClient } from '@/lib/supabase';
 
-const portfolioEmail = 'eddyomarscb@gmail.com';
+const portfolioEmail = 'eddyomarwk@gmail.com';
 const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID;
 
 interface FormValues {
